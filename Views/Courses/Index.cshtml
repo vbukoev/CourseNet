@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<CourseNet.Data.Entities.Course>
+
+<h2>Course Index</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Заглавие</th>
+        <th>Описание</th>
+        <th>Начална дата</th>
+        <th>Крайна дата</th>
+        <th>Цена</th>
+        <th>Инструктор</th>
+        <th>Действие</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var course in Model)
+    {
+        <tr>
+            <td>@course.Title</td>
+            <td>@course.Description</td>
+            <td>@course.StartDate.ToShortDateString()</td>
+            <td>@course.EndDate.ToShortDateString()</td>
+            <td>@course.Price</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@course.Id">Детайли</a> |
+                <a asp-action="Edit" asp-route-id="@course.Id">Редактирай</a> |
+                <a asp-action="Delete" asp-route-id="@course.Id">Изтрий</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

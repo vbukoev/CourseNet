@@ -1,0 +1,20 @@
+﻿@model CourseNet.Data.Entities.Course
+
+<h2>Потвърждение за изтриване</h2>
+
+<h3>Наистина ли искате да изтриете този курс?</h3>
+<div>
+    <h4>Детайли за курса</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Title</dt>
+        <dd class="col-sm-10">@Model.Title</dd>
+        <dt class="col-sm-2">Description</dt>
+        <dd class="col-sm-10">@Model.Description</dd>
+    </dl>
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Изтрий</button> |
+        <a asp-action="Index">Обратно към списъка с курсове</a>
+    </form>
+</div>
