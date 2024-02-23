@@ -6,9 +6,14 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "CourseNet/1.0.0": {
+      "CourseNet.Web/1.0.0": {
         "dependencies": {
           "CourseNet.Common": "1.0.0",
+          "CourseNet.Data": "1.0.0",
+          "CourseNet.Data.Models": "1.0.0",
+          "CourseNet.Services.Data": "1.0.0",
+          "CourseNet.Web.Infrastructure": "1.0.0",
+          "CourseNet.Web.ViewModels": "1.0.0",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "6.0.25",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.27",
           "Microsoft.AspNetCore.Identity.UI": "6.0.27",
@@ -18,7 +23,7 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.16"
         },
         "runtime": {
-          "CourseNet.dll": {}
+          "CourseNet.Web.dll": {}
         }
       },
       "Humanizer/2.14.1": {
@@ -2760,11 +2765,61 @@
         "runtime": {
           "CourseNet.Common.dll": {}
         }
+      },
+      "CourseNet.Data/1.0.0": {
+        "dependencies": {
+          "CourseNet.Common": "1.0.0",
+          "CourseNet.Data.Models": "1.0.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.27",
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.27"
+        },
+        "runtime": {
+          "CourseNet.Data.dll": {}
+        }
+      },
+      "CourseNet.Data.Models/1.0.0": {
+        "dependencies": {
+          "CourseNet.Common": "1.0.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.27"
+        },
+        "runtime": {
+          "CourseNet.Data.Models.dll": {}
+        }
+      },
+      "CourseNet.Services.Data/1.0.0": {
+        "dependencies": {
+          "CourseNet.Common": "1.0.0",
+          "CourseNet.Data": "1.0.0",
+          "CourseNet.Data.Models": "1.0.0",
+          "CourseNet.Web.ViewModels": "1.0.0"
+        },
+        "runtime": {
+          "CourseNet.Services.Data.dll": {}
+        }
+      },
+      "CourseNet.Web.Infrastructure/1.0.0": {
+        "dependencies": {
+          "CourseNet.Common": "1.0.0",
+          "CourseNet.Services.Data": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "runtime": {
+          "CourseNet.Web.Infrastructure.dll": {}
+        }
+      },
+      "CourseNet.Web.ViewModels/1.0.0": {
+        "dependencies": {
+          "CourseNet.Common": "1.0.0",
+          "CourseNet.Data.Models": "1.0.0"
+        },
+        "runtime": {
+          "CourseNet.Web.ViewModels.dll": {}
+        }
       }
     }
   },
   "libraries": {
-    "CourseNet/1.0.0": {
+    "CourseNet.Web/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -4394,6 +4449,31 @@
       "hashPath": "system.xml.xdocument.4.3.0.nupkg.sha512"
     },
     "CourseNet.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CourseNet.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CourseNet.Data.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CourseNet.Services.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CourseNet.Web.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CourseNet.Web.ViewModels/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
