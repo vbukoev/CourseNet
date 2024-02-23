@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "YLTLlmmgZlfbYZw9+RmpshKIykYWdO1mRWNtmnm8TZSzL74uV7WoKU564X8ZXmu6kmlK8c8yFwKTkNL9gc4rNg==",
+  "dgSpecHash": "MrYklREJsa9EaOcaousC8jKucL1enCDVv12dnCXwKbDfuYddIqUKHxlG7IW1OYsn8JF9Ma/Fc1dEBHrWqbBPfA==",
   "success": true,
-  "projectFilePath": "D:\\Software University\\repos\\CourseNet\\CourseNet\\CourseNet.csproj",
+  "projectFilePath": "D:\\Software University\\repos\\CourseNet\\CourseNet\\CourseNet.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Asus\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

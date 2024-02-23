@@ -1,18 +1,11 @@
-﻿using CourseNet.Models;
+﻿using System.Diagnostics;
+using CourseNet.Web.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
-namespace CourseNet.Controllers
+namespace CourseNet.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         public IActionResult Index()
         {
             return View();

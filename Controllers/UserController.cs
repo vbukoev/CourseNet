@@ -1,9 +1,11 @@
-﻿using CourseNet.Data.Entities;
+﻿using CourseNet.Data.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CourseNet.Controllers
+namespace CourseNet.Web.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly UserManager<User> _userManager;
