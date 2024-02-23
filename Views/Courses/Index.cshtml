@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model List<CourseNet.Data.Entities.Course>
-
-<h2>Course Index</h2>
+@model IEnumerable<CourseNet.Web.ViewModels.Course.CourseInfoViewModel>
+<link rel="stylesheet" href="~/css/courses.css" />
+<h2>Всички курсове</h2>
 
 <table class="table">
     <thead>
