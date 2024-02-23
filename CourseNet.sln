@@ -8,9 +8,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseNet.Common", "CourseNet.Common\CourseNet.Common.csproj", "{878C9011-B711-4F74-8E2A-94CBD1FE39D7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{BA798A8F-E999-4C52-A5E4-820784CA9139}"
-	ProjectSection(SolutionItems) = preProject
-		TextFile1.txt = TextFile1.txt
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{1F1AB756-A3FB-4B7D-9461-3B6282A92333}"
 EndProject
