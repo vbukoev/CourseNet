@@ -19,9 +19,7 @@ namespace CourseNet.Web.Controllers
         //[AllowAnonymous]
         //public async Task<IActionResult> Index()
         //{
-        //    //IEnumerable<CourseInfoViewModel> viewModel = await courseService.GetAllCoursesAsync();
-
-        //    //return View(viewModel);
+            
         //}
     }
 }

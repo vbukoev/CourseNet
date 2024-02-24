@@ -8,6 +8,6 @@ namespace CourseNet.Services.Data.Interfaces
 {
     public interface IInstructorService
     {
-        Task<bool> InstructorExistsById(string? id);
+        Task<bool> InstructorExistsByUserId(string? id);
     }
 }

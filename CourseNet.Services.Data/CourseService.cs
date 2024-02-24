@@ -6,17 +6,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CourseNet.Services.Data
 {
-    //public class CourseService : ICourseService
-    //{
-    //    private readonly CourseNetDbContext context;
+    public class CourseService : ICourseService
+    {
+        private readonly CourseNetDbContext context;
 
-    //    public CourseService(CourseNetDbContext context)
-    //    {
-    //        this.context = context;
-    //    }
-    //    //public async Task<IEnumerable<IndexViewModel>> GetAllCoursesAsync()
-    //    //{
-            
-    //    //}
-    //}
+        public CourseService(CourseNetDbContext context)
+        {
+            this.context = context;
+        }
+        public async Task<IEnumerable<IndexViewModel>> GetAllCoursesAsync()
+        {
+            IEnumerable<IndexViewModel> courses = await this.context.Courses
+                .Select(c => new IndexViewModel
+                {
+                    Id = c.Id.ToString(),
+                    Title = c.Title,
+                    ImagePath = c.ImagePath,
+                })
+                .ToListAsync();
+
+            return courses;
+        }
+    }
 }

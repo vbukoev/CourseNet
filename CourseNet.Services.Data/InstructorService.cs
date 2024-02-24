@@ -13,7 +13,7 @@ namespace CourseNet.Services.Data
             this.dbContext = dbContext;
         }
 
-        public async Task<bool> InstructorExistsById(string? id)
+        public async Task<bool> InstructorExistsByUserId(string? id)
         {
             bool result = await dbContext.Instructors.AnyAsync(instructor => instructor.Id.ToString() == id);
 

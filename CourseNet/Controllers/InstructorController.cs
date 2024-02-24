@@ -19,7 +19,7 @@ namespace CourseNet.Web.Controllers
         public async Task<IActionResult> Become()
         {
             string? userId = this.User.GetId();
-            bool isInstructor = await this.instructorService.InstructorExistsById(userId);
+            bool isInstructor = await this.instructorService.InstructorExistsByUserId(userId);
 
             if (isInstructor)
             {

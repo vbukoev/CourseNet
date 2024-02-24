@@ -12,7 +12,7 @@ namespace CourseNet.Data.Configurations
 
         //public Instructor[] GenerateInstructors()
         //{
-            
+
         //}
     }
 }
