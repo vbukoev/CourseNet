@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static CourseNet.Common.DataConstants.Instructor;
 
 namespace CourseNet.Data.Models.Entities
@@ -7,6 +8,11 @@ namespace CourseNet.Data.Models.Entities
     [Comment("Instructors Table")]
     public class Instructor
     {
+        public Instructor()
+        {
+            this.Id = System.Guid.NewGuid();
+        }
+
         [Comment("Instructor Identifier")]
         [Key]
         public Guid Id { get; set; }
@@ -20,12 +26,17 @@ namespace CourseNet.Data.Models.Entities
         public string LastName { get; set; } = string.Empty;
         [Comment("Instructor Email Address")]
         [Required]
-        public string Email { get; set; } = string.Empty;
+        public string Email { get; set; } = null!;
+
         [Comment("Instructor Phone Number")]
         [Required]
         [MaxLength(PhoneNumberMaxLength)]
-        public string PhoneNumber { get; set; } = string.Empty;
-        [Comment("Courses taught by the instructor")]
-        public ICollection<Course> CoursesTaught { get; set; } = new List<Course>();
+        public string PhoneNumber { get; set; } = null!;
+        [Comment("User Identifier")]
+        public Guid UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public virtual ApplicationUser User { get; set; } = null!;
+
+        public virtual ICollection<Course> CoursesTaught { get; set; } = new HashSet<Course>();
     }
 }

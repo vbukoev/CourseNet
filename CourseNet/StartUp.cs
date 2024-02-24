@@ -1,4 +1,5 @@
 using CourseNet.Data;
+using CourseNet.Data.Models.Entities;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Identity;
@@ -10,7 +11,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<CourseNetDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     {
         options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
         options.Password.RequiredLength = builder.Configuration.GetValue<int>("Password:SignIn:RequiredLength");

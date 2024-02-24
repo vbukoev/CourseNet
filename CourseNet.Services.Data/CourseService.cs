@@ -1,7 +1,7 @@
 ﻿using CourseNet.Data;
-using CourseNet.Data.Models.Entities;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.ViewModels.Course;
+using CourseNet.Web.ViewModels.Home;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourseNet.Services.Data
@@ -14,17 +14,18 @@ namespace CourseNet.Services.Data
         {
             this.context = context;
         }
-        public async Task<IEnumerable<CourseInfoViewModel>> GetAllCoursesAsync()
+        public async Task<IEnumerable<IndexViewModel>> GetAllCoursesAsync()
         {
-            var courses = await context.Courses.Include(course => course.Instructor).ToListAsync();
+            IEnumerable<IndexViewModel> courses = await this.context.Courses
+                .Select(c => new IndexViewModel
+                {
+                    Id = c.Id.ToString(),
+                    Title = c.Title,
+                    ImagePath = c.ImagePath,
+                })
+                .ToListAsync();
 
-            
-            var coursesViewModel = courses.Select(course => new CourseInfoViewModel(id: course.Id, title: course.Title,
-                description: course.Description, startDate: course.StartDate, endDate: course.EndDate,
-                price: course.Price, instructorFirstName: course.Instructor?.FirstName,
-                instructorLastName: course.Instructor?.LastName));
-
-            return coursesViewModel;
+            return courses;
         }
     }
 }

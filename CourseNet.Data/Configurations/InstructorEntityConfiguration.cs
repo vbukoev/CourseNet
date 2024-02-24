@@ -7,44 +7,12 @@ namespace CourseNet.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Instructor> builder)
         {
-            builder.HasKey(i => i.Id);
-
-            builder.Property(i => i.Id).ValueGeneratedOnAdd();
-            builder.HasData(GenerateInstructors());
+            
         }
 
-        public Instructor[] GenerateInstructors()
-        {
-            ICollection<Instructor> instructors = new HashSet<Instructor>();
+        //public Instructor[] GenerateInstructors()
+        //{
 
-            instructors.Add(new Instructor
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "John",
-                LastName = "Doe",
-                Email = "johndoe@abv.bg",
-                PhoneNumber = "0887665555"
-            });
-
-            instructors.Add(new Instructor
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Kyle",
-                LastName = "Doe",
-                Email = "kyledoe@gmail.com",
-                PhoneNumber = "0886667755"
-            });
-
-            instructors.Add(new Instructor
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Harry",
-                LastName = "Tailor",
-                Email = "harrytailor@email.com",
-                PhoneNumber = "0888774444"
-            });
-
-            return instructors.ToArray();
-        }
+        //}
     }
 }
