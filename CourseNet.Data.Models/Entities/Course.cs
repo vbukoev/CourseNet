@@ -11,7 +11,7 @@ namespace CourseNet.Data.Models.Entities
     {
         [Comment("Course Identifier")]
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Comment("Course Title")]
         [Required]
         [MaxLength(TitleMaxLength)]
@@ -30,9 +30,10 @@ namespace CourseNet.Data.Models.Entities
         [Required]
         [Column(TypeName = "Decimal(18,2)")]
         public decimal Price { get; set; }
+
         [Comment("Course Instructor Identifier")]
         [Required]
-        public int InstructorId { get; set; } 
+        public Guid InstructorId { get; set; } 
         [Comment("Course Instructor")]
         [ForeignKey(nameof(InstructorId))]
         public Instructor Instructor { get; set; } = new Instructor();
@@ -40,7 +41,7 @@ namespace CourseNet.Data.Models.Entities
         public DifficultyLevel Difficulty { get; set; }
         [Comment("Course Status")]
         public CourseStatus Status { get; set; }
-        [Comment("Course Enrollments")]
-        public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+        //[Comment("Course Enrollments")]
+        //public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
     }
 }

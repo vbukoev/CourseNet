@@ -1,4 +1,5 @@
 ﻿using CourseNet.Data;
+using CourseNet.Data.Models.Entities;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.ViewModels.Course;
 using Microsoft.EntityFrameworkCore;

@@ -21,3 +21,4 @@ D:\Software University\repos\CourseNet\CourseNet.Web.Infrastructure\obj\Debug\ne
 D:\Software University\repos\CourseNet\CourseNet.Web.Infrastructure\obj\Debug\net6.0\refint\CourseNet.Web.Infrastructure.dll
 D:\Software University\repos\CourseNet\CourseNet.Web.Infrastructure\obj\Debug\net6.0\CourseNet.Web.Infrastructure.pdb
 D:\Software University\repos\CourseNet\CourseNet.Web.Infrastructure\obj\Debug\net6.0\ref\CourseNet.Web.Infrastructure.dll
+D:\Software University\repos\CourseNet\CourseNet.Web.Infrastructure\obj\Debug\net6.0\CourseNet.Web.Infrastructure.sourcelink.json

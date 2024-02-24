@@ -15,3 +15,4 @@ D:\Software University\repos\CourseNet\CourseNet.Web.ViewModels\obj\Debug\net6.0
 D:\Software University\repos\CourseNet\CourseNet.Web.ViewModels\obj\Debug\net6.0\refint\CourseNet.Web.ViewModels.dll
 D:\Software University\repos\CourseNet\CourseNet.Web.ViewModels\obj\Debug\net6.0\CourseNet.Web.ViewModels.pdb
 D:\Software University\repos\CourseNet\CourseNet.Web.ViewModels\obj\Debug\net6.0\ref\CourseNet.Web.ViewModels.dll
+D:\Software University\repos\CourseNet\CourseNet.Web.ViewModels\obj\Debug\net6.0\CourseNet.Web.ViewModels.sourcelink.json

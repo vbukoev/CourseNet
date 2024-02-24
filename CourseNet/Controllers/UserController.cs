@@ -8,16 +8,16 @@ namespace CourseNet.Web.Controllers
     [Authorize]
     public class UserController : Controller
     {
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserController(UserManager<User> userManager)
+        public UserController(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
         }
 
         public async Task<IActionResult> Profile(string userId)
         {
-            User user = await _userManager.FindByIdAsync(userId);
+            ApplicationUser user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
@@ -30,7 +30,7 @@ namespace CourseNet.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> EditProfile(string userId)
         {
-            User user = await _userManager.FindByIdAsync(userId);
+            ApplicationUser user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
@@ -41,7 +41,7 @@ namespace CourseNet.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditProfile(string userId, User editedUser)
+        public async Task<IActionResult> EditProfile(string userId, ApplicationUser editedUser)
         {
 
             if (!Equals(userId, editedUser.Id))
@@ -49,7 +49,7 @@ namespace CourseNet.Web.Controllers
                 return NotFound();
             }
 
-            User user = await _userManager.FindByIdAsync(userId);
+            ApplicationUser user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
