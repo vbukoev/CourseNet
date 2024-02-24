@@ -14,7 +14,7 @@
             InstructorLastName = course.Instructor?.LastName;
         }
 
-        public CourseInfoViewModel(int id, string title, string description, DateTime startDate, DateTime endDate, decimal price, string instructorFirstName, string instructorLastName)
+        public CourseInfoViewModel(Guid id, string title, string description, DateTime startDate, DateTime endDate, decimal price, string instructorFirstName, string instructorLastName)
         {
             Id = id;
             Title = title;
@@ -26,7 +26,7 @@
             InstructorLastName = instructorLastName;
         }
 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime StartDate { get; set; }

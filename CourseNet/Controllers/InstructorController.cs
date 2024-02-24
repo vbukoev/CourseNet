@@ -1,4 +1,5 @@
-﻿using CourseNet.Services.Data.Interfaces;
+﻿using CourseNet.Common.Notifications;
+using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +21,8 @@ namespace CourseNet.Web.Controllers
 
             if (isInstructor)
             {
-                return BadRequest();
+                TempData[NotificationMessagesConstants.ErrorMessage] = "You are already an instructor!";
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }

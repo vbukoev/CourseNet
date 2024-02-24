@@ -17,3 +17,4 @@ D:\Software University\repos\CourseNet\CourseNet.Data\obj\Debug\net6.0\refint\Co
 D:\Software University\repos\CourseNet\CourseNet.Data\obj\Debug\net6.0\CourseNet.Data.pdb
 D:\Software University\repos\CourseNet\CourseNet.Data\obj\Debug\net6.0\CourseNet.Data.genruntimeconfig.cache
 D:\Software University\repos\CourseNet\CourseNet.Data\obj\Debug\net6.0\ref\CourseNet.Data.dll
+D:\Software University\repos\CourseNet\CourseNet.Data\obj\Debug\net6.0\CourseNet.Data.sourcelink.json
