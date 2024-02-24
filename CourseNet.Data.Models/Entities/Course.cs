@@ -9,6 +9,11 @@ namespace CourseNet.Data.Models.Entities
     [Comment("Course Table")]
     public class Course
     {
+        public Course()
+        {
+            this.Id = System.Guid.NewGuid();
+        }
+
         [Comment("Course Identifier")]
         [Key]
         public Guid Id { get; set; }
@@ -20,6 +25,10 @@ namespace CourseNet.Data.Models.Entities
         [Required]
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; } = string.Empty;
+
+        [Comment("Course Image Path")]
+        public string ImagePath { get; set; } = string.Empty;
+
         [Comment("Course Start Date")]
         [Required]
         public DateTime StartDate { get; set; }
@@ -35,13 +44,18 @@ namespace CourseNet.Data.Models.Entities
         [Required]
         public Guid InstructorId { get; set; } 
         [Comment("Course Instructor")]
-        [ForeignKey(nameof(InstructorId))]
-        public Instructor Instructor { get; set; } = new Instructor();
+        public Instructor Instructor { get; set; } 
         [Comment("Course Difficulty Level")]
         public DifficultyLevel Difficulty { get; set; }
         [Comment("Course Status")]
         public CourseStatus Status { get; set; }
-        //[Comment("Course Enrollments")]
-        //public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+        
+        public Guid? StudentId { get; set; }
+
+        [ForeignKey(nameof(StudentId))]
+        public virtual ApplicationUser? Student { get; set; }
+        public int CategoryId { get; set; }
+        public virtual Category Category { get; set; } 
+        public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
     }
 }

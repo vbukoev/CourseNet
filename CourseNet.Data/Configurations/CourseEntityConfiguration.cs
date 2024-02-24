@@ -8,7 +8,20 @@ namespace CourseNet.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Course> builder)
         {
-            builder.HasKey(c => c.Id);
+            builder
+                .Property(c => c.StartDate)
+                .HasDefaultValue(DateTime.UtcNow);
+
+            builder.HasOne(c => c.Category)
+                .WithMany(c => c.Courses)
+                .HasForeignKey(c => c.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(c => c.Instructor)
+                .WithMany(i => i.CoursesTaught)
+                .HasForeignKey(c => c.InstructorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.HasData(GenerateCourses());
         }
 
@@ -18,15 +31,33 @@ namespace CourseNet.Data.Configurations
 
             courses.Add(new Course
             {
-                Id = Guid.NewGuid(),
                 Title = "C# Fundamentals",
-                Description = "Научете фундаментите на C# език за програмиране.",
-                StartDate = new DateTime(2023, 7, 1),
-                EndDate = new DateTime(2023, 8, 31),
-                Price = 100,
-                InstructorId = new Guid("5c87b86e-4f6a-470e-b432-16b674712a5b"),
+                Description = "Научете основите на C# език за програмиране",
+                CategoryId = 1,
+                InstructorId = Guid.Parse("2E96BDCE-D188-4E4D-9F37-ADDFE53F8FA7"),
+                StudentId = Guid.Parse("F2DEDB39-40B0-4042-CBE4-08DC3524BC5D"),
                 Difficulty = DifficultyLevel.Beginner,
                 Status = CourseStatus.Active
+            });
+
+            courses.Add(new Course
+            {
+                Title = "Design Advanced ",
+                Description = "Научете напреднали техники на дизайна",
+                CategoryId = 2,
+                InstructorId = Guid.Parse("2E96BDCE-D188-4E4D-9F37-ADDFE53F8FA7"),
+                Difficulty = DifficultyLevel.Advanced,
+                Status = CourseStatus.Completed
+            });
+
+            courses.Add(new Course
+            {
+                Title = "Business Management",
+                Description = "Научете как да управлявате бизнеса си",
+                CategoryId = 3,
+                InstructorId = Guid.Parse("2E96BDCE-D188-4E4D-9F37-ADDFE53F8FA7"),
+                Difficulty = DifficultyLevel.Intermediate,
+                Status = CourseStatus.Archived
             });
 
             return courses.ToArray();
