@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CourseNet.Web.ViewModels")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ead78106081c40d54613df9aa6a82379a37800db")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bf342f0aac0a10ac35f75a863c42ce8d5aa48540")]
 [assembly: System.Reflection.AssemblyProductAttribute("CourseNet.Web.ViewModels")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CourseNet.Web.ViewModels")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

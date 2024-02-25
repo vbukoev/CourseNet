@@ -1,5 +1,6 @@
 ﻿using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.ViewModels.Course;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CourseNet.Web.Controllers
 {
@@ -16,10 +17,17 @@ namespace CourseNet.Web.Controllers
             this.courseService = courseService;
         }
 
-        //[AllowAnonymous]
-        //public async Task<IActionResult> Index()
-        //{
-            
-        //}
+        [AllowAnonymous]
+        public async Task<IActionResult> Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            var viewModel = new CourseFormViewModel();
+            return this.View(viewModel);
+        }
     }
 }
