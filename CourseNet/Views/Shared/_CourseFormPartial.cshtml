@@ -1,0 +1,57 @@
+﻿@model CourseNet.Web.ViewModels.Course.CourseFormViewModel
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Title"></label>
+                <input asp-for="Title" class="form-control" placeholder="Заглавие...">
+                <span asp-validation-for="Title" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" rows="4" class="form-control"
+                          placeholder="Курсът представлява..."></textarea>
+                <span asp-validation-for="Description" class="small text-
+danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate"></label>
+                <input asp-for="StartDate" type="date" class="form-control">
+                <span asp-validation-for="StartDate" class="small text-
+danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate"></label>
+                <input asp-for="EndDate" type="date" class="form-control">
+                <span asp-validation-for="EndDate" class="small text-
+danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImagePath"></label>
+                <input asp-for="ImagePath" class="form-control" placeholder="Вашият път към снимка">
+                <span asp-validation-for="ImagePath" class="small text-
+danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price"></label>
+                <input asp-for="Price" class="form-control">
+                <span asp-validation-for="Price" class="small text-
+danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId"></label>
+                <select asp-for="CategoryId" class="form-control">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoryId" class="small text-
+danger"></span>
+            </div>
+            <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="Запази" />
+            </div>
+        </form>
+    </div>
+</div>

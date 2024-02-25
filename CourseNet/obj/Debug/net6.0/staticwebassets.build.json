@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "NW9nMZBK8q6bTSf/bhig199flH/owZpqLx8q8bAqYFQ=",
+  "Hash": "x2mVAAnwKIaguLlgyM/IIZHL5fQM5kiFs/OQirKCHQU=",
   "Source": "CourseNet.Web",
   "BasePath": "_content/CourseNet.Web",
   "Mode": "Default",
@@ -1269,6 +1269,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\coursenet-image.gif"
+    },
+    {
+      "Identity": "D:\\Software University\\repos\\CourseNet\\CourseNet\\wwwroot\\js\\jquerry-override.js",
+      "SourceId": "CourseNet.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Software University\\repos\\CourseNet\\CourseNet\\wwwroot\\",
+      "BasePath": "_content/CourseNet.Web",
+      "RelativePath": "js/jquerry-override.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\jquerry-override.js"
     },
     {
       "Identity": "D:\\Software University\\repos\\CourseNet\\CourseNet\\wwwroot\\js\\site.js",
