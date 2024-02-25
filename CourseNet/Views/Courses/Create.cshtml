@@ -1,20 +1,13 @@
-﻿@model CourseNet.Data.Models.Entities.Course
+﻿@model CourseNet.Web.ViewModels.Course.CourseFormViewModel
+@{
+    ViewData["Title"] = "Създай курс";
+}
 
-<h2>Създай курс</h2>
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr/>
 
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="Title"></label>
-        <input asp-for="Title" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-    </div>
-    <div class="form-group">
-        <label asp-for="StartDate"></label>
-        <input asp-for="StartDate" type="date" class="form-control" />
-    </div>
-    <!-- Добавете други полета за въвеждане -->
-    <button type="submit" class="btn btn-primary">Създай</button>
-</form>
+<partial name="_CourseFormPartial" model="Model" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

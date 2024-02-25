@@ -1,20 +1,24 @@
 ﻿using CourseNet.Services.Data.Interfaces;
+using CourseNet.Web.Infrastructure.Extensions;
 using CourseNet.Web.ViewModels.Course;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+using static CourseNet.Common.Notifications.NotificationMessagesConstants;
 
 namespace CourseNet.Web.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System.Globalization;
 
     [Authorize]
     public class CoursesController : Controller
     {
-        private readonly ICourseService courseService;
-
-        public CoursesController(ICourseService courseService)
+        private readonly ICategoryService categoryService;
+        private readonly IInstructorService instructorService;
+        public CoursesController(ICategoryService categoryService, IInstructorService instructorService)
         {
-            this.courseService = courseService;
+            this.categoryService = categoryService;
+            this.instructorService = instructorService;
         }
 
         [AllowAnonymous]
@@ -26,8 +30,22 @@ namespace CourseNet.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var viewModel = new CourseFormViewModel();
-            return this.View(viewModel);
+           
+            bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете курс";
+
+                return RedirectToAction("Become", "Instructor");
+            }
+
+            CourseFormViewModel model = new CourseFormViewModel
+            {
+                Categories = await categoryService.GetAllCategoriesAsync()
+            };
+               
+            return View(model);
         }
     }
 }

@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets\\images\\coursenet-image.gif"
     },
     {
+      "Id": "D:\\Software University\\repos\\CourseNet\\CourseNet\\wwwroot\\js\\jquerry-override.js",
+      "PackagePath": "staticwebassets\\js\\jquerry-override.js"
+    },
+    {
       "Id": "D:\\Software University\\repos\\CourseNet\\CourseNet\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
