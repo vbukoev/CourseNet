@@ -42,6 +42,7 @@ namespace CourseNet.Services.Data
             };
 
             await context.Courses.AddAsync(course);
+            await context.SaveChangesAsync();
         }
     }
 }

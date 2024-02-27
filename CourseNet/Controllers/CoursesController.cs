@@ -54,12 +54,6 @@ namespace CourseNet.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CourseFormViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                model.Categories = await categoryService.GetAllCategoriesAsync();
-                return View(model);
-            }
-
             bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
 
             if (!isInstructor)
@@ -88,14 +82,14 @@ namespace CourseNet.Web.Controllers
                 string instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
                 await courseService.CreateCourseAsync(model, instructorId);
             }
-            catch (Exception )
+            catch (Exception)
             {
                 ModelState.AddModelError(string.Empty, "Възникна грешка при създаването на курса!");
-
+                model.Categories = await categoryService.GetAllCategoriesAsync();
                 return View(model);
             }
             
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

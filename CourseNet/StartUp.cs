@@ -2,7 +2,7 @@ using CourseNet.Data;
 using CourseNet.Data.Models.Entities;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.Infrastructure.Extensions;
-using Microsoft.AspNetCore.Identity;
+using CourseNet.Web.Infrastructure.ModelBinders;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +23,12 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 
 builder.Services.AddApplicationServices(typeof(ICourseService));
 
-builder.Services.AddControllersWithViews();
+builder.Services
+    .AddControllersWithViews()
+    .AddMvcOptions(options =>
+    {
+        options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
