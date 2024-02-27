@@ -56,5 +56,17 @@ namespace CourseNet.Services.Data
             await dbContext.Instructors.AddAsync(instructor);
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task<string> GetInstructorIdByUserId(string? userId)
+        {
+            var instructor = await dbContext.Instructors
+                .FirstOrDefaultAsync(x => x.UserId.ToString() == userId);
+            if (instructor is null)
+            {
+                return null;
+            }
+
+            return instructor.Id.ToString();
+        }
     }
 }
