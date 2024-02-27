@@ -29,9 +29,9 @@ namespace CourseNet.Data.Models.Entities
         [Comment("Course Image Path")]
         public string ImagePath { get; set; } = string.Empty;
 
-        [Comment("Course Start Date")]
+        [Comment("Course Creation Date")]
         [Required]
-        public DateTime StartDate { get; set; }
+        public DateTime CreatedOn { get; set; }
         [Comment("Course End Date")]
         [Required]
         public DateTime EndDate { get; set; }

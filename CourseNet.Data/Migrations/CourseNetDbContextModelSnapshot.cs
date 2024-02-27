@@ -144,6 +144,12 @@ namespace CourseNet.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 2, 27, 19, 44, 39, 727, DateTimeKind.Utc).AddTicks(704))
+                        .HasComment("Course Creation Date");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -170,12 +176,6 @@ namespace CourseNet.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("Decimal(18,2)")
                         .HasComment("Course Price");
-
-                    b.Property<DateTime>("StartDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 2, 24, 11, 21, 29, 627, DateTimeKind.Utc).AddTicks(7762))
-                        .HasComment("Course Start Date");
 
                     b.Property<int>("Status")
                         .HasColumnType("int")
@@ -205,44 +205,44 @@ namespace CourseNet.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a9aba473-b04d-4a68-b4fb-27836fd1cb71"),
+                            Id = new Guid("8edeba69-5a42-4e00-b1a7-de2f6e8c59e9"),
                             CategoryId = 1,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Научете основите на C# език за програмиране",
                             Difficulty = 0,
                             EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImagePath = "",
                             InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
                             Price = 0m,
-                            StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 0,
                             StudentId = new Guid("f2dedb39-40b0-4042-cbe4-08dc3524bc5d"),
                             Title = "C# Fundamentals"
                         },
                         new
                         {
-                            Id = new Guid("e6444e96-ce3d-4e50-a3e7-bb8bd0410507"),
+                            Id = new Guid("3b51ea41-f01f-44f2-bf1c-24e89a42421e"),
                             CategoryId = 2,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Научете напреднали техники на дизайна",
                             Difficulty = 2,
                             EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImagePath = "",
                             InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
                             Price = 0m,
-                            StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 2,
                             Title = "Design Advanced "
                         },
                         new
                         {
-                            Id = new Guid("c718b08c-ebdc-4708-bbe1-60dc8dfe4c0e"),
+                            Id = new Guid("7e13d79b-5979-4a87-ba36-bd53ce5998e0"),
                             CategoryId = 3,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Научете как да управлявате бизнеса си",
                             Difficulty = 1,
                             EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImagePath = "",
                             InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
                             Price = 0m,
-                            StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 3,
                             Title = "Business Management"
                         });

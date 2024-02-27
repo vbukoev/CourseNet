@@ -9,7 +9,7 @@ namespace CourseNet.Data.Configurations
         public void Configure(EntityTypeBuilder<Course> builder)
         {
             builder
-                .Property(c => c.StartDate)
+                .Property(c => c.CreatedOn)
                 .HasDefaultValue(DateTime.UtcNow);
 
             builder.HasOne(c => c.Category)

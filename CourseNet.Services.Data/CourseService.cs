@@ -1,5 +1,6 @@
 ﻿using CourseNet.Data.Models.Entities;
 using CourseNet.Data;
+using CourseNet.Data.Models.Entities.Enums;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.ViewModels.Course;
 using CourseNet.Web.ViewModels.Home;
@@ -37,11 +38,13 @@ namespace CourseNet.Services.Data
                 Description = model.Description,
                 ImagePath = model.ImagePath,
                 CategoryId = model.CategoryId,
-                InstructorId = Guid.Parse(instructorId),
                 Price = model.Price,
+                InstructorId = Guid.Parse(instructorId),
+                Status = CourseStatus.Active,
             };
 
             await context.Courses.AddAsync(course);
+            await context.SaveChangesAsync();
         }
     }
 }
