@@ -1,8 +1,9 @@
-﻿using System.Globalization;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-
-namespace CourseNet.Web.Infrastructure.ModelBinders
+﻿namespace CourseNet.Web.Infrastructure.ModelBinders
 {
+    using System.Globalization;
+
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+
     public class DecimalModelBinder : IModelBinder
     {
         public Task BindModelAsync(ModelBindingContext? bindingContext)
@@ -11,34 +12,36 @@ namespace CourseNet.Web.Infrastructure.ModelBinders
             {
                 throw new ArgumentNullException(nameof(bindingContext));
             }
-            ValueProviderResult valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
 
-            if (valueProviderResult != ValueProviderResult.None && string.IsNullOrWhiteSpace(valueProviderResult.FirstValue))
+            ValueProviderResult valueResult =
+                bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
+            if (valueResult != ValueProviderResult.None && !string.IsNullOrWhiteSpace(valueResult.FirstValue))
             {
                 decimal parsedValue = 0m;
-
-                bool binderSucceed = false;
+                bool binderSucceeded = false;
 
                 try
                 {
-                    string formDecimalValue = valueProviderResult.FirstValue.Replace(",", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+                    string formDecValue = valueResult.FirstValue;
+                    formDecValue = formDecValue.Replace(",",
+                        CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+                    formDecValue = formDecValue.Replace(".",
+                        CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
 
-                    formDecimalValue = formDecimalValue.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-
-                    parsedValue = Convert.ToDecimal(formDecimalValue);
-
-                    binderSucceed = true;
+                    parsedValue = Convert.ToDecimal(formDecValue);
+                    binderSucceeded = true;
                 }
                 catch (FormatException fe)
                 {
-                    bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, fe, bindingContext.ModelMetadata);
+                    bindingContext.ModelState.AddModelError(bindingContext.ModelName, fe, bindingContext.ModelMetadata);
                 }
 
-                if (binderSucceed)
+                if (binderSucceeded)
                 {
                     bindingContext.Result = ModelBindingResult.Success(parsedValue);
                 }
             }
+
             return Task.CompletedTask;
         }
     }

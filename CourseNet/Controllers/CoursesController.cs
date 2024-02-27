@@ -33,7 +33,6 @@ namespace CourseNet.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-           
             bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
 
             if (!isInstructor)

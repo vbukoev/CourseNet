@@ -5,6 +5,6 @@
         Active,
         Inactive,
         Completed,
-        Archived
+        Archived    
     }
 }
