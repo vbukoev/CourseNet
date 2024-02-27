@@ -1,4 +1,5 @@
-﻿using CourseNet.Data;
+﻿using CourseNet.Data.Models.Entities;
+using CourseNet.Data;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.ViewModels.Course;
 using CourseNet.Web.ViewModels.Home;
@@ -26,6 +27,21 @@ namespace CourseNet.Services.Data
                 .ToListAsync();
 
             return courses;
+        }
+
+        public async Task CreateCourseAsync(CourseFormViewModel model, string instructorId)
+        {
+            var course = new Course
+            {
+                Title = model.Title,
+                Description = model.Description,
+                ImagePath = model.ImagePath,
+                CategoryId = model.CategoryId,
+                InstructorId = Guid.Parse(instructorId),
+                Price = model.Price,
+            };
+
+            await context.Courses.AddAsync(course);
         }
     }
 }

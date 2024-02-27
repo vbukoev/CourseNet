@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CourseNet.Data;
+﻿using CourseNet.Data;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.ViewModels.Category;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +24,13 @@ namespace CourseNet.Services.Data
                 .ToListAsync();
 
             return categories;
+        }
+
+        public async Task<bool> CategoryExists(int categoryId)
+        {
+            bool res = await dbContext.Categories.AnyAsync(c => c.Id == categoryId);
+
+            return res;
         }
     }
 }

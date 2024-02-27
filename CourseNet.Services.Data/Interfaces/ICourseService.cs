@@ -11,5 +11,7 @@ namespace CourseNet.Services.Data.Interfaces
     public interface ICourseService
     {
         Task<IEnumerable<IndexViewModel>> GetAllCoursesAsync();
+
+        Task CreateCourseAsync(CourseFormViewModel model, string instructorId);
     }
 }
