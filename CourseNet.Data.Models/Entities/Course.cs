@@ -27,6 +27,7 @@ namespace CourseNet.Data.Models.Entities
         public string Description { get; set; } = string.Empty;
 
         [Comment("Course Image Path")]
+        [Required(AllowEmptyStrings = false)]
         public string ImagePath { get; set; } = string.Empty;
 
         [Comment("Course Creation Date")]
