@@ -4486,6 +4486,7 @@
           "CourseNet.Common": "1.0.0",
           "CourseNet.Data": "1.0.0",
           "CourseNet.Data.Models": "1.0.0",
+          "CourseNet.Services.Data.Models": "1.0.0",
           "CourseNet.Web.ViewModels": "1.0.0"
         },
         "compile": {
@@ -4493,6 +4494,19 @@
         },
         "runtime": {
           "bin/placeholder/CourseNet.Services.Data.dll": {}
+        }
+      },
+      "CourseNet.Services.Data.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "CourseNet.Web.ViewModels": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CourseNet.Services.Data.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CourseNet.Services.Data.Models.dll": {}
         }
       },
       "CourseNet.Web.Infrastructure/1.0.0": {
@@ -12178,6 +12192,11 @@
       "type": "project",
       "path": "../CourseNet.Services.Data/CourseNet.Services.Data.csproj",
       "msbuildProject": "../CourseNet.Services.Data/CourseNet.Services.Data.csproj"
+    },
+    "CourseNet.Services.Data.Models/1.0.0": {
+      "type": "project",
+      "path": "../CourseNet.Services.Data.Models/CourseNet.Services.Data.Models.csproj",
+      "msbuildProject": "../CourseNet.Services.Data.Models/CourseNet.Services.Data.Models.csproj"
     },
     "CourseNet.Web.Infrastructure/1.0.0": {
       "type": "project",

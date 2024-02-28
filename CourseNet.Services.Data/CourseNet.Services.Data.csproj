@@ -10,6 +10,7 @@
     <ProjectReference Include="..\CourseNet.Common\CourseNet.Common.csproj" />
     <ProjectReference Include="..\CourseNet.Data.Models\CourseNet.Data.Models.csproj" />
     <ProjectReference Include="..\CourseNet.Data\CourseNet.Data.csproj" />
+    <ProjectReference Include="..\CourseNet.Services.Data.Models\CourseNet.Services.Data.Models.csproj" />
     <ProjectReference Include="..\CourseNet.Web.ViewModels\CourseNet.Web.ViewModels.csproj" />
   </ItemGroup>
 

@@ -860,6 +860,19 @@
           "bin/placeholder/CourseNet.Data.Models.dll": {}
         }
       },
+      "CourseNet.Services.Data.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "CourseNet.Web.ViewModels": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CourseNet.Services.Data.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CourseNet.Services.Data.Models.dll": {}
+        }
+      },
       "CourseNet.Web.ViewModels/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -2145,6 +2158,11 @@
       "path": "../CourseNet.Data.Models/CourseNet.Data.Models.csproj",
       "msbuildProject": "../CourseNet.Data.Models/CourseNet.Data.Models.csproj"
     },
+    "CourseNet.Services.Data.Models/1.0.0": {
+      "type": "project",
+      "path": "../CourseNet.Services.Data.Models/CourseNet.Services.Data.Models.csproj",
+      "msbuildProject": "../CourseNet.Services.Data.Models/CourseNet.Services.Data.Models.csproj"
+    },
     "CourseNet.Web.ViewModels/1.0.0": {
       "type": "project",
       "path": "../CourseNet.Web.ViewModels/CourseNet.Web.ViewModels.csproj",
@@ -2156,6 +2174,7 @@
       "CourseNet.Common >= 1.0.0",
       "CourseNet.Data >= 1.0.0",
       "CourseNet.Data.Models >= 1.0.0",
+      "CourseNet.Services.Data.Models >= 1.0.0",
       "CourseNet.Web.ViewModels >= 1.0.0"
     ]
   },
@@ -2199,6 +2218,9 @@
             },
             "D:\\Software University\\repos\\CourseNet\\CourseNet.Data\\CourseNet.Data.csproj": {
               "projectPath": "D:\\Software University\\repos\\CourseNet\\CourseNet.Data\\CourseNet.Data.csproj"
+            },
+            "D:\\Software University\\repos\\CourseNet\\CourseNet.Services.Data.Models\\CourseNet.Services.Data.Models.csproj": {
+              "projectPath": "D:\\Software University\\repos\\CourseNet\\CourseNet.Services.Data.Models\\CourseNet.Services.Data.Models.csproj"
             },
             "D:\\Software University\\repos\\CourseNet\\CourseNet.Web.ViewModels\\CourseNet.Web.ViewModels.csproj": {
               "projectPath": "D:\\Software University\\repos\\CourseNet\\CourseNet.Web.ViewModels\\CourseNet.Web.ViewModels.csproj"
