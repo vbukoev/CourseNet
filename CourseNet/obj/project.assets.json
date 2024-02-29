@@ -12215,6 +12215,7 @@
       "CourseNet.Data >= 1.0.0",
       "CourseNet.Data.Models >= 1.0.0",
       "CourseNet.Services.Data >= 1.0.0",
+      "CourseNet.Services.Data.Models >= 1.0.0",
       "CourseNet.Web.Infrastructure >= 1.0.0",
       "CourseNet.Web.ViewModels >= 1.0.0",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 6.0.25",
@@ -12266,6 +12267,9 @@
             },
             "D:\\Software University\\repos\\CourseNet\\CourseNet.Data\\CourseNet.Data.csproj": {
               "projectPath": "D:\\Software University\\repos\\CourseNet\\CourseNet.Data\\CourseNet.Data.csproj"
+            },
+            "D:\\Software University\\repos\\CourseNet\\CourseNet.Services.Data.Models\\CourseNet.Services.Data.Models.csproj": {
+              "projectPath": "D:\\Software University\\repos\\CourseNet\\CourseNet.Services.Data.Models\\CourseNet.Services.Data.Models.csproj"
             },
             "D:\\Software University\\repos\\CourseNet\\CourseNet.Services.Data\\CourseNet.Services.Data.csproj": {
               "projectPath": "D:\\Software University\\repos\\CourseNet\\CourseNet.Services.Data\\CourseNet.Services.Data.csproj"

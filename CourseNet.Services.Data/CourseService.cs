@@ -100,7 +100,13 @@ namespace CourseNet.Services.Data
                     IsEnrolled = c.StudentId.HasValue,
                 })
                 .ToListAsync();
+            int totalCourses = courseQuery.Count();
 
+            return new AllCoursesFilteredAndPagedServiceModel
+            {
+                Courses = courses,
+                TotalCourses = totalCourses,
+            };
         }
     }
 }

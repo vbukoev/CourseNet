@@ -32,5 +32,15 @@ namespace CourseNet.Services.Data
 
             return res;
         }
+
+        public async Task<IEnumerable<string>> AllCategoryNamesAsync()
+        {
+            var allNames = await dbContext
+                .Categories
+                .Select(c => c.Name)
+                .ToListAsync();
+
+            return allNames;
+        }
     }
 }

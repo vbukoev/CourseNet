@@ -298,3 +298,5 @@ D:\Software University\repos\CourseNet\CourseNet\bin\Debug\net6.0\CourseNet.Serv
 D:\Software University\repos\CourseNet\CourseNet\bin\Debug\net6.0\CourseNet.Services.Data.pdb
 D:\Software University\repos\CourseNet\CourseNet\bin\Debug\net6.0\CourseNet.Web.Infrastructure.dll
 D:\Software University\repos\CourseNet\CourseNet\bin\Debug\net6.0\CourseNet.Web.Infrastructure.pdb
+D:\Software University\repos\CourseNet\CourseNet\bin\Debug\net6.0\CourseNet.Services.Data.Models.dll
+D:\Software University\repos\CourseNet\CourseNet\bin\Debug\net6.0\CourseNet.Services.Data.Models.pdb
