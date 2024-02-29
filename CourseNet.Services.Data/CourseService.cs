@@ -78,8 +78,8 @@ namespace CourseNet.Services.Data
             {
                 CourseSorting.LeastExpensive => courseQuery.OrderBy(c => c.Price),
                 CourseSorting.MostExpensive => courseQuery.OrderByDescending(c => c.Price),
-                CourseSorting.Newest => courseQuery.OrderBy(c => c.CreatedOn),
-                CourseSorting.Oldest => courseQuery.OrderByDescending(c => c.CreatedOn),
+                CourseSorting.Newest => courseQuery.OrderByDescending(c => c.CreatedOn),
+                CourseSorting.Oldest => courseQuery.OrderBy(c => c.CreatedOn),
                 _ => courseQuery.OrderBy(c => c.InstructorId != null)
                     .ThenByDescending(c=>c.CreatedOn)
             };
