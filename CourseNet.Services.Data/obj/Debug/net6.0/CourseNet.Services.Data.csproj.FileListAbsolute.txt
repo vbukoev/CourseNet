@@ -20,3 +20,5 @@ D:\Software University\repos\CourseNet\CourseNet.Services.Data\obj\Debug\net6.0\
 D:\Software University\repos\CourseNet\CourseNet.Services.Data\obj\Debug\net6.0\CourseNet.Services.Data.pdb
 D:\Software University\repos\CourseNet\CourseNet.Services.Data\obj\Debug\net6.0\ref\CourseNet.Services.Data.dll
 D:\Software University\repos\CourseNet\CourseNet.Services.Data\obj\Debug\net6.0\CourseNet.Services.Data.sourcelink.json
+D:\Software University\repos\CourseNet\CourseNet.Services.Data\bin\Debug\net6.0\CourseNet.Services.Data.Models.dll
+D:\Software University\repos\CourseNet\CourseNet.Services.Data\bin\Debug\net6.0\CourseNet.Services.Data.Models.pdb

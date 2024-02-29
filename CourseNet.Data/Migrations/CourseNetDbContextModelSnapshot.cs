@@ -147,7 +147,7 @@ namespace CourseNet.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 2, 27, 19, 44, 39, 727, DateTimeKind.Utc).AddTicks(704))
+                        .HasDefaultValueSql("GETDATE()")
                         .HasComment("Course Creation Date");
 
                     b.Property<string>("Description")
@@ -205,7 +205,7 @@ namespace CourseNet.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8edeba69-5a42-4e00-b1a7-de2f6e8c59e9"),
+                            Id = new Guid("26847e9d-afcf-444d-b632-85032cd4e153"),
                             CategoryId = 1,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Научете основите на C# език за програмиране",
@@ -220,7 +220,7 @@ namespace CourseNet.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3b51ea41-f01f-44f2-bf1c-24e89a42421e"),
+                            Id = new Guid("3170bfd9-a623-434c-9159-3ab77189e714"),
                             CategoryId = 2,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Научете напреднали техники на дизайна",
@@ -234,7 +234,7 @@ namespace CourseNet.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7e13d79b-5979-4a87-ba36-bd53ce5998e0"),
+                            Id = new Guid("85b46a3b-8fb7-4b56-a6f9-472d465542a4"),
                             CategoryId = 3,
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Научете как да управлявате бизнеса си",

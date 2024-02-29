@@ -1,5 +1,6 @@
 ﻿using CourseNet.Web.ViewModels.Category;
 using System.ComponentModel.DataAnnotations;
+using CourseNet.Data.Models.Entities.Enums;
 using static CourseNet.Common.DataConstants.Course;
 namespace CourseNet.Web.ViewModels.Course
 {
@@ -28,7 +29,7 @@ namespace CourseNet.Web.ViewModels.Course
         [Required]
         [Display(Name = "Трудност - Beginner=0, Intermediate=1, Advanced=2")]
         [Range(0, 2)]
-        public int Difficulty { get; set; }
+        public DifficultyLevel Difficulty { get; set; }
         [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
         [Display(Name = "Цена")]
         public decimal Price { get; set; }

@@ -1185,10 +1185,19 @@
           "CourseNet.Common": "1.0.0",
           "CourseNet.Data": "1.0.0",
           "CourseNet.Data.Models": "1.0.0",
+          "CourseNet.Services.Data.Models": "1.0.0",
           "CourseNet.Web.ViewModels": "1.0.0"
         },
         "runtime": {
           "CourseNet.Services.Data.dll": {}
+        }
+      },
+      "CourseNet.Services.Data.Models/1.0.0": {
+        "dependencies": {
+          "CourseNet.Web.ViewModels": "1.0.0"
+        },
+        "runtime": {
+          "CourseNet.Services.Data.Models.dll": {}
         }
       },
       "CourseNet.Web.ViewModels/1.0.0": {
@@ -1966,6 +1975,11 @@
       "sha512": ""
     },
     "CourseNet.Services.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CourseNet.Services.Data.Models/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

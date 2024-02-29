@@ -10,7 +10,7 @@ namespace CourseNet.Data.Configurations
         {
             builder
                 .Property(c => c.CreatedOn)
-                .HasDefaultValue(DateTime.UtcNow);
+                .HasDefaultValueSql("GETDATE()");
 
             builder.HasOne(c => c.Category)
                 .WithMany(c => c.Courses)

@@ -1,4 +1,5 @@
 ﻿using CourseNet.Services.Data.Interfaces;
+using CourseNet.Services.Data.Models.Course;
 using CourseNet.Web.Infrastructure.Extensions;
 using CourseNet.Web.ViewModels.Course;
 
@@ -24,10 +25,16 @@ namespace CourseNet.Web.Controllers
             this.courseService = courseService;
         }
 
+        [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] AllCoursesQueryModel queryModel)
         {
-            return View();
+            AllCoursesFilteredAndPagedServiceModel serviceModel = await courseService.AllAsync(queryModel);
+            queryModel.Courses = serviceModel.Courses;
+            queryModel.TotalCourses = serviceModel.TotalCourses;
+            queryModel.Categories = await categoryService.AllCategoryNamesAsync();
+
+            return View(queryModel);
         }
 
         [HttpGet]

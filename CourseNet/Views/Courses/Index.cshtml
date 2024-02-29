@@ -1,35 +1,110 @@
-﻿@* @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model IEnumerable<CourseNet.Web.ViewModels.Course.CourseFormViewModel>
-<link rel="stylesheet" href="~/css/courses.css" />
-<h2>Всички курсове</h2>
+﻿@model CourseNet.Web.ViewModels.Course.AllCoursesQueryModel
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Заглавие</th>
-        <th>Описание</th>
-        <th>Начална дата</th>
-        <th>Крайна дата</th>
-        <th>Цена</th>
-        <th>Инструктор</th>
-        <th>Действие</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var course in Model)
+@{
+    ViewBag.Title = "Всички курсове";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<form method="get">
+    <div class="row">
+        <div class="form-group col-md-3 d-flex justify-content-between">
+            <div class="form-group">
+                <label asp-for="Category">Категория</label>
+                <select asp-for="Category" class="form-control">
+                    <option value="">Всички</option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category">@category</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CoursesPerPage">Курсове на страница:</label>
+                <select asp-for="CoursesPerPage" class="form-control">
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="...">
+        </div>
+
+        <div class="form-group col-md-3">
+            <div class="form-group">
+                <label asp-for="CourseSorting"></label>
+                <select asp-for="CourseSorting" class="form-control">
+                    <option value="0">Най-нов</option>
+                    <option value="1">Най-стар</option>
+                    <option value="2">Цена (възходящ ред)</option>
+                    <option value="3">Цена (низходящ ред)</option>
+                    <option value="4">Незаписаните първо</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group mt-4 p-2">
+                <input type="submit" value="Търсене" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@{
+    int previousPage = Model.CurrentPage - 1;
+    if (previousPage < 1)
     {
-        <tr>
-            <td>@course.Title</td>
-            <td>@course.Description</td>
-            <td>@course.StartDate.ToShortDateString()</td>
-            <td>@course.EndDate.ToShortDateString()</td>
-            <td>@course.Price</td>
-            <td>
-                <a asp-action="Details" asp-route-id="@course.Id">Детайли</a> |
-                <a asp-action="Edit" asp-route-id="@course.Id">Редактирай</a> |
-                <a asp-action="Delete" asp-route-id="@course.Id">Изтрий</a>
-            </td>
-        </tr>
+        previousPage = 1;
     }
-    </tbody>
-</table> *@
+
+    int maxPage = (int)Math.Ceiling((double)Model.TotalCourses /
+        Model.CoursesPerPage);
+}
+
+<div class="row mb-5">
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+           asp-controller="Courses"
+           asp-action="Index"
+           asp-route-currentPage="@previousPage"
+           asp-route-category="@Model.Category"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.CourseSorting)"><<</a>
+    </div>
+
+    @{
+        bool shouldNextPageBeDisabled = Model.CurrentPage == maxPage ||
+        !Model.Courses.Any();
+    }
+
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary
+           @(shouldNextPageBeDisabled ? "disabled" : string.Empty)"
+           asp-controller="Courses"
+           asp-action="Index"
+           asp-route-currentPage="@(Model.CurrentPage + 1)"
+           asp-route-category="@Model.Category"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.CourseSorting)">>></a>
+    </div>
+</div>
+
+@if (!Model.Courses.Any())
+{
+    <h2 class="text-center">Няма курс, който да отговаря на този критерии!</h2>
+}
+
+<div class="row">
+    @foreach (var house in Model.Courses)
+    {
+        <partial name="_CoursePartial" model="@house" />
+    }
+</div>

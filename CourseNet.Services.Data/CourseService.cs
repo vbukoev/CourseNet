@@ -1,10 +1,14 @@
-﻿using CourseNet.Data.Models.Entities;
-using CourseNet.Data;
+﻿using CourseNet.Data;
+using CourseNet.Data.Models.Entities;
 using CourseNet.Data.Models.Entities.Enums;
 using CourseNet.Services.Data.Interfaces;
+using CourseNet.Services.Data.Models.Course;
 using CourseNet.Web.ViewModels.Course;
+using CourseNet.Web.ViewModels.Course.Enums;
 using CourseNet.Web.ViewModels.Home;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.Serialization;
+using static CourseNet.Common.DataConstants.Course;
 
 namespace CourseNet.Services.Data
 {
@@ -41,10 +45,68 @@ namespace CourseNet.Services.Data
                 Price = model.Price,
                 InstructorId = Guid.Parse(instructorId),
                 Status = CourseStatus.Active,
+                Difficulty = model.Difficulty,
+                EndDate = DateTime.Parse(model.EndDate),
             };
 
             await context.Courses.AddAsync(course);
             await context.SaveChangesAsync();
+        }
+
+        public async Task<AllCoursesFilteredAndPagedServiceModel> AllAsync(AllCoursesQueryModel queryModel)
+        {
+            IQueryable<Course> courseQuery = context
+                .Courses
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(queryModel.Category))
+            {
+                courseQuery = courseQuery
+                    .Where(c => c.Category.Name == queryModel.Category);
+            }
+
+            if (!string.IsNullOrWhiteSpace(queryModel.SearchTerm))
+            {
+                string wildCard = $"%{queryModel.SearchTerm.ToLower()}%";
+
+                courseQuery = courseQuery
+                    .Where(c => 
+                        EF.Functions.Like(c.Title, wildCard) ||EF.Functions.Like(c.Description,wildCard));
+            }
+
+            courseQuery = queryModel.CourseSorting switch
+            {
+                CourseSorting.LeastExpensive => courseQuery.OrderBy(c => c.Price),
+                CourseSorting.MostExpensive => courseQuery.OrderByDescending(c => c.Price),
+                CourseSorting.Newest => courseQuery.OrderByDescending(c => c.CreatedOn),
+                CourseSorting.Oldest => courseQuery.OrderBy(c => c.CreatedOn),
+                _ => courseQuery.OrderBy(c => c.InstructorId != null)
+                    .ThenByDescending(c=>c.CreatedOn)
+            };
+
+            IEnumerable<CourseAllViewModel> courses = await courseQuery
+                .Skip((queryModel.CurrentPage - 1) * queryModel.CoursesPerPage)
+                .Take(queryModel.CoursesPerPage)
+                .Select(c => new CourseAllViewModel
+                {
+                    Id = c.Id.ToString(),
+                    Title = c.Title,
+                    Description = c.Description,
+                    ImagePath = c.ImagePath,
+                    Price = c.Price,
+                    Difficulty = c.Difficulty.ToString(),
+                    Status = c.Status.ToString(),
+                    EndDate = c.EndDate.ToString(),
+                    IsEnrolled = c.StudentId.HasValue,
+                })
+                .ToListAsync();
+            int totalCourses = courseQuery.Count();
+
+            return new AllCoursesFilteredAndPagedServiceModel
+            {
+                Courses = courses,
+                TotalCourses = totalCourses,
+            };
         }
     }
 }
