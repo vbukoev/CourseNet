@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CourseNet.Services.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7104749b50949cfccf16d6c8863afb24b1630a5a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+07cdf7371d3e91e9c6930eb36373976eaef15e69")]
 [assembly: System.Reflection.AssemblyProductAttribute("CourseNet.Services.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CourseNet.Services.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

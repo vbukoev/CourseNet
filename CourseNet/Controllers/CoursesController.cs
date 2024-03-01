@@ -100,16 +100,16 @@ namespace CourseNet.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Details(string courseId)
+        public async Task<IActionResult> Details(string id)
         {
-            bool exists = await courseService.ExistsByIdAsync(courseId);
-            if (exists)
+            var model = await courseService.DetailsAsync(id);
+           
+            if (model == null)
             {
                 TempData[ErrorMessage] = "Курсът не съществува!";
                 return RedirectToAction("Index", "Home");
             }
 
-            var model = await courseService.DetailsAsync(courseId);
             return View(model);
         }
 
@@ -121,7 +121,7 @@ namespace CourseNet.Web.Controllers
             bool isInstructor = await instructorService.InstructorExistsByUserId(userId);
             if (isInstructor)
             {
-                string? instructorId = await instructorService.GetInstructorIdByUserId(userId);
+                string instructorId = await instructorService.GetInstructorIdByUserId(userId);
                 courses.AddRange(await courseService.AllByInstructorIdAsync(instructorId!));
             }
             else

@@ -56,7 +56,7 @@ namespace CourseNet.Services.Data
 
         public async Task<AllCoursesFilteredAndPagedServiceModel> AllAsync(AllCoursesQueryModel queryModel)
         {
-            IQueryable<Course?> courseQuery = context
+            IQueryable<Course> courseQuery = context
                 .Courses
                 .AsQueryable();
 
@@ -152,38 +152,35 @@ namespace CourseNet.Services.Data
             return allUserCourses;
         }
         
-        public async Task<bool> ExistsByIdAsync(string courseId)
+        public async Task<CourseDetailsViewModel?> DetailsAsync(string courseId)
         {
-            bool res = await context.Courses.AnyAsync(c => c.Id.ToString() == courseId);
-            return res;
-        }
-
-        public async Task<CourseDetailsViewModel> DetailsAsync(string courseId)
-        {
-            Course course = (await context
-                .Courses
-                .Include(c=>c.Category) 
+            Course? course = await context.Courses
                 .Include(c => c.Instructor)
                 .ThenInclude(c => c.User)
-                .FirstAsync(c => c.Id.ToString() == courseId))!;
-            
+                .Include(c => c.Category)
+                .FirstOrDefaultAsync(c => c.Id.ToString() == courseId);
+
+            if (course == null)
+            {
+                return null;
+            }
+
             return new CourseDetailsViewModel
             {
                 Id = course.Id.ToString(),
                 Title = course.Title,
                 Description = course.Description,
-                ImagePath = course.ImagePath,   
+                ImagePath = course.ImagePath,
                 Price = course.Price,
                 Difficulty = course.Difficulty.ToString(),
                 Status = course.Status.ToString(),
                 EndDate = course.EndDate.ToString(),
-                Category = course.Category.Name,
-                IsEnrolled = course.StudentId.HasValue,
-                Instructor = new InstructorInfoOfCourseViewModel
+                Instructor = new InstructorInfoOfCourseViewModel()
                 {
-                    Email = course.Instructor.User.Email,
+                    Email = course.Instructor.Email,
                     PhoneNumber = course.Instructor.PhoneNumber,
                 },
+                Category = course.Category.Name,
             };
         }
 

@@ -14,8 +14,9 @@ namespace CourseNet.Web.ViewModels.Course
         public decimal Price { get; set; }
         [Display(Name = "Записан ли е курса")]
         public bool IsEnrolled { get; set; }
-        public string Status { get; set; }
-        public string EndDate { get; set; }
-        public string Difficulty { get; set; }
+
+        public string Status { get; set; } = null!;
+        public string EndDate { get; set; } = null!;
+        public string Difficulty { get; set; } = null!;
     }
 }
