@@ -12,7 +12,7 @@ namespace CourseNet.Data
 
         private readonly DbContextOptions<CourseNetDbContext> _context;
 
-        public DbSet<Course> Courses { get; set; } = null!;
+        public DbSet<Course?> Courses { get; set; } = null!;
         public DbSet<Instructor> Instructors { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
  

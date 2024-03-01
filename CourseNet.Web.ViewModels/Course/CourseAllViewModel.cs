@@ -9,6 +9,7 @@ namespace CourseNet.Web.ViewModels.Course
         [Display(Name = "Път към снимка")]
         public string ImagePath { get; set; } = null!;  
         public string Description { get; set; } = null!;
+        public string CreatedOn { get; set; } = null!;
         [Display(Name = "Цена")]
         public decimal Price { get; set; }
         [Display(Name = "Записан ли е курса")]

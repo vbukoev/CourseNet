@@ -53,7 +53,7 @@ namespace CourseNet.Web.Controllers
             {
                 Categories = await categoryService.GetAllCategoriesAsync()
             };
-               
+
             return View(model);
         }
 
@@ -94,8 +94,42 @@ namespace CourseNet.Web.Controllers
                 model.Categories = await categoryService.GetAllCategoriesAsync();
                 return View(model);
             }
-            
+
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(string courseId)
+        {
+            bool exists = await courseService.ExistsByIdAsync(courseId);
+            if (exists)
+            {
+                TempData[ErrorMessage] = "Курсът не съществува!";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var model = await courseService.DetailsAsync(courseId);
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Mine()
+        {
+            List<CourseAllViewModel> courses = new List<CourseAllViewModel>();
+            string userId = User.GetId();
+            bool isInstructor = await instructorService.InstructorExistsByUserId(userId);
+            if (isInstructor)
+            {
+                string? instructorId = await instructorService.GetInstructorIdByUserId(userId);
+                courses.AddRange(await courseService.AllByInstructorIdAsync(instructorId!));
+            }
+            else
+            {
+                courses.AddRange(await courseService.AllByUserIdAsync(userId));
+            }
+
+            return View(courses);
         }
     }
 }
