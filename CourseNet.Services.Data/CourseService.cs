@@ -1,4 +1,5 @@
-﻿using CourseNet.Data;
+﻿using CourseNet.Common.DataConstants;
+using CourseNet.Data;
 using CourseNet.Data.Models.Entities;
 using CourseNet.Data.Models.Entities.Enums;
 using CourseNet.Services.Data.Interfaces;
@@ -6,9 +7,9 @@ using CourseNet.Services.Data.Models.Course;
 using CourseNet.Web.ViewModels.Course;
 using CourseNet.Web.ViewModels.Course.Enums;
 using CourseNet.Web.ViewModels.Home;
+using CourseNet.Web.ViewModels.Instructor;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.Serialization;
-using static CourseNet.Common.DataConstants.Course;
+using Course = CourseNet.Data.Models.Entities.Course;
 
 namespace CourseNet.Services.Data
 {
@@ -55,7 +56,7 @@ namespace CourseNet.Services.Data
 
         public async Task<AllCoursesFilteredAndPagedServiceModel> AllAsync(AllCoursesQueryModel queryModel)
         {
-            IQueryable<Course> courseQuery = context
+            IQueryable<Course?> courseQuery = context
                 .Courses
                 .AsQueryable();
 
@@ -70,8 +71,8 @@ namespace CourseNet.Services.Data
                 string wildCard = $"%{queryModel.SearchTerm.ToLower()}%";
 
                 courseQuery = courseQuery
-                    .Where(c => 
-                        EF.Functions.Like(c.Title, wildCard) ||EF.Functions.Like(c.Description,wildCard));
+                    .Where(c =>
+                        EF.Functions.Like(c.Title, wildCard) || EF.Functions.Like(c.Description, wildCard));
             }
 
             courseQuery = queryModel.CourseSorting switch
@@ -81,7 +82,7 @@ namespace CourseNet.Services.Data
                 CourseSorting.Newest => courseQuery.OrderByDescending(c => c.CreatedOn),
                 CourseSorting.Oldest => courseQuery.OrderBy(c => c.CreatedOn),
                 _ => courseQuery.OrderBy(c => c.InstructorId != null)
-                    .ThenByDescending(c=>c.CreatedOn)
+                    .ThenByDescending(c => c.CreatedOn)
             };
 
             IEnumerable<CourseAllViewModel> courses = await courseQuery
@@ -108,5 +109,83 @@ namespace CourseNet.Services.Data
                 TotalCourses = totalCourses,
             };
         }
+
+        public async Task<IEnumerable<CourseAllViewModel>> AllByInstructorIdAsync(string instructorId)
+        {
+            IEnumerable<CourseAllViewModel> allInstructorCourses = await this.context.Courses
+                .Where(c => c.InstructorId.ToString() == instructorId)
+                .Select(c => new CourseAllViewModel
+                {
+                    Id = c.Id.ToString(),
+                    Title = c.Title,
+                    Description = c.Description,
+                    ImagePath = c.ImagePath,
+                    Price = c.Price,
+                    Difficulty = c.Difficulty.ToString(),
+                    Status = c.Status.ToString(),
+                    EndDate = c.EndDate.ToString(),
+                    IsEnrolled = c.StudentId.HasValue,
+                })
+                .ToListAsync();
+
+            return allInstructorCourses;
+        }
+
+        public async Task<IEnumerable<CourseAllViewModel>> AllByUserIdAsync(string userId)
+        {
+            IEnumerable<CourseAllViewModel> allUserCourses = await this.context.Courses
+                .Where(c => c.StudentId.HasValue && c.StudentId.ToString() == userId)
+                .Select(c => new CourseAllViewModel
+                {
+                    Id = c.Id.ToString(),
+                    Title = c.Title,
+                    Description = c.Description,
+                    ImagePath = c.ImagePath,
+                    Price = c.Price,
+                    Difficulty = c.Difficulty.ToString(),
+                    Status = c.Status.ToString(),
+                    EndDate = c.EndDate.ToString(),
+                    IsEnrolled = c.StudentId.HasValue,
+                })
+                .ToListAsync();
+
+            return allUserCourses;
+        }
+        
+        public async Task<bool> ExistsByIdAsync(string courseId)
+        {
+            bool res = await context.Courses.AnyAsync(c => c.Id.ToString() == courseId);
+            return res;
+        }
+
+        public async Task<CourseDetailsViewModel> DetailsAsync(string courseId)
+        {
+            Course course = (await context
+                .Courses
+                .Include(c=>c.Category) 
+                .Include(c => c.Instructor)
+                .ThenInclude(c => c.User)
+                .FirstAsync(c => c.Id.ToString() == courseId))!;
+            
+            return new CourseDetailsViewModel
+            {
+                Id = course.Id.ToString(),
+                Title = course.Title,
+                Description = course.Description,
+                ImagePath = course.ImagePath,   
+                Price = course.Price,
+                Difficulty = course.Difficulty.ToString(),
+                Status = course.Status.ToString(),
+                EndDate = course.EndDate.ToString(),
+                Category = course.Category.Name,
+                IsEnrolled = course.StudentId.HasValue,
+                Instructor = new InstructorInfoOfCourseViewModel
+                {
+                    Email = course.Instructor.User.Email,
+                    PhoneNumber = course.Instructor.PhoneNumber,
+                },
+            };
+        }
+
     }
 }

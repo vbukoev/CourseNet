@@ -6,10 +6,6 @@ namespace CourseNet.Web.ViewModels.Course
 {
     public class CourseFormViewModel
     {
-        public CourseFormViewModel()
-        {
-            Categories = new HashSet<CategorySelectionFormViewModel>();
-        }
         [Required]
         [StringLength(TitleMaxLength, MinimumLength = TitleMinLength)]
         [Display(Name = "Заглавие")]

@@ -1,1 +1,17 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<CourseNet.Web.ViewModels.Course.CourseAllViewModel>
+
+<h2>Моите курсове</h2>
+@if (!Model.Any())
+{
+    <h2 class="text-center">Все още нямаш курсове!</h2>
+}
+else
+{
+    <div class="row">
+        @foreach(var course in Model)
+        {
+            <partial name="_CoursePartial" model="course"/>
+        }
+    </div>
+}

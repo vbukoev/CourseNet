@@ -1,19 +1,81 @@
-﻿@model CourseNet.Data.Models.Entities.Course
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using CourseNet.Web.Infrastructure.Extensions
+@using CourseNet.Services.Data
+@using CourseNet.Services.Data.Interfaces
+@using CourseNet.Common.DataConstants
+@model CourseNet.Web.ViewModels.Course.CourseDetailsViewModel
 
-<h2>Детайли за курса</h2>
+@inject InstructorService InstructorService
+@inject ICourseService CourseService
+@{
+    bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId()!);
+    
+}
 
-<div>
-    <h4>@Model.Title</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">Description</dt>
-        <dd class="col-sm-10">@Model.Description</dd>
-        <dt class="col-sm-2">Start Date</dt>
-        <dd class="col-sm-10">@Model.CreatedOn.ToShortDateString()</dd>
-        <!-- Добавете други полета за показване -->
-    </dl>
+@{
+    ViewBag.Title = "Детайли за курса";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="container" style="display:inline">
+    <div class="row">
+        <div class="col-4">
+            <img class="card-img-top" style="width: 20rem;"
+                 src="@Model.ImagePath" alt="House Image">
+        </div>
+        <div class="card col-8 border-0">
+            <p style="font-size:25px;"><u>@Model.Title</u></p>
+            <p>Located in: <b>@Model.Description</b></p>
+            <p>
+                Цена:
+                <b>@($"{Model.Price:f2}") BGN</b>
+            </p>
+            <p>@Model.Description</p>
+            <p>Category: <b>@Model.Category</b></p>
+            <p><i>(@(Model.IsEnrolled ? "Записан" : "Незаписан"))</i></p>
+            <div class="form-inline">
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    @if ((isUserInstructor))
+                    {
+                        <a class="btn btn-warning" asp-controller="Courses" asp-action="Edit"
+                           asp-route-id="@Model.Id">Edit</a>
+                        <a class="ml-2 btn btn-danger" asp-controller="Courses" asp-action="Delete"
+                           asp-route-id="@Model.Id">Delete</a>
+                    }
+
+                    @if (!Model.IsEnrolled)
+                    {
+                        @if (!isUserInstructor)
+                        {
+                            <form class="ml-2" asp-controller="Courses"
+                                  asp-action="Enroll" asp-route-id="@Model.Id" method="post">
+                                <input class="btn btn-primary" type="submit" value="Запиши се"/>
+                            </form>
+                        }
+                    }
+                    else
+                    {
+                        @if (!isUserInstructor)
+                        {
+                            <form class="ml-2" asp-controller="Courses" asp-action="Leave"
+                                  asp-route-id="@Model.Id" method="post">
+                                <input class="btn btn-primary" type="submit" value="Напусни"/>
+                            </form>
+                        }
+                    }
+                }
+            </div>
+            <p></p>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Agent Info</h5>
+                    <p class="card-text">Email: @Model.Instructor.Email</p>
+                    <p class="card-text">Phone Number: @Model.Instructor.PhoneNumber</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Обратно към списъка с курсове</a>
-</p>
