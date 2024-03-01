@@ -114,6 +114,35 @@ namespace CourseNet.Web.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var model = await courseService.GetCourseForEditByIdAsync(id);
+            var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+            if (model == null)
+            {
+                TempData[ErrorMessage] = "Курсът не съществува!";
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да редактирате курс";
+                return RedirectToAction("Become", "Instructor");
+            }
+
+            var instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
+            bool isInstructorOwnerOfCourse = await courseService.IsInstructorOfCourseAsync(id, instructorId);
+            if (!isInstructorOwnerOfCourse)
+            {
+                TempData[ErrorMessage] = "Вие не сте собственик на този курс!";
+                return RedirectToAction("Mine", "Courses");
+            }
+            CourseFormViewModel courseFormViewModel = await courseService.GetCourseForEditByIdAsync(id);
+
+            return View(model);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Mine()
         {
             List<CourseAllViewModel> courses = new List<CourseAllViewModel>();

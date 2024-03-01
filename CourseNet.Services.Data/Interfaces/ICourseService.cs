@@ -17,5 +17,7 @@ namespace CourseNet.Services.Data.Interfaces
         Task<IEnumerable<CourseAllViewModel>> AllByInstructorIdAsync(string instructorId);
         Task<IEnumerable<CourseAllViewModel>> AllByUserIdAsync(string userId);
         Task<CourseDetailsViewModel?> DetailsAsync(string courseId);
+        Task<CourseFormViewModel> GetCourseForEditByIdAsync(string courseId);
+        Task<bool> IsInstructorOfCourseAsync(string courseId, string instructorId);
     }
 }

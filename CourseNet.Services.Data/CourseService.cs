@@ -184,5 +184,30 @@ namespace CourseNet.Services.Data
             };
         }
 
+        public async Task<CourseFormViewModel> GetCourseForEditByIdAsync(string courseId)
+        {
+            Course course = await context.Courses
+                .Include(c=>c.Category)
+                .FirstAsync(c=>c.Id.ToString() == courseId);
+
+            return new CourseFormViewModel
+            {
+                Title = course.Title,
+                Description = course.Description,
+                ImagePath = course.ImagePath,
+                EndDate = course.EndDate.ToString(),
+                Difficulty = course.Difficulty,
+                Price = course.Price,
+                CategoryId = course.CategoryId,
+            };
+        }
+
+        public async Task<bool> IsInstructorOfCourseAsync(string courseId, string instructorId)
+        {
+           var course = await context.Courses
+                .FirstOrDefaultAsync(c => c.Id.ToString() == courseId);
+
+            return res.InstructorId.ToString() == instructorId;
+        }
     }
 }
