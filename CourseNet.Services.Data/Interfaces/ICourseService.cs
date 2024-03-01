@@ -16,7 +16,8 @@ namespace CourseNet.Services.Data.Interfaces
         Task<AllCoursesFilteredAndPagedServiceModel> AllAsync(AllCoursesQueryModel queryModel);
         Task<IEnumerable<CourseAllViewModel>> AllByInstructorIdAsync(string instructorId);
         Task<IEnumerable<CourseAllViewModel>> AllByUserIdAsync(string userId);
-        Task<CourseDetailsViewModel> DetailsAsync(string courseId);
-        Task<bool> ExistsByIdAsync(string courseId);
+        Task<CourseDetailsViewModel?> DetailsAsync(string courseId);
+        Task<CourseFormViewModel> GetCourseForEditByIdAsync(string courseId);
+        Task<bool> IsInstructorOfCourseAsync(string courseId, string instructorId);
     }
 }
