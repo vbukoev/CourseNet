@@ -7,10 +7,8 @@ using static CourseNet.Common.Notifications.NotificationMessagesConstants;
 
 namespace CourseNet.Web.Controllers
 {
-    using CourseNet.Services.Data;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System.Globalization;
 
     [Authorize]
     public class CoursesController : Controller
@@ -49,12 +47,19 @@ namespace CourseNet.Web.Controllers
                 return RedirectToAction("Become", "Instructor");
             }
 
-            CourseFormViewModel model = new CourseFormViewModel
+            try
             {
-                Categories = await categoryService.GetAllCategoriesAsync()
-            };
+                CourseFormViewModel model = new CourseFormViewModel
+                {
+                    Categories = await categoryService.GetAllCategoriesAsync()
+                };
 
-            return View(model);
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                return GeneralError();
+            }
         }
 
         [HttpPost]
@@ -103,11 +108,10 @@ namespace CourseNet.Web.Controllers
         public async Task<IActionResult> Details(string id)
         {
             var model = await courseService.DetailsAsync(id);
-           
+
             if (model == null)
             {
-                TempData[ErrorMessage] = "Курсът не съществува!";
-                return RedirectToAction("Index", "Home");
+                return GeneralError();
             }
 
             return View(model);
@@ -117,12 +121,14 @@ namespace CourseNet.Web.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             var model = await courseService.GetCourseForEditByIdAsync(id);
-            var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
             if (model == null)
             {
                 TempData[ErrorMessage] = "Курсът не съществува!";
                 return RedirectToAction("Index", "Home");
             }
+
+            var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
 
             if (!isInstructor)
             {
@@ -131,15 +137,69 @@ namespace CourseNet.Web.Controllers
             }
 
             var instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
-            bool isInstructorOwnerOfCourse = await courseService.IsInstructorOfCourseAsync(id, instructorId);
+            bool isInstructorOwnerOfCourse = await courseService.IsInstructorOfCourseAsync(id, instructorId!);
             if (!isInstructorOwnerOfCourse)
             {
                 TempData[ErrorMessage] = "Вие не сте собственик на този курс!";
                 return RedirectToAction("Mine", "Courses");
             }
-            CourseFormViewModel courseFormViewModel = await courseService.GetCourseForEditByIdAsync(id);
+            try
+            {
+                CourseFormViewModel courseFormViewModel = await courseService.GetCourseForEditByIdAsync(id);
 
-            return View(model);
+                courseFormViewModel.Categories = await categoryService.GetAllCategoriesAsync();
+                return View(courseFormViewModel);
+            }
+            catch (Exception e)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, CourseFormViewModel formViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                formViewModel.Categories = await categoryService.GetAllCategoriesAsync();
+                return View(formViewModel);
+            }
+
+            var model = await courseService.GetCourseForEditByIdAsync(id);
+
+            if (model == null)
+            {
+                TempData[ErrorMessage] = "Курсът не съществува!";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да редактирате курс";
+                return RedirectToAction("Become", "Instructor");
+            }
+
+            var instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
+            bool isInstructorOwnerOfCourse = await courseService.IsInstructorOfCourseAsync(id, instructorId!);
+            if (!isInstructorOwnerOfCourse)
+            {
+                TempData[ErrorMessage] = "Вие не сте собственик на този курс!";
+                return RedirectToAction("Mine", "Courses");
+            }
+            try
+            {
+                await courseService.EditCourseByIdAsync(formViewModel, id);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Възникна грешка при редактирането на курса!");
+                model.Categories = await categoryService.GetAllCategoriesAsync();
+                return View(model);
+
+            }
+            return RedirectToAction("Details", "Courses", new { id });
         }
 
         [HttpGet]
@@ -148,17 +208,31 @@ namespace CourseNet.Web.Controllers
             List<CourseAllViewModel> courses = new List<CourseAllViewModel>();
             string userId = User.GetId();
             bool isInstructor = await instructorService.InstructorExistsByUserId(userId);
-            if (isInstructor)
+            try
             {
-                string instructorId = await instructorService.GetInstructorIdByUserId(userId);
-                courses.AddRange(await courseService.AllByInstructorIdAsync(instructorId!));
-            }
-            else
-            {
-                courses.AddRange(await courseService.AllByUserIdAsync(userId));
-            }
+                if (isInstructor)
+                {
+                    string instructorId = await instructorService.GetInstructorIdByUserId(userId);
+                    courses.AddRange(await courseService.AllByInstructorIdAsync(instructorId!));
+                }
+                else
+                {
+                    courses.AddRange(await courseService.AllByUserIdAsync(userId));
+                }
 
-            return View(courses);
+                return View(courses);
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
+        }
+
+        private IActionResult GeneralError()
+        {
+            TempData[ErrorMessage] = "Възникна грешка!";
+            return RedirectToAction("Index", "Home");
         }
     }
 }

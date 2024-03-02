@@ -19,5 +19,6 @@ namespace CourseNet.Services.Data.Interfaces
         Task<CourseDetailsViewModel?> DetailsAsync(string courseId);
         Task<CourseFormViewModel> GetCourseForEditByIdAsync(string courseId);
         Task<bool> IsInstructorOfCourseAsync(string courseId, string instructorId);
+        Task EditCourseByIdAsync(CourseFormViewModel model, string courseId);
     }
 }
