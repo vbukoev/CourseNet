@@ -2,6 +2,7 @@
 using CourseNet.Services.Data.Models.Course;
 using CourseNet.Web.Infrastructure.Extensions;
 using CourseNet.Web.ViewModels.Course;
+using static CourseNet.Common.ValidationErrors.General;
 
 using static CourseNet.Common.Notifications.NotificationMessagesConstants;
 
@@ -91,8 +92,9 @@ namespace CourseNet.Web.Controllers
             try
             {
                 string instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
-                string courseId =  await courseService.CreateCourseAndReturnIdAsync(model, instructorId);
-                return RedirectToAction("Details", "Courses", new { id = courseId });   
+                string courseId = await courseService.CreateCourseAndReturnIdAsync(model, instructorId);
+                TempData[SuccessMessage] = "Курсът беше създаден успешно!";
+                return RedirectToAction("Details", "Courses", new { id = courseId });
             }
             catch (Exception)
             {
@@ -100,8 +102,6 @@ namespace CourseNet.Web.Controllers
                 model.Categories = await categoryService.GetAllCategoriesAsync();
                 return View(model);
             }
-
-            
         }
 
         [HttpGet]
@@ -149,6 +149,7 @@ namespace CourseNet.Web.Controllers
                 CourseFormViewModel courseFormViewModel = await courseService.GetCourseForEditByIdAsync(id);
 
                 courseFormViewModel.Categories = await categoryService.GetAllCategoriesAsync();
+                TempData[SuccessMessage] = "Курсът беше редактиран успешно!";
                 return View(courseFormViewModel);
             }
             catch (Exception e)
@@ -192,6 +193,7 @@ namespace CourseNet.Web.Controllers
             try
             {
                 await courseService.EditCourseByIdAsync(formViewModel, id);
+                TempData[SuccessMessage] = "Курсът беше редактиран успешно!";
             }
             catch (Exception)
             {
@@ -232,7 +234,7 @@ namespace CourseNet.Web.Controllers
 
         private IActionResult GeneralError()
         {
-            TempData[ErrorMessage] = "Възникна грешка!";
+            TempData[ErrorMessage] = GeneralErrorMessage;
             return RedirectToAction("Index", "Home");
         }
     }
