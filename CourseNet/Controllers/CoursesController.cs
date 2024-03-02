@@ -91,7 +91,8 @@ namespace CourseNet.Web.Controllers
             try
             {
                 string instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
-                await courseService.CreateCourseAsync(model, instructorId);
+                string courseId =  await courseService.CreateCourseAndReturnIdAsync(model, instructorId);
+                return RedirectToAction("Details", "Courses", new { id = courseId });   
             }
             catch (Exception)
             {
@@ -100,7 +101,7 @@ namespace CourseNet.Web.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index", "Home");
+            
         }
 
         [HttpGet]

@@ -35,7 +35,7 @@ namespace CourseNet.Services.Data
             return courses;
         }
 
-        public async Task CreateCourseAsync(CourseFormViewModel model, string instructorId)
+        public async Task<string> CreateCourseAndReturnIdAsync(CourseFormViewModel model, string instructorId)
         {
             var course = new Course
             {
@@ -52,6 +52,8 @@ namespace CourseNet.Services.Data
 
             await context.Courses.AddAsync(course);
             await context.SaveChangesAsync();
+
+            return course.Id.ToString();
         }
 
         public async Task<AllCoursesFilteredAndPagedServiceModel> AllAsync(AllCoursesQueryModel queryModel)
