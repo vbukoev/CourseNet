@@ -227,5 +227,19 @@ namespace CourseNet.Services.Data
 
             await context.SaveChangesAsync();
         }
+
+        public async Task<CourseDeleteViewModel> GetCourseForDeleteByIdAsync(string courseId)
+        {
+            Course course = await context
+                .Courses
+                .FirstAsync(c => c.Id.ToString() == courseId);
+
+            return new CourseDeleteViewModel
+            {
+                Title = course.Title,
+                Description = course.Description,
+                ImagePath = course.ImagePath,
+            };
+        }
     }
 }
