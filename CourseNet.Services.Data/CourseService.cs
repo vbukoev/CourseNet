@@ -35,7 +35,7 @@ namespace CourseNet.Services.Data
             return courses;
         }
 
-        public async Task CreateCourseAsync(CourseFormViewModel model, string instructorId)
+        public async Task<string> CreateCourseAndReturnIdAsync(CourseFormViewModel model, string instructorId)
         {
             var course = new Course
             {
@@ -52,6 +52,8 @@ namespace CourseNet.Services.Data
 
             await context.Courses.AddAsync(course);
             await context.SaveChangesAsync();
+
+            return course.Id.ToString();
         }
 
         public async Task<AllCoursesFilteredAndPagedServiceModel> AllAsync(AllCoursesQueryModel queryModel)
@@ -151,7 +153,7 @@ namespace CourseNet.Services.Data
 
             return allUserCourses;
         }
-        
+
         public async Task<CourseDetailsViewModel?> DetailsAsync(string courseId)
         {
             Course? course = await context.Courses
@@ -187,8 +189,8 @@ namespace CourseNet.Services.Data
         public async Task<CourseFormViewModel> GetCourseForEditByIdAsync(string courseId)
         {
             Course course = await context.Courses
-                .Include(c=>c.Category)
-                .FirstAsync(c=>c.Id.ToString() == courseId);
+                .Include(c => c.Category)
+                .FirstAsync(c => c.Id.ToString() == courseId);
 
             return new CourseFormViewModel
             {
@@ -204,10 +206,26 @@ namespace CourseNet.Services.Data
 
         public async Task<bool> IsInstructorOfCourseAsync(string courseId, string instructorId)
         {
-           var course = await context.Courses
+            var course = await context.Courses
+                 .FirstOrDefaultAsync(c => c.Id.ToString() == courseId);
+
+            return course.InstructorId.ToString() == instructorId;
+        }
+
+        public async Task EditCourseByIdAsync(CourseFormViewModel model, string courseId)
+        {
+            var house = await context.Courses
                 .FirstOrDefaultAsync(c => c.Id.ToString() == courseId);
 
-            return res.InstructorId.ToString() == instructorId;
+            house.Title = model.Title;
+            house.Description = model.Description;
+            house.EndDate = DateTime.Parse(model.EndDate);
+            house.ImagePath = model.ImagePath;
+            house.Price = model.Price;
+            house.Difficulty = model.Difficulty;
+            house.CategoryId = model.CategoryId;
+
+            await context.SaveChangesAsync();
         }
     }
 }

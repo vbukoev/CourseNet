@@ -2,6 +2,6 @@
 {
     public class General
     {
-        public const string InvalidServiceException = "Невалиден service!";
+        public const string GeneralErrorMessage = "Възникна грешка. Моля опитайте отново!";
     }
 }

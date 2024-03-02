@@ -12,12 +12,13 @@ namespace CourseNet.Services.Data.Interfaces
     public interface ICourseService
     {
         Task<IEnumerable<IndexViewModel>> GetAllCoursesAsync();
-        Task CreateCourseAsync(CourseFormViewModel model, string instructorId);
+        Task<string> CreateCourseAndReturnIdAsync(CourseFormViewModel model, string instructorId);
         Task<AllCoursesFilteredAndPagedServiceModel> AllAsync(AllCoursesQueryModel queryModel);
         Task<IEnumerable<CourseAllViewModel>> AllByInstructorIdAsync(string instructorId);
         Task<IEnumerable<CourseAllViewModel>> AllByUserIdAsync(string userId);
         Task<CourseDetailsViewModel?> DetailsAsync(string courseId);
         Task<CourseFormViewModel> GetCourseForEditByIdAsync(string courseId);
         Task<bool> IsInstructorOfCourseAsync(string courseId, string instructorId);
+        Task EditCourseByIdAsync(CourseFormViewModel model, string courseId);
     }
 }
