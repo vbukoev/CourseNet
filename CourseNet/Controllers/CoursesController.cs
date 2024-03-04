@@ -247,7 +247,43 @@ namespace CourseNet.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id, CourseDeleteViewModel viewModel)
         {
+            var model = await courseService.GetCourseForEditByIdAsync(id);
 
+            if (model == null)
+            {
+                TempData[ErrorMessage] = "Курсът не съществува!";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да редактирате курс";
+                return RedirectToAction("Become", "Instructor");
+            }
+
+            var instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
+            bool isInstructorOwnerOfCourse = await courseService.IsInstructorOfCourseAsync(id, instructorId!);
+            if (!isInstructorOwnerOfCourse)
+            {
+                TempData[ErrorMessage] = "Вие не сте собственик на този курс!";
+                return RedirectToAction("Mine", "Courses");
+            }
+
+            try
+            {
+                await courseService.DeleteCourseByIdAsync(id);
+
+                TempData[WarningMessage]= "Курсът беше изтрит успешно!";
+
+                return RedirectToAction("Mine", "Courses"); 
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+                
+            }
         }
 
         [HttpGet]

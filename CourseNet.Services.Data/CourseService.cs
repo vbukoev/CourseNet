@@ -244,11 +244,22 @@ namespace CourseNet.Services.Data
 
         public async Task DeleteCourseByIdAsync(string courseId)
         {
+            var courses = await context.Courses
+                .Where(c => c.Id.ToString() == courseId)
+                .ToListAsync();
+
             var course = await context
                 .Courses
                 .FirstAsync(c=>c.Id.ToString() == courseId);
 
-            await context.SaveChangesAsync();
+            if (courses.Any())
+            {
+                foreach (var c in courses)
+                {
+                    context.Courses.Remove(course);
+                }
+                await context.SaveChangesAsync();
+            }
         }
     }
 }
