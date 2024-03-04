@@ -244,6 +244,12 @@ namespace CourseNet.Web.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id, CourseDeleteViewModel viewModel)
+        {
+
+        }
+
         [HttpGet]
         public async Task<IActionResult> Mine()
         {
