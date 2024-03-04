@@ -256,7 +256,7 @@ namespace CourseNet.Services.Data
             {
                 foreach (var c in courses)
                 {
-                    context.Courses.Remove(course);
+                    context.Courses.Remove(c);
                 }
                 await context.SaveChangesAsync();
             }
