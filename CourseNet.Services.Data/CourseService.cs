@@ -241,5 +241,14 @@ namespace CourseNet.Services.Data
                 ImagePath = course.ImagePath,
             };
         }
+
+        public async Task DeleteCourseByIdAsync(string courseId)
+        {
+            var course = await context
+                .Courses
+                .FirstAsync(c=>c.Id.ToString() == courseId);
+
+            await context.SaveChangesAsync();
+        }
     }
 }
