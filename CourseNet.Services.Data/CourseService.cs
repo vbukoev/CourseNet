@@ -154,6 +154,15 @@ namespace CourseNet.Services.Data
             return allUserCourses;
         }
 
+        public async Task<bool> ExistsByIdAsync(string houseId)
+        {
+            bool result = await context
+                .Courses
+                .AnyAsync(h => h.Id.ToString() == houseId);
+
+            return result;
+        }
+
         public async Task<CourseDetailsViewModel?> DetailsAsync(string courseId)
         {
             Course? course = await context.Courses
@@ -260,6 +269,24 @@ namespace CourseNet.Services.Data
                 }
                 await context.SaveChangesAsync();
             }
+        }
+
+        public async Task<bool> IsEnrolledByIdAsync(string courseId)
+        {
+            var course = await context.Courses
+                .FirstAsync(c => c.Id.ToString() == courseId);
+            return course.StudentId.HasValue;
+        }
+
+        public async Task EnrollCourseAsync(string courseId, string userId)
+        {
+            var course = await context
+                .Courses
+                .FirstAsync(c => c.Id.ToString() == courseId);
+
+            course.StudentId = Guid.Parse(userId);
+
+            await context.SaveChangesAsync();
         }
     }
 }

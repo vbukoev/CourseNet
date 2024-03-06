@@ -313,6 +313,48 @@ namespace CourseNet.Web.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Enroll(string id)
+        {
+            bool courseExists = await courseService.ExistsByIdAsync(id);
+
+            if (!courseExists)
+            {
+                TempData[ErrorMessage] = "Курсът не съществува!";
+
+                return RedirectToAction("Index", "Courses");
+            }
+
+            bool isCourseEnrolled = await courseService.IsEnrolledByIdAsync(id);
+
+            if (isCourseEnrolled)
+            {
+                TempData[ErrorMessage] = "Вие вече сте записани за този курс!";
+
+                return RedirectToAction("Index", "Courses");
+            }
+
+            bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId()!);
+
+            if (isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие сте инструктор! Не може да се записвате за курсове!";
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            try
+            {
+                await courseService.EnrollCourseAsync(id, User.GetId()!);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+
+            return RedirectToAction("Mine", "Courses");
+        }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] = GeneralErrorMessage;
