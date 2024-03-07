@@ -329,7 +329,7 @@ namespace CourseNet.Web.Controllers
 
             if (isCourseEnrolled)
             {
-                TempData[ErrorMessage] = "Вие вече сте записани за този курс! Изберете си друг курс от свободните курсовете";
+                TempData[ErrorMessage] = "Вие вече сте записани за този курс! Изберете си друг курс от свободните курсовете!";
 
                 return RedirectToAction("Index", "Courses");
             }
@@ -366,7 +366,7 @@ namespace CourseNet.Web.Controllers
             bool isCourseEnrolled = await courseService.IsEnrolledByIdAsync(id);
             if (!isCourseEnrolled)
             {
-                TempData[ErrorMessage] = "Вие не сте записани за този курс!";
+                TempData[ErrorMessage] = "Вие трябва да сте студент и да сте записани за този курс, за да можете да го напуснете!";
                 return RedirectToAction("Index", "Courses");
             }
 
