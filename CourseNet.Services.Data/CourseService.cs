@@ -288,5 +288,24 @@ namespace CourseNet.Services.Data
 
             await context.SaveChangesAsync();
         }
+
+        public async Task<bool> IsEnrolledByIdAsync(string courseId, string userId)
+        {
+            var course = await context.Courses
+                .FirstAsync(c => c.Id.ToString() == courseId && c.StudentId.ToString() == userId);
+
+            return course.StudentId.HasValue &&
+                   course.StudentId.ToString() == userId;
+        }
+
+        public async Task LeaveCourseAsync(string courseId)
+        {
+            var course = await context.Courses
+                .FirstAsync(c => c.Id.ToString() == courseId);
+
+            course.StudentId = null;
+
+            await context.SaveChangesAsync();
+        }
     }
 }
