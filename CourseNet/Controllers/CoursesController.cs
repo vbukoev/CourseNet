@@ -329,7 +329,7 @@ namespace CourseNet.Web.Controllers
 
             if (isCourseEnrolled)
             {
-                TempData[ErrorMessage] = "Вие вече сте записани за този курс!";
+                TempData[ErrorMessage] = "Вие вече сте записани за този курс! Изберете си друг курс от свободните курсовете";
 
                 return RedirectToAction("Index", "Courses");
             }
