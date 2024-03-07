@@ -313,10 +313,88 @@ namespace CourseNet.Web.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Enroll(string id)
+        {
+            bool courseExists = await courseService.ExistsByIdAsync(id);
+
+            if (!courseExists)
+            {
+                TempData[ErrorMessage] = "Курсът не съществува!";
+
+                return RedirectToAction("Index", "Courses");
+            }
+
+            bool isCourseEnrolled = await courseService.IsEnrolledByIdAsync(id);
+
+            if (isCourseEnrolled)
+            {
+                TempData[ErrorMessage] = "Вие вече сте записани за този курс! Изберете си друг курс от свободните курсовете!";
+
+                return RedirectToAction("Index", "Courses");
+            }
+
+            bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId()!);
+
+            if (isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие сте инструктор! Не може да се записвате за курсове!";
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            try
+            {
+                await courseService.EnrollCourseAsync(id, User.GetId()!);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+
+            return RedirectToAction("Mine", "Courses");
+        }
+
+        public async Task<IActionResult> Leave(string id)
+        {
+            bool courseExists = await courseService.ExistsByIdAsync(id);
+            if (!courseExists)
+            {
+                TempData[ErrorMessage] = "Курсът не съществува!";
+                return RedirectToAction("Index", "Courses");
+            }
+            bool isCourseEnrolled = await courseService.IsEnrolledByIdAsync(id);
+            if (!isCourseEnrolled)
+            {
+                TempData[ErrorMessage] = "Вие трябва да сте студент и да сте записани за този курс, за да можете да го напуснете!";
+                return RedirectToAction("Index", "Courses");
+            }
+
+            bool isUserStudent = await courseService.IsEnrolledByIdAsync(id, User.GetId()!);
+            if (!isUserStudent)
+            {
+                TempData[ErrorMessage] = "Вие не сте записани за този курс и не може да го напуснете!";
+
+                return RedirectToAction("Mine", "Courses");
+            }
+
+            try
+            {
+                await courseService.LeaveCourseAsync(id);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+
+            return RedirectToAction("Mine", "Courses");
+        }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] = GeneralErrorMessage;
             return RedirectToAction("Index", "Home");
+
         }
     }
 }
