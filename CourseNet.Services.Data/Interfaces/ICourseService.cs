@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CourseNet.Services.Data.Models.Course;
+using CourseNet.Services.Data.Models.Statistics;
 using CourseNet.Web.ViewModels.Course;
 using CourseNet.Web.ViewModels.Home;
 using Microsoft.EntityFrameworkCore;
@@ -43,5 +44,7 @@ namespace CourseNet.Services.Data.Interfaces
         Task<bool> IsEnrolledByIdAsync(string courseId, string userId);
 
         Task LeaveCourseAsync(string courseId);
+
+        Task<StatisticsServiceModel> GetStatisticsAsync();
     }
 }

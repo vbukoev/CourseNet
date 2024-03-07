@@ -95,8 +95,34 @@
         }
     </div>
 
+
+<div class="row">
+    <div class="col-12 text-center">
+        <button class="btn btn-primary" id="statistics_btn">Покажи статистиките на курса</button>
+    </div>
+</div>
+
+<div class="mt-4 p-5 bg-light d-none" id="statistics_div">
+    <div class="row">
+        <h2 class="col-md-6 text-center" id="total_courses"></h2>
+            <h2 class="col-md-6 text-center" id="total_enrollments"></h2>
+    </div> 
+</div>
 </body>
 </html>
 
-
+@section Scripts {
+    <script>
+        document.getElementById('statistics_btn').addEventListener('click', function () {
+            fetch('/api/statistics')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('total_courses').textContent = `Общ брой курсове: ${data.totalCourses}`;
+                    document.getElementById('total_enrollments').textContent = `Общ брой записвания: ${data.totalEnrollments}`;
+                    document.getElementById('statistics_div').classList.remove('d-none');
+                });
+        });
+    </script>
+}
+```
 
