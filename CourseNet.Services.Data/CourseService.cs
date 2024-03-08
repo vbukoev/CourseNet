@@ -4,6 +4,7 @@ using CourseNet.Data.Models.Entities;
 using CourseNet.Data.Models.Entities.Enums;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Services.Data.Models.Course;
+using CourseNet.Services.Data.Models.Statistics;
 using CourseNet.Web.ViewModels.Course;
 using CourseNet.Web.ViewModels.Course.Enums;
 using CourseNet.Web.ViewModels.Home;
@@ -306,6 +307,15 @@ namespace CourseNet.Services.Data
             course.StudentId = null;
 
             await context.SaveChangesAsync();
+        }
+
+        public async Task<StatisticsServiceModel> GetStatisticsAsync()
+        {
+            return new StatisticsServiceModel()
+            {
+                TotalCourses = await context.Courses.CountAsync(),
+                TotalEnrollments = await context.Courses.CountAsync(c => c.StudentId.HasValue),
+            };
         }
     }
 }

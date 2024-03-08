@@ -19,7 +19,7 @@
 
         .navbar {
             background-color: #4285f4;
-            padding: 15px 0;
+            padding: 5px 0;
             text-align: center;
         }
 
@@ -75,12 +75,14 @@
 
         footer {
             background-color: #fff;
-            padding: 20px 0;
+            padding: 3px 0;
             text-align: center;
             position: absolute;
             bottom: 0;
             width: 100%;
         }
+
+        
     </style>
 </head>
 <body>
@@ -95,8 +97,24 @@
         }
     </div>
 
+    <div class="mt-5 p-2 bg-light d-none" id="statistics_box">
+        <div class="row">
+            <h4 class="col-md-4 text-center fw-bold" id="total_enrollments"></h4>
+            <h4 class="col-md-4 text-center fw-bold">от общо</h4>
+            <h4 class="col-md-4 text-center fw-bold" id="total_courses"></h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <button class="btn btn-primary" id="statistics_btn">Покажи статистика</button>
+        </div>
+    </div>
+
+
 </body>
 </html>
 
-
+@section Scripts {
+    <script>statistics();</script>
+}
 
