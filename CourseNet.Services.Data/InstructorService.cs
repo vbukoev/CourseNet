@@ -68,5 +68,17 @@ namespace CourseNet.Services.Data
 
             return instructor.Id.ToString();
         }
+
+        public async Task<bool> HasCourseWithIdAsync(string? userId, string courseId)
+        {
+            var instructor = await dbContext.Instructors
+                .Include(instructor => instructor.CoursesTaught)
+                .FirstOrDefaultAsync(i => i.UserId.ToString() == userId);
+            if (instructor == null)
+            {
+                return false;
+            }
+            return instructor.CoursesTaught.Any(c => c.Id.ToString() == courseId.ToLower());
+        }
     }
 }

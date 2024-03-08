@@ -7,43 +7,59 @@
 @inject ICourseService CourseService
 @{
     bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId()!);
+    bool isInstructorTeachingCourse = await InstructorService.HasCourseWithIdAsync(User.GetId(), Model.Id);
+    bool isCourseEnrolled = await CourseService.IsEnrolledByIdAsync(Model.Id, User.GetId()!);
     
 }
-
 <div class="col-md-4">
     <div class="card mb-3">
         <img class="card-img-top" src="@Model.ImagePath" alt="Course Image">
         <div class="card-body text-center">
+            <h6>=<b>@(Model.IsEnrolled ? "Записан" : "Незаписан")</b>=</h6>
             <h4>@Model.Title</h4>
             <h6>Описание: <b>@Model.Description</b></h6>
             <h6>
                 Цена:
                 <b>@($"{Model.Price:f2}") лв.</b>
             </h6>
-            <h6>(@(Model.IsEnrolled ? "Записан" : "Незаписан"))</h6>
-            <br />
-            <a asp-area="" asp-controller="Courses" asp-action="Details" asp-route-id="@Model.Id"
-               class="btn btn-success">Детайли</a>
 
+            <br/>
+            <a asp-area="" asp-controller="Courses" asp-action="Details" asp-route-id="@Model.Id"
+               class="btn btn-primary">Детайли</a>
+            <p></p>
             @if (User.Identity?.IsAuthenticated ?? false)
             {
-
-                <a asp-area="" asp-controller="Courses" asp-action="Edit" asp-route-id="@Model.Id"
-                   class="btn btn-warning">Редактирай</a>
-                <p></p>
-                <a asp-area="" asp-controller="Courses" asp-action="Delete" asp-route-id="@Model.Id"
-                   class="btn btn-danger">Изтрий</a>
-                <p></p>
-
-                <form class="input-group-sm" asp-area="" asp-controller="Courses"
-                      asp-action="Enroll" asp-route-id="@Model.Id" method="post">
-                    <input class="btn btn-primary" type="submit" value="Запиши се" />
-                </form>
-                <p></p>
-                <form asp-area="" asp-controller="Courses" asp-action="Leave"
-                      asp-route-id="@Model.Id" method="post">
-                    <input class="btn btn-danger" type="submit" value="Напусни курс" />
-                </form>
+                @if (isUserInstructor && isInstructorTeachingCourse)
+                {
+                    <a asp-area="" asp-controller="Courses" asp-action="Edit" asp-route-id="@Model.Id"
+                       class="btn btn-primary">Редактирай</a>
+                    <p></p>
+                    <a asp-area="" asp-controller="Courses" asp-action="Delete" asp-route-id="@Model.Id"
+                       class="btn btn-danger">Изтрий</a>
+                    <p></p>
+                }
+                @if (!Model.IsEnrolled)
+                {
+                    @if (!isUserInstructor)
+                    {
+                        <form class="input-group-sm" asp-area="" asp-controller="Courses"
+                              asp-action="Enroll" asp-route-id="@Model.Id" method="post">
+                            <input class="btn btn-primary" type="submit" value="Запиши се"/>
+                        </form>
+                        <p></p>
+                    }
+                }
+                else
+                {
+                    @if (!isUserInstructor && isCourseEnrolled)
+                    {
+                        <form asp-area="" asp-controller="Courses" asp-action="Leave"
+                              asp-route-id="@Model.Id" method="post">
+                            <input class="btn btn-danger" type="submit" value="Напусни курс" />
+                        </form>
+                    }
+                }
+                
             }
         </div>
     </div>
