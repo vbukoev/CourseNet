@@ -19,7 +19,7 @@
 
         .navbar {
             background-color: #4285f4;
-            padding: 15px 0;
+            padding: 5px 0;
             text-align: center;
         }
 
@@ -75,12 +75,14 @@
 
         footer {
             background-color: #fff;
-            padding: 20px 0;
+            padding: 3px 0;
             text-align: center;
             position: absolute;
             bottom: 0;
             width: 100%;
         }
+
+        
     </style>
 </head>
 <body>
@@ -95,34 +97,23 @@
         }
     </div>
 
-
-<div class="row">
-    <div class="col-12 text-center">
-        <button class="btn btn-primary" id="statistics_btn">Покажи статистиките</button>
+    <div class="mt-5 p-2 bg-light d-none" id="statistics_box">
+        <div class="row">
+            <h4 class="col-md-6 text-center fw-bold" id="total_enrollments">от</h4>
+            <h4 class="col-md-6 text-center fw-bold" id="total_courses"></h4>
+        </div>
     </div>
-</div>
-
-<div class="mt-4 p-5 bg-light d-none" id="statistics_div">
     <div class="row">
-        <h2 class="col-md-6 text-center" id="total_courses"></h2>
-            <h2 class="col-md-6 text-center" id="total_enrollments"></h2>
-    </div> 
-</div>
+        <div class="col-12 text-center">
+            <button class="btn btn-primary" id="statistics_btn">Покажи статистика</button>
+        </div>
+    </div>
+
+
 </body>
 </html>
 
 @section Scripts {
-    <script>
-        document.getElementById('statistics_btn').addEventListener('click', function () {
-            fetch('/api/statistics')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('total_courses').textContent = `Общ брой курсове: ${data.totalCourses}`;
-                    document.getElementById('total_enrollments').textContent = `Общ брой записвания: ${data.totalEnrollments}`;
-                    document.getElementById('statistics_div').classList.remove('d-none');
-                });
-        });
-    </script>
+    <script>statistics();</script>
 }
-```
 
