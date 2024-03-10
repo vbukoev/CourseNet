@@ -7,7 +7,8 @@ namespace CourseNet.Services.Data.Interfaces
         Task<bool> InstructorExistsByUserId(string? id);
         Task<bool> InstructorExistsByPhoneNumber(string phoneNumber);
         Task<bool> HasAppliedCoursesByUserIdAsync(string? id);
-        Task Create (string userId, BecomeInstructorFormModel model);
+        Task Create(string userId, BecomeInstructorFormModel model);
         Task<string> GetInstructorIdByUserId(string? userId);
+        Task<bool> HasCourseWithIdAsync(string? userId, string courseId);
     }
 }
