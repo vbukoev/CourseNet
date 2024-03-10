@@ -275,7 +275,7 @@ namespace CourseNet.Services.Data
         public async Task<bool> IsEnrolledByIdAsync(string courseId)
         {
             var course = await context.Courses
-                .FirstAsync(c => c.Id.ToString() == courseId);
+                .FirstOrDefaultAsync(c => c.Id.ToString() == courseId);
             return course.StudentId.HasValue;
         }
 
@@ -293,7 +293,7 @@ namespace CourseNet.Services.Data
         public async Task<bool> IsEnrolledByIdAsync(string courseId, string userId)
         {
             var course = await context.Courses
-                .FirstAsync(c => c.Id.ToString() == courseId && c.StudentId.ToString() == userId);
+                .FirstAsync(c => c.Id.ToString() == courseId);
 
             return course.StudentId.HasValue &&
                    course.StudentId.ToString() == userId;
