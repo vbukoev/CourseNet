@@ -9,6 +9,7 @@
 
 <form method="get">
     <div class="row">
+        
         <div class="form-group col-md-3 d-flex justify-content-between">
             <div class="form-group">
                 <label asp-for="Category">Категория</label>
@@ -32,11 +33,6 @@
         </div>
 
         <div class="form-group col-md-3">
-            <label asp-for="SearchTerm"></label>
-            <input asp-for="SearchTerm" class="form-control" placeholder="Търси курс тук">
-        </div>
-
-        <div class="form-group col-md-3">
             <div class="form-group">
                 <label asp-for="CourseSorting"></label>
                 <select asp-for="CourseSorting" class="form-control">
@@ -49,6 +45,10 @@
             </div>
         </div>
 
+        <div class="form-group col-md-3">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="Търси курс тук">
+        </div>
         <div class="col-md-3">
             <div class="form-group mt-4 p-2">
                 <input type="submit" value="Търсене" class="btn btn-primary" />
