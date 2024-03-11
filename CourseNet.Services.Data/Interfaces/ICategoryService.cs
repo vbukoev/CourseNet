@@ -7,5 +7,6 @@ namespace CourseNet.Services.Data.Interfaces
         Task<IEnumerable<CategorySelectionFormViewModel>> GetAllCategoriesAsync();
         Task<bool> CategoryExists(int categoryId);
         Task<IEnumerable<string>> AllCategoryNamesAsync();
+        
     }
 }

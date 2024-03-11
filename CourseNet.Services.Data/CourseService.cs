@@ -274,9 +274,8 @@ namespace CourseNet.Services.Data
 
         public async Task<bool> IsEnrolledByIdAsync(string courseId)
         {
-            var course = await context.Courses
-                .FirstOrDefaultAsync(c => c.Id.ToString() == courseId);
-            return course.StudentId.HasValue;
+            return await context.Courses
+                .AnyAsync(c => c.Id.ToString() == courseId && c.StudentId.HasValue);
         }
 
         public async Task EnrollCourseAsync(string courseId, string userId)

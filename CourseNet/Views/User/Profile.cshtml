@@ -1,12 +1,11 @@
-﻿@* @model CourseNet.Data.Models.Entities.ApplicationUser
+﻿@model CourseNet.Data.Models.Entities.User
 
 <h2>Профил</h2>
 
 <div>
     <p><strong>Име:</strong> @Model.FirstName</p>
-    <p><strong>Фамилия:</strong> @Model.LastName</p>
-    <p><strong>Дата на раждане:</strong> @Model.BirthDate.ToShortDateString()</p>
-    <p><strong>Адрес:</strong> @Model.Address</p>
+    <><strong>Фамилия:</strong> @Model.LastName</>
+    <p><strong>Адрес:</strong> @Model.Phone</p>
 </div>
 
-<p><a asp-action="EditProfile" asp-route-userId="@Model.Id">Редактирай профил</a></p> *@
+<p><a asp-action="EditProfile" asp-route-userId="@Model.Id">Редактирай профил</a></p> 
