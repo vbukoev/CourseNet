@@ -5,8 +5,12 @@ namespace CourseNet.Services.Data.Interfaces
     public interface ICategoryService
     {
         Task<IEnumerable<CategorySelectionFormViewModel>> GetAllCategoriesAsync();
+
         Task<bool> CategoryExists(int categoryId);
+
         Task<IEnumerable<string>> AllCategoryNamesAsync();
+
+        Task<IEnumerable<AllCategoryViewModel>> AllCategoriesAsync();
         
     }
 }

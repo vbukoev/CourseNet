@@ -14,13 +14,14 @@ namespace CourseNet.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var categories = await this.categoriesService.AllCategoryNamesAsync();
-            var viewModel = new CategorySelectionFormViewModel
-            {
-             
-            };
+           IEnumerable<AllCategoryViewModel> viewModel = await this.categoriesService.AllCategoriesAsync();
 
             return View(viewModel);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            return View();
         }
     }
 }

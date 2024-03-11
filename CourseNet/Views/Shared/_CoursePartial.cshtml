@@ -1,4 +1,4 @@
-﻿@model CourseNet.Web.ViewModels.Course.CourseAllViewModel
+﻿@model CourseAllViewModel
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using CourseNet.Web.Infrastructure.Extensions
 @using CourseNet.Services.Data.Interfaces
@@ -15,16 +15,7 @@
     <div class="card mb-3">
         <img class="card-img-top" src="@Model.ImagePath" alt="Course Image">
         <div class="card-body text-center">
-            
-            @*@<h6>=<b>@(isUserEnrolled ? "Записан" : "Незаписан")</b>=</h6>*@
-            @if (isUserEnrolled && !isUserInstructor)
-            {
-                <h6>=<b>@("Записан")</b>=</h6>
-            }
-            else
-            {
-                <h6>=<b>@("Незаписан")</b>=</h6>
-            }
+            <h6>=<b>@(isUserEnrolled ? "Записан" : "Незаписан")</b>=</h6>
             <h4><b>@Model.Title</b></h4>
             <h6>Описание: <b>@Model.Description</b></h6>
             <h6>

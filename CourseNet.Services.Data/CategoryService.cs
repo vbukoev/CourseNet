@@ -42,5 +42,18 @@ namespace CourseNet.Services.Data
 
             return allNames;
         }
+
+        public async Task<IEnumerable<AllCategoryViewModel>> AllCategoriesAsync()
+        {
+            IEnumerable<AllCategoryViewModel> allCategories = await dbContext.Categories
+                .AsNoTracking()
+                .Select(c => new AllCategoryViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                }).ToArrayAsync();
+
+            return allCategories;
+        }
     }
 }

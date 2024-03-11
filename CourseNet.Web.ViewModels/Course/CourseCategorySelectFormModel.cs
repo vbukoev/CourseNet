@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace CourseNet.Web.ViewModels.Course
 {
-    internal class CourseCategorySelectFormModel
+    public class CourseCategorySelectFormModel
     {
+        public int Id { get; set; }
+        public string Name { get; set; } = null!;
     }
 }
