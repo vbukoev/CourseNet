@@ -6,7 +6,7 @@
 @inject IInstructorService InstructorService
 @inject ICourseService CourseService
 @{
-    bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId()!);
+    bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId());
     bool isInstructorTeachingCourse = await InstructorService.HasCourseWithIdAsync(User.GetId(), Model.Id);
     bool isCourseEnrolled = await CourseService.IsEnrolledByIdAsync(Model.Id, User.GetId()!);
     

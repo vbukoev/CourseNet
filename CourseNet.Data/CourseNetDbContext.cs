@@ -1,9 +1,8 @@
-﻿using System.Reflection;
-using CourseNet.Data.Configurations;
-using CourseNet.Data.Models.Entities;
+﻿using CourseNet.Data.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace CourseNet.Data
 {
