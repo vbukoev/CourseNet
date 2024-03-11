@@ -17,7 +17,7 @@ namespace CourseNet.Web.Controllers
             var categories = await this.categoriesService.AllCategoryNamesAsync();
             var viewModel = new CategorySelectionFormViewModel
             {
-               Name = 
+             
             };
 
             return View(viewModel);

@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 namespace CourseNet.Data.Models.Entities
 {
     [Comment("User Table")]
-    public class ApplicationUser : IdentityUser<Guid>
+    public class CourseUser : IdentityUser<Guid>
     {
-        public ApplicationUser()
+        public CourseUser()
         {
             this.Id = System.Guid.NewGuid();
         }
