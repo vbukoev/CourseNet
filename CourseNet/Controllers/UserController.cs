@@ -8,5 +8,10 @@ namespace CourseNet.Web.Controllers
         {
             return View();
         }
+
+        public IActionResult EditProfile()
+        {
+            return View();
+        }
     }
 }
