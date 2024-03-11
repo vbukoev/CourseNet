@@ -59,13 +59,13 @@
                 <div class="input-group">
                     <input asp-for="SearchTerm" class="form-control" placeholder="Търси курс тук">
                     <div class="input-group-append">
-                        <button type="submit" class="btn btn-primary">Търсене</button>
+                        <button type="submit" id="btnSearch" class="btn btn-primary">Търсене</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <p></p>
     @if (!Model.Courses.Any())
     {
         <h2 class="text-center mt-4">Няма курс, който да отговаря на този критерии!</h2>
@@ -104,3 +104,26 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        function applyFilters() {
+            var category = $("#Category").val();
+            var coursesPerPage = $("#CoursesPerPage").val();
+            var courseSorting = $("#CourseSorting").val();
+            var searchTerm = $("#SearchTerm").val();
+
+            window.location.href = "/Courses/Index?Category=" + category +
+                "&CoursesPerPage=" + coursesPerPage +
+                "&CourseSorting=" + courseSorting +
+                "&SearchTerm=" + searchTerm;
+        }
+
+        $(document).ready(function () {
+            $("#btnSearch").on("click", function (e) {
+                e.preventDefault();
+                applyFilters();
+            });
+        });
+    </script>
+}

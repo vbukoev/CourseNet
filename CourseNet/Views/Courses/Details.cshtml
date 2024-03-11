@@ -9,6 +9,7 @@
 @{
     bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId()!);
     bool isUserEnrolled = await CourseService.IsEnrolledByIdAsync(Model.Id, User.GetId()!);
+    bool isCourseEnrolled = await CourseService.IsEnrolledByIdAsync(Model.Id, User.GetId()!);
 }
 
 @{
@@ -25,7 +26,7 @@
                  src="@Model.ImagePath" alt="Course Image">
         </div>
         <div class="card col-8 border-0">
-            <p>=<i>@(isUserEnrolled ? "Записан" : "Незаписан")</i>=</p>
+            <p>=<i>@(isUserEnrolled && !isUserInstructor ? "Записан" : "Незаписан")</i>=</p>
             <p style="font-size:25px;"><u>@Model.Title</u></p>
             <p>Описание: <b>@Model.Description</b></p>
             <p>
@@ -46,20 +47,24 @@
                            asp-route-id="@Model.Id">Изтрий</a>
                     }
                     <p></p>
-                    @if (!Model.IsEnrolled)
-                    {
-                        <form class="ml-2" asp-controller="Courses"
-                              asp-action="Enroll" asp-route-id="@Model.Id" method="post">
-                            <input class="btn btn-primary" type="submit" value="Запиши се" />
-                        </form>
-                    }
-                    else
+                    @if (!isUserEnrolled)
                     {
                         @if (!isUserInstructor)
                         {
+                            <form class="ml-2" asp-controller="Courses"
+                                  asp-action="Enroll" asp-route-id="@Model.Id" method="post">
+                                <input class="btn btn-primary" type="submit" value="Запиши се" />
+                            </form>
+                        }
+                       
+                    }
+                    else
+                    {
+                        @if (!isUserInstructor && isUserEnrolled)
+                        {
                             <form class="ml-2" asp-controller="Courses" asp-action="Leave"
                                   asp-route-id="@Model.Id" method="post">
-                                <input class="btn btn-primary" type="submit" value="Напусни" />
+                                <input class="btn btn-danger" type="submit" value="Напусни" />
                             </form>
                         }
                     }
