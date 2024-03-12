@@ -1,4 +1,4 @@
-﻿@model CourseNet.Web.ViewModels.Course.CourseAllViewModel
+﻿@model CourseAllViewModel
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using CourseNet.Web.Infrastructure.Extensions
 @using CourseNet.Services.Data.Interfaces
@@ -9,20 +9,20 @@
     bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId());
     bool isInstructorTeachingCourse = await InstructorService.HasCourseWithIdAsync(User.GetId(), Model.Id);
     bool isCourseEnrolled = await CourseService.IsEnrolledByIdAsync(Model.Id, User.GetId()!);
-    
+    bool isUserEnrolled = await CourseService.IsEnrolledByIdAsync(Model.Id, User.GetId()!);
 }
 <div class="col-md-4">
     <div class="card mb-3">
         <img class="card-img-top" src="@Model.ImagePath" alt="Course Image">
         <div class="card-body text-center">
-            <h6>=<b>@(Model.IsEnrolled ? "Записан" : "Незаписан")</b>=</h6>
-            <h4>@Model.Title</h4>
+            <h6>=<b>@(isUserEnrolled ? "Записан" : "Незаписан")</b>=</h6>
+            <h4><b>@Model.Title</b></h4>
             <h6>Описание: <b>@Model.Description</b></h6>
             <h6>
                 Цена:
                 <b>@($"{Model.Price:f2}") лв.</b>
             </h6>
-
+            <h6>Трудност: <b>@Model.Difficulty</b></h6>
             <br/>
             <a asp-area="" asp-controller="Courses" asp-action="Details" asp-route-id="@Model.Id"
                class="btn btn-primary">Детайли</a>
@@ -38,6 +38,7 @@
                        class="btn btn-danger">Изтрий</a>
                     <p></p>
                 }
+
                 @if (!Model.IsEnrolled)
                 {
                     @if (!isUserInstructor)
@@ -55,11 +56,11 @@
                     {
                         <form asp-area="" asp-controller="Courses" asp-action="Leave"
                               asp-route-id="@Model.Id" method="post">
-                            <input class="btn btn-danger" type="submit" value="Напусни курс" />
+                            <input class="btn btn-danger" type="submit" value="Напусни курс"/>
                         </form>
                     }
                 }
-                
+
             }
         </div>
     </div>

@@ -35,7 +35,7 @@ namespace CourseNet.Data.Models.Entities
         [Comment("User Identifier")]
         public Guid UserId { get; set; }
         [ForeignKey(nameof(UserId))]
-        public virtual ApplicationUser User { get; set; } = null!;
+        public virtual CourseUser User { get; set; } = null!;
 
         public virtual ICollection<Course> CoursesTaught { get; set; } = new HashSet<Course>();
     }

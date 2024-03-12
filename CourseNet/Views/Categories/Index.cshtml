@@ -1,5 +1,16 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<AllCategoryViewModel>
+@using CourseNet.Web.Infrastructure.Extensions
 @{
+    ViewData["Title"] = "Всичките категории";
 }
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<div class="list-group">
+    @foreach (AllCategoryViewModel category in Model)
+    {
+        <a class="list-group-item list-group-item-action" asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id" asp-route-information="@category.GetUrlInformation()">@category.Name</a>
+        <button>Редакция на категория</button>
+    }
+</div>

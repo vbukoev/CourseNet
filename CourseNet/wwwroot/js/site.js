@@ -1,7 +1,7 @@
 ﻿function statistics() {
     $('#statistics_btn').on('click', function (e) {
         e.preventDefault();
-        e.stopPropagation();        
+        e.stopPropagation();
         if ($('#statistics_box').hasClass('d-none')) {
             $.get('https://localhost:7289/api/statistics', function (data) {
                 $('#total_courses').text(data.totalCourses + " курса");
@@ -20,3 +20,4 @@
         }
     });
 }
+

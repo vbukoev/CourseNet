@@ -2,14 +2,15 @@
 @using CourseNet.Web.Infrastructure.Extensions
 @using CourseNet.Services.Data
 @using CourseNet.Services.Data.Interfaces
-@model CourseNet.Web.ViewModels.Course.CourseDetailsViewModel
+@model CourseDetailsViewModel
 
- @inject InstructorService InstructorService 
+ @inject IInstructorService InstructorService
  @inject ICourseService CourseService
 @{
-    bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId());
-   bool isUserEnrolled = await CourseService.IsEnrolledByIdAsync(Model.Id, User.GetId()!);
-} 
+    bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId()!);
+    bool isUserEnrolled = await CourseService.IsEnrolledByIdAsync(Model.Id, User.GetId()!);
+    bool isCourseEnrolled = await CourseService.IsEnrolledByIdAsync(Model.Id, User.GetId()!);
+}
 
 @{
     ViewBag.Title = "Детайли за курса";
@@ -25,7 +26,7 @@
                  src="@Model.ImagePath" alt="Course Image">
         </div>
         <div class="card col-8 border-0">
-            <p>=<i>@(isUserEnrolled ? "Записан" : "Незаписан")</i>=</p>
+            <p>=<i>@(isUserEnrolled && !isUserInstructor ? "Записан" : "Незаписан")</i>=</p>
             <p style="font-size:25px;"><u>@Model.Title</u></p>
             <p>Описание: <b>@Model.Description</b></p>
             <p>
@@ -33,30 +34,39 @@
                 <b>@($"{Model.Price:f2}") лв.</b>
             </p>
             <p>Категория: <b>@Model.Category</b></p>
-
+            <p>Трудност:  <b>@Model.Difficulty</b></p>
+            <p>Крайна дата: <b>@Model.EndDate</b></p>
             <div class="form-inline">
                 @if (User.Identity?.IsAuthenticated ?? false)
                 {
-
-                    <a class="btn btn-primary" asp-controller="Courses" asp-action="Edit"
-                       asp-route-id="@Model.Id">Редактирай</a>
-                    <a class="ml-2 btn btn-danger" asp-controller="Courses" asp-action="Delete"
-                       asp-route-id="@Model.Id">Изтрий</a>
-
-                    <p></p>
-                    @if (!Model.IsEnrolled)
+                    @if (isUserInstructor)
                     {
-                        <form class="ml-2" asp-controller="Courses"
-                              asp-action="Enroll" asp-route-id="@Model.Id" method="post">
-                            <input class="btn btn-primary" type="submit" value="Запиши се"/>
-                        </form>
+                        <a class="btn btn-primary" asp-controller="Courses" asp-action="Edit"
+                           asp-route-id="@Model.Id">Редактирай</a>
+                        <a class="ml-2 btn btn-danger" asp-controller="Courses" asp-action="Delete"
+                           asp-route-id="@Model.Id">Изтрий</a>
+                    }
+                    <p></p>
+                    @if (!isUserEnrolled)
+                    {
+                        @if (!isUserInstructor)
+                        {
+                            <form class="ml-2" asp-controller="Courses"
+                                  asp-action="Enroll" asp-route-id="@Model.Id" method="post">
+                                <input class="btn btn-primary" type="submit" value="Запиши се" />
+                            </form>
+                        }
+                       
                     }
                     else
                     {
-                        <form class="ml-2" asp-controller="Courses" asp-action="Leave"
-                              asp-route-id="@Model.Id" method="post">
-                            <input class="btn btn-primary" type="submit" value="Напусни"/>
-                        </form>
+                        @if (!isUserInstructor && isUserEnrolled)
+                        {
+                            <form class="ml-2" asp-controller="Courses" asp-action="Leave"
+                                  asp-route-id="@Model.Id" method="post">
+                                <input class="btn btn-danger" type="submit" value="Напусни" />
+                            </form>
+                        }
                     }
                 }
             </div>

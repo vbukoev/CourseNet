@@ -1,4 +1,5 @@
-﻿using CourseNet.Common.DataConstants;
+﻿using System.Globalization;
+using CourseNet.Common.DataConstants;
 using CourseNet.Data;
 using CourseNet.Data.Models.Entities;
 using CourseNet.Data.Models.Entities.Enums;
@@ -126,7 +127,7 @@ namespace CourseNet.Services.Data
                     Price = c.Price,
                     Difficulty = c.Difficulty.ToString(),
                     Status = c.Status.ToString(),
-                    EndDate = c.EndDate.ToString(),
+                    EndDate = c.EndDate.ToString(CultureInfo.InvariantCulture),
                     IsEnrolled = c.StudentId.HasValue,
                 })
                 .ToListAsync();
@@ -186,7 +187,7 @@ namespace CourseNet.Services.Data
                 Price = course.Price,
                 Difficulty = course.Difficulty.ToString(),
                 Status = course.Status.ToString(),
-                EndDate = course.EndDate.ToString(),
+                EndDate = course.EndDate.ToString(CultureInfo.InvariantCulture),
                 Instructor = new InstructorInfoOfCourseViewModel()
                 {
                     Email = course.Instructor.Email,
@@ -224,16 +225,16 @@ namespace CourseNet.Services.Data
 
         public async Task EditCourseByIdAsync(CourseFormViewModel model, string courseId)
         {
-            var house = await context.Courses
-                .FirstOrDefaultAsync(c => c.Id.ToString() == courseId);
+            var course = await context.Courses
+                .FirstAsync(c => c.Id.ToString() == courseId);
 
-            house.Title = model.Title;
-            house.Description = model.Description;
-            house.EndDate = DateTime.Parse(model.EndDate);
-            house.ImagePath = model.ImagePath;
-            house.Price = model.Price;
-            house.Difficulty = model.Difficulty;
-            house.CategoryId = model.CategoryId;
+            course.Title = model.Title;
+            course.Description = model.Description;
+            course.ImagePath = model.ImagePath;
+            course.EndDate = DateTime.Parse(model.EndDate);
+            course.Price = model.Price;
+            course.Difficulty = model.Difficulty;
+            course.CategoryId = model.CategoryId;
 
             await context.SaveChangesAsync();
         }

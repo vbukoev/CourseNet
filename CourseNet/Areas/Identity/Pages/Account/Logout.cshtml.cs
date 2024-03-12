@@ -11,9 +11,9 @@ namespace CourseNet.Web.Areas.Identity.Pages.Account
 {
     public class LogoutModel : PageModel
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly SignInManager<CourseUser> _signInManager;
 
-        public LogoutModel(SignInManager<ApplicationUser> signInManager)
+        public LogoutModel(SignInManager<CourseUser> signInManager)
         {
             _signInManager = signInManager;
         }

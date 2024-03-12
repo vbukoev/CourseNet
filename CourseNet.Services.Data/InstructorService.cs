@@ -31,7 +31,7 @@ namespace CourseNet.Services.Data
 
         public async Task<bool> HasAppliedCoursesByUserIdAsync(string userId)
         {
-            ApplicationUser? user = await dbContext
+            CourseUser? user = await dbContext
                 .Users.Include(applicationUser => applicationUser.AppliedCourses)
                 .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
             if (user == null)
