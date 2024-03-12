@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<AllCategoryViewModel>
-@using static CourseNet.Web.Infrastructure.Extensions.ViewModelExtension
+@using CourseNet.Web.Infrastructure.Extensions
 @{
     ViewData["Title"] = "Всичките категории";
 }
@@ -10,6 +10,7 @@
 <div class="list-group">
     @foreach (AllCategoryViewModel category in Model)
     {
-        <a class="list-group-item list-group-item-action" asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id" asp-route-information="@category">@category.GetUrlInformation()</a>
+        <a class="list-group-item list-group-item-action" asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id" asp-route-information="@category.GetUrlInformation()">@category.Name</a>
+        <button>Редакция на категория</button>
     }
 </div>

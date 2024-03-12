@@ -1,4 +1,5 @@
 ﻿using CourseNet.Web.ViewModels.Category;
+using CourseNet.Web.ViewModels.Course;
 
 namespace CourseNet.Services.Data.Interfaces
 {
@@ -11,6 +12,12 @@ namespace CourseNet.Services.Data.Interfaces
         Task<IEnumerable<string>> AllCategoryNamesAsync();
 
         Task<IEnumerable<AllCategoryViewModel>> AllCategoriesAsync();
+
+        Task<CategoryDetailsViewModel> GetCategoryDetailsAsync(int categoryId);
+        Task<CategoryDetailsViewModel> GetCategoryForEditByIdAsync(int categoryId);
+
+        Task EditCategoryByIdAsync(CategoryDetailsViewModel model, int categoryId);
         
+
     }
 }

@@ -1,0 +1,16 @@
+﻿@model CategoryDetailsViewModel
+
+@{
+    ViewData ["Title"] = "Категория: " + Model.Name;
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<div class="container-fluid">
+    <div class="row">
+        <p class="col-4">
+            Името: @Model.Name
+        </p>
+    </div>
+</div> 

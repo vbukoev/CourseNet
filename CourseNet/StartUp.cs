@@ -54,6 +54,15 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseEndpoints(config =>
+{
+    config.MapControllerRoute(name: "UrlProtection", pattern: "/{controller}/{action}/{id}/{information}",
+        defaults: new { controller = "Categories", action = "Details" });
+    config.MapDefaultControllerRoute();
+    config.MapRazorPages();
+   
+});
+
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
 
