@@ -14,7 +14,7 @@ namespace CourseNet.Data.Models.Entities
         [Comment("Category Name")]
         [Required]
         [MaxLength(NameMaxLength)]
-        public string Name { get; set; }
+        public string Name { get; set; } 
 
         [Comment("Collection of Courses")]
         public virtual ICollection<Course> Courses { get; set; } = new HashSet<Course>();

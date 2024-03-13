@@ -1,5 +1,21 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model CategoryDetailsViewModel
 @{
+    ViewBag.Title = "Изтрий категория";
 }
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<form method="post" asp-action="Delete">
+    <div class="row">
+        <h3>Сигурни ли сте, че искате да изтриете категорията?</h3>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Име</label>
+                <input asp-for="Name" class="form-control" disabled="disabled" />
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Изтрий" class="btn btn-danger" />
+            </div>
+        </div>
+    </div>
+</form>

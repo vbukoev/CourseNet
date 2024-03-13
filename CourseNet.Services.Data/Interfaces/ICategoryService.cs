@@ -14,10 +14,12 @@ namespace CourseNet.Services.Data.Interfaces
         Task<IEnumerable<AllCategoryViewModel>> AllCategoriesAsync();
 
         Task<CategoryDetailsViewModel> GetCategoryDetailsAsync(int categoryId);
+
         Task<CategoryDetailsViewModel> GetCategoryForEditByIdAsync(int categoryId);
 
-        Task EditCategoryByIdAsync(CategoryDetailsViewModel model, int categoryId);
-        
+        Task EditCategoryByIdAsync(CategoryDetailsViewModel viewModel, int categoryId);
+        Task<CategoryDetailsViewModel> GetCategoryForDeleteByIdAsync(int categoryId);
 
+        Task DeleteCategoryByIdAsync(int categoryId);
     }
 }

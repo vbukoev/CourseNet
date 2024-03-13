@@ -220,7 +220,7 @@ namespace CourseNet.Web.Controllers
 
             if (!isInstructor)
             {
-                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да редактирате курс";
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да изтриете курс";
                 return RedirectToAction("Become", "Instructor");
             }
 
