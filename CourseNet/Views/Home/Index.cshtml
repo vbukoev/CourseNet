@@ -1,91 +1,6 @@
 ﻿@model IEnumerable<IndexViewModel>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Management App</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-image: url('https://png.pngtree.com/background/20211217/original/pngtree-geometric-line-network-course-learning-abstract-background-picture-image_1595372.jpg');
-            background-size: cover;
-            background-position: center;
-        }
 
-        .navbar {
-            background-color: #4285f4;
-            padding: 5px 0;
-            text-align: center;
-        }
-
-            .navbar a {
-                color: #fff;
-                text-decoration: none;
-                padding: 15px;
-                font-size: 16px;
-                margin: 0 10px;
-                border-radius: 5px;
-                transition: background-color 0.3s ease;
-            }
-
-                .navbar a:hover {
-                    background-color: #3367d6;
-                }
-
-        .content {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            text-align: center;
-            margin: 20vh auto;
-            width: 60%;
-        }
-
-        h1 {
-            color: #4285f4;
-        }
-
-        p {
-            color: #333;
-            font-size: 18px;
-            line-height: 1.6;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 18px;
-            text-align: center;
-            text-decoration: none;
-            background-color: #4285f4;
-            color: #fff;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-            .btn:hover {
-                background-color: #3367d6;
-            }
-
-        footer {
-            background-color: #fff;
-            padding: 3px 0;
-            text-align: center;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-        }
-
-        
-    </style>
-</head>
-<body>
-
+<link rel="stylesheet" href="~/css/home.css" />
     <div class="content">
         <h1>Добре дошли в CourseNET</h1>
         <p>Вашето универсално решение за безпроблемна организация и управление на курсове.</p>
@@ -109,9 +24,6 @@
         </div>
     </div>
 
-
-</body>
-</html>
 
 @section Scripts {
     <script>statistics();</script>

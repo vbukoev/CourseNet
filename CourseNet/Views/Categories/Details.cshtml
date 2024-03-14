@@ -1,16 +1,25 @@
 ﻿@model CategoryDetailsViewModel
 
 @{
-    ViewData ["Title"] = "Категория: " + Model.Name;
+    ViewData["Title"] = "Детайли за категория";
 }
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
 
-<div class="container-fluid">
+<div class="text-black text-center">
     <div class="row">
-        <p class="col-4">
-            Името: @Model.Name
-        </p>
+        <h4>
+            Име на категория: @Model.Name
+        </h4>
     </div>
-</div> 
+    <div class="form-group mt-2">
+        <input type="button" onclick="goBack()" value="Назад" class="btn btn-primary" />
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

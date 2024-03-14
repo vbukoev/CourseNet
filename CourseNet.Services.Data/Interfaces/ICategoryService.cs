@@ -12,12 +12,15 @@ namespace CourseNet.Services.Data.Interfaces
         Task<IEnumerable<string>> AllCategoryNamesAsync();
 
         Task<IEnumerable<AllCategoryViewModel>> AllCategoriesAsync();
+        Task<string> CreateCategoryAndReturnIdAsync(CategoryDetailsViewModel model, string instructorId);
 
         Task<CategoryDetailsViewModel> GetCategoryDetailsAsync(int categoryId);
+
         Task<CategoryDetailsViewModel> GetCategoryForEditByIdAsync(int categoryId);
 
-        Task EditCategoryByIdAsync(CategoryDetailsViewModel model, int categoryId);
-        
+        Task EditCategoryByIdAsync(CategoryDetailsViewModel viewModel, int categoryId);
+        Task<CategoryDetailsViewModel> GetCategoryForDeleteByIdAsync(int categoryId);
 
+        Task DeleteCategoryByIdAsync(int categoryId);
     }
 }

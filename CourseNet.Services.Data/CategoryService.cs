@@ -1,4 +1,6 @@
 ﻿using CourseNet.Data;
+using CourseNet.Data.Models.Entities;
+using CourseNet.Data.Models.Entities.Enums;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.ViewModels.Category;
 using CourseNet.Web.ViewModels.Course;
@@ -9,9 +11,11 @@ namespace CourseNet.Services.Data
     public class CategoryService : ICategoryService
     {
         private readonly CourseNetDbContext context;
-        public CategoryService(CourseNetDbContext context)
+        private readonly ICourseService courseService;
+        public CategoryService(CourseNetDbContext context, ICourseService courseService)
         {
             this.context = context;
+            this.courseService = courseService;
         }
         public async Task<IEnumerable<CategorySelectionFormViewModel>> GetAllCategoriesAsync()
         {
@@ -57,6 +61,19 @@ namespace CourseNet.Services.Data
             return allCategories;
         }
 
+        public async Task<string> CreateCategoryAndReturnIdAsync(CategoryDetailsViewModel model, string instructorId)
+        {
+            var category = new Category
+            {
+                Name = model.Name,
+            };
+
+            await context.Categories.AddAsync(category);
+            await context.SaveChangesAsync();
+
+            return category.Id.ToString();
+        }
+
         public async Task<CategoryDetailsViewModel> GetCategoryDetailsAsync(int categoryId)
         {
             var category = await context.Categories
@@ -71,16 +88,20 @@ namespace CourseNet.Services.Data
             return categoryDetails;
         }
 
-        public async Task<CategoryDetailsViewModel> GetCategoryForEditByIdAsync(int categoryId)
+        public async Task<CategoryDetailsViewModel> GetCategoryForEditByIdAsync(int id)
         {
             var category = await context.Categories
-                .FirstAsync(c => c.Id == categoryId);
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (category == null)
+            {
+                return null;
+            }
 
             return new CategoryDetailsViewModel
             {
-                Id = categoryId,
+                Id = category.Id,
                 Name = category.Name,
-                Description = category.Description
             };
         }
 
@@ -90,9 +111,40 @@ namespace CourseNet.Services.Data
                 .FirstAsync(c => c.Id == categoryId);
 
             category.Name = model.Name;
-            category.Description = model.Description;
 
             await context.SaveChangesAsync();
+        }
+
+        public async Task<CategoryDetailsViewModel> GetCategoryForDeleteByIdAsync(int categoryId)
+        {
+            var course = await context
+                .Categories
+                .FirstAsync(c => c.Id == categoryId);
+
+            return new CategoryDetailsViewModel
+            {
+                Name = course.Name,
+            };
+        }
+
+        public async Task DeleteCategoryByIdAsync(int categoryId)
+        {
+            var coursesWithCategory = await context.Courses.Where(c => c.CategoryId == categoryId).ToListAsync();
+
+            if (coursesWithCategory.Any())
+            {
+                foreach (var course in coursesWithCategory)
+                {
+                    await courseService.DeleteCoursesByCategoryIdAsync(categoryId);
+                }
+            }
+
+            var categoryToDelete = await context.Categories.FindAsync(categoryId);
+            if (categoryToDelete != null)
+            {
+                context.Categories.Remove(categoryToDelete);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

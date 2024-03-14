@@ -1,27 +1,8 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
-}
-
-body {
+﻿body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    /*background-image: url('https://png.pngtree.com/background/20211217/original/pngtree-geometric-line-network-course-learning-abstract-background-picture-image_1595372.jpg');*/
+    background-image: url('https://png.pngtree.com/background/20211217/original/pngtree-geometric-line-network-course-learning-abstract-background-picture-image_1595372.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -82,10 +63,15 @@ p {
         background-color: #3367d6;
     }
 
-
-.btn-danger {
-    background-color: #dc3545; 
+.btn-warning {
+    background-color: yellow;
+    color: black;
 }
+
+    .btn-warning:hover {
+        background-color: yellow;
+        color: black;
+    }
 
 footer {
     background-color: #fff;
