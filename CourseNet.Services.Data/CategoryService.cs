@@ -1,4 +1,6 @@
 ﻿using CourseNet.Data;
+using CourseNet.Data.Models.Entities;
+using CourseNet.Data.Models.Entities.Enums;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.ViewModels.Category;
 using CourseNet.Web.ViewModels.Course;
@@ -57,6 +59,19 @@ namespace CourseNet.Services.Data
                 }).ToArrayAsync();
 
             return allCategories;
+        }
+
+        public async Task<string> CreateCategoryAndReturnIdAsync(CategoryDetailsViewModel model, string instructorId)
+        {
+            var category = new Category
+            {
+                Name = model.Name,
+            };
+
+            await context.Categories.AddAsync(category);
+            await context.SaveChangesAsync();
+
+            return category.Id.ToString();
         }
 
         public async Task<CategoryDetailsViewModel> GetCategoryDetailsAsync(int categoryId)

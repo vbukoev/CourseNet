@@ -24,7 +24,25 @@ namespace CourseNet.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<AllCategoryViewModel> viewModel = await this.categoriesService.AllCategoriesAsync();
+            IEnumerable<AllCategoryViewModel> viewModel = await categoriesService.AllCategoriesAsync();
+
+            return View(viewModel);
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете категория";
+                return RedirectToAction("Become", "Instructor");
+            }
+
+            CategoryDetailsViewModel viewModel = new CategoryDetailsViewModel
+            {
+                Categories = await categoriesService.GetAllCategoriesAsync()
+            };
 
             return View(viewModel);
         }

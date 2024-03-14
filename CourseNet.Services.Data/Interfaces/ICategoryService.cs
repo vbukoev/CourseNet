@@ -12,6 +12,7 @@ namespace CourseNet.Services.Data.Interfaces
         Task<IEnumerable<string>> AllCategoryNamesAsync();
 
         Task<IEnumerable<AllCategoryViewModel>> AllCategoriesAsync();
+        Task<string> CreateCategoryAndReturnIdAsync(CategoryDetailsViewModel model, string instructorId);
 
         Task<CategoryDetailsViewModel> GetCategoryDetailsAsync(int categoryId);
 

@@ -7,7 +7,7 @@
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
 
-
+<div class="d-flex justify-content-center"> <a asp-controller="Categories" asp-action="Create" class="btn btn-primary btn-outline-warning btn-sm mb-2">Създаване на категория</a></div>
 <div class="list-group">
     @foreach (AllCategoryViewModel category in Model)
     {
