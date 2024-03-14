@@ -14,11 +14,12 @@ namespace CourseNet.Web.Controllers
     {
         private readonly ICategoryService categoriesService;
         private readonly IInstructorService instructorService;
-
-        public CategoriesController(ICategoryService categoriesService, IInstructorService instructorService)
+        private readonly ICourseService coursesService;
+        public CategoriesController(ICategoryService categoriesService, IInstructorService instructorService, ICourseService coursesService)
         {
             this.categoriesService = categoriesService;
             this.instructorService = instructorService;
+            this.coursesService = coursesService;
         }
 
         public async Task<IActionResult> Index()
@@ -157,6 +158,9 @@ namespace CourseNet.Web.Controllers
 
             try
             {
+                
+                await coursesService.DeleteCoursesByCategoryIdAsync(id);
+                
                 await categoriesService.DeleteCategoryByIdAsync(id);
 
                 TempData[WarningMessage] = "Категорията беше успешно изтрита!";
@@ -169,7 +173,8 @@ namespace CourseNet.Web.Controllers
             }
         }
 
-    private IActionResult GeneralError()
+
+        private IActionResult GeneralError()
         {
             TempData[ErrorMessage] = GeneralErrorMessage;
             return RedirectToAction("Index", "Home");

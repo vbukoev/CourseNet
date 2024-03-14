@@ -46,5 +46,7 @@ namespace CourseNet.Services.Data.Interfaces
         Task LeaveCourseAsync(string courseId);
 
         Task<StatisticsServiceModel> GetStatisticsAsync();
+
+        Task DeleteCoursesByCategoryIdAsync(int categoryId);
     }
 }

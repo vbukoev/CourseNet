@@ -13,4 +13,13 @@
             Име на категория: @Model.Name
         </h4>
     </div>
-</div> 
+    <div class="form-group mt-2">
+        <input type="button" onclick="goBack()" value="Назад" class="btn btn-primary" />
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

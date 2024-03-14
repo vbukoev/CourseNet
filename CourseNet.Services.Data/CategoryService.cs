@@ -9,9 +9,11 @@ namespace CourseNet.Services.Data
     public class CategoryService : ICategoryService
     {
         private readonly CourseNetDbContext context;
-        public CategoryService(CourseNetDbContext context)
+        private readonly ICourseService courseService;
+        public CategoryService(CourseNetDbContext context, ICourseService courseService)
         {
             this.context = context;
+            this.courseService = courseService;
         }
         public async Task<IEnumerable<CategorySelectionFormViewModel>> GetAllCategoriesAsync()
         {
@@ -112,15 +114,20 @@ namespace CourseNet.Services.Data
 
         public async Task DeleteCategoryByIdAsync(int categoryId)
         {
-            var categories = await context.Categories
-                .ToListAsync();
+            var coursesWithCategory = await context.Courses.Where(c => c.CategoryId == categoryId).ToListAsync();
 
-            if (categories.Any())
+            if (coursesWithCategory.Any())
             {
-                foreach (var c in categories)
+                foreach (var course in coursesWithCategory)
                 {
-                    context.Categories.Remove(c);
+                    await courseService.DeleteCoursesByCategoryIdAsync(categoryId);
                 }
+            }
+
+            var categoryToDelete = await context.Categories.FindAsync(categoryId);
+            if (categoryToDelete != null)
+            {
+                context.Categories.Remove(categoryToDelete);
                 await context.SaveChangesAsync();
             }
         }

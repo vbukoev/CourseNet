@@ -317,5 +317,14 @@ namespace CourseNet.Services.Data
                 TotalEnrollments = await context.Courses.CountAsync(c => c.StudentId.HasValue),
             };
         }
+
+        public async Task DeleteCoursesByCategoryIdAsync(int categoryId)
+        {
+            var coursesToDelete = context.Courses.Where(c => c.CategoryId == categoryId);
+
+            context.Courses.RemoveRange(coursesToDelete); // We use RemoveRange to delete all courses with the given categoryId
+
+            await context.SaveChangesAsync();
+        }
     }
 }
