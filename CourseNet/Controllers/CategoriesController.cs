@@ -44,7 +44,19 @@ namespace CourseNet.Web.Controllers
                 Categories = await categoriesService.GetAllCategoriesAsync()
             };
 
-            return View(viewModel);
+            try
+            {
+                string instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
+                string courseId = await categoriesService.CreateCategoryAndReturnIdAsync(viewModel, instructorId);
+                TempData[SuccessMessage] = "Категорията беше създадена успешно!";
+                return RedirectToAction("Index", "Categories");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Възникна грешка при създаването на категорията!");
+                viewModel.Categories = await categoriesService.GetAllCategoriesAsync();
+                return View(viewModel);
+            }
         }
 
         public async Task<IActionResult> Details(int id, string information)
