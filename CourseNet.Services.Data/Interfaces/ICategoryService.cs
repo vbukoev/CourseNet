@@ -9,10 +9,12 @@ namespace CourseNet.Services.Data.Interfaces
 
         Task<bool> CategoryExists(int categoryId);
 
+        Task<bool> CategoryExistsByNameAsync(string categoryName);
+
         Task<IEnumerable<string>> AllCategoryNamesAsync();
 
         Task<IEnumerable<AllCategoryViewModel>> AllCategoriesAsync();
-        Task<string> CreateCategoryAndReturnIdAsync(CategoryDetailsViewModel model, string instructorId);
+        Task<string> CreateCategoryAndReturnIdAsync(CategoryDetailsViewModel model);
 
         Task<CategoryDetailsViewModel> GetCategoryDetailsAsync(int categoryId);
 

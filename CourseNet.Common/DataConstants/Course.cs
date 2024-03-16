@@ -11,6 +11,6 @@
         public const string PriceMinValue = "0";
         public const string PriceMaxValue = "5000";
         
-        public const string DateTimeFormat = "dd/MM/yyyy HH:mm";
+        public const string DateFormat = "dd/MM/yyyy HH:mm";
     }
 }

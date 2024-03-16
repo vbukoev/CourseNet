@@ -29,27 +29,65 @@ namespace CourseNet.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+            bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
 
             if (!isInstructor)
             {
-                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете категория";
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете курс";
+
                 return RedirectToAction("Become", "Instructor");
             }
 
-            CategoryDetailsViewModel viewModel = new CategoryDetailsViewModel
+            try
             {
-                Categories = await categoriesService.GetAllCategoriesAsync()
-            };
+                CategoryDetailsViewModel viewModel = new CategoryDetailsViewModel
+                {
+                    Categories = await categoriesService.GetAllCategoriesAsync()
+                };
+
+                return View(viewModel);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CategoryDetailsViewModel viewModel)
+        {
+            bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете курс";
+
+                return RedirectToAction("Become", "Instructor");
+            }
+
+            bool categoryExists = await categoriesService.CategoryExistsByNameAsync(viewModel.Name);
+
+            if (categoryExists)
+            {
+                ModelState.AddModelError(nameof(viewModel.Name), "Категорията, която се опитвате да добавите вече съществува!");
+                TempData[ErrorMessage] = "Неуспешно добавяне на категория. Опитайте отново с друго име!";
+            }
+
+            if (!ModelState.IsValid)
+            {
+                viewModel.Categories = await categoriesService.GetAllCategoriesAsync();
+
+                return View(viewModel);
+            }
 
             try
             {
-                string instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
-                string courseId = await categoriesService.CreateCategoryAndReturnIdAsync(viewModel, instructorId);
+                string categoryId = await categoriesService.CreateCategoryAndReturnIdAsync(viewModel);
                 TempData[SuccessMessage] = "Категорията беше създадена успешно!";
-                return RedirectToAction("Index", "Categories");
+                return RedirectToAction("Index", "Categories", new { id = categoryId });
             }
             catch (Exception)
             {
