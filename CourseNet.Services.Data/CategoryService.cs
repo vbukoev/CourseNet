@@ -38,6 +38,13 @@ namespace CourseNet.Services.Data
             return res;
         }
 
+        public Task<bool> CategoryExistsByNameAsync(string categoryName)
+        {
+            bool res = context.Categories.Any(c => c.Name == categoryName);
+
+            return Task.FromResult(res);
+        }
+
         public async Task<IEnumerable<string>> AllCategoryNamesAsync()
         {
             var allNames = await context
@@ -61,7 +68,7 @@ namespace CourseNet.Services.Data
             return allCategories;
         }
 
-        public async Task<string> CreateCategoryAndReturnIdAsync(CategoryDetailsViewModel model, string instructorId)
+        public async Task<string> CreateCategoryAndReturnIdAsync(CategoryDetailsViewModel model)
         {
             var category = new Category
             {

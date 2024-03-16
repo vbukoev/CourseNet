@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Runtime.Serialization;
 using CourseNet.Common.DataConstants;
 using CourseNet.Data;
 using CourseNet.Data.Models.Entities;
@@ -12,7 +13,7 @@ using CourseNet.Web.ViewModels.Home;
 using CourseNet.Web.ViewModels.Instructor;
 using Microsoft.EntityFrameworkCore;
 using Course = CourseNet.Data.Models.Entities.Course;
-
+using static CourseNet.Common.DataConstants.Course;
 namespace CourseNet.Services.Data
 {
     public class CourseService : ICourseService
@@ -49,7 +50,7 @@ namespace CourseNet.Services.Data
                 InstructorId = Guid.Parse(instructorId),
                 Status = CourseStatus.Active,
                 Difficulty = model.Difficulty,
-                EndDate = DateTime.Parse(model.EndDate),
+                EndDate = DateTime.ParseExact(model.EndDate, DateFormat, CultureInfo.InvariantCulture),
             };
 
             await context.Courses.AddAsync(course);

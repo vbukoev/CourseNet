@@ -15,7 +15,7 @@ namespace CourseNet.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            IEnumerable<IndexViewModel> viewModel = await this.courseService.GetAllCoursesAsync();
+            IEnumerable<IndexViewModel> viewModel = await courseService.GetAllCoursesAsync();
 
             return View(viewModel);
         }

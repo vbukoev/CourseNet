@@ -57,7 +57,7 @@ namespace CourseNet.Web.Controllers
 
                 return View(model);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return GeneralError();
             }

@@ -23,7 +23,7 @@ namespace CourseNet.Web.ViewModels.Course
         [Display(Name = "Крайна дата")]
         public string EndDate { get; set; }
         [Required]
-        [Display(Name = "Трудност - Beginner=0, Intermediate=1, Advanced=2")]
+        [Display(Name = "Трудност")]
         [Range(0, 2)]
         public DifficultyLevel Difficulty { get; set; }
         [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]

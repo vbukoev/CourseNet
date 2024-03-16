@@ -9,7 +9,6 @@
 @{
     bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId()!);
     bool isUserEnrolled = await CourseService.IsEnrolledByIdAsync(Model.Id, User.GetId()!);
-    bool isCourseEnrolled = await CourseService.IsEnrolledByIdAsync(Model.Id, User.GetId()!);
 }
 
 @{
