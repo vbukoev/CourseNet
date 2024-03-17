@@ -28,14 +28,6 @@ namespace CourseNet.Web.Controllers
         {
             var viewModel = await lecturesService.GetAllLecturesForCourseAsync(courseId);
 
-            var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
-
-            if (isInstructor)
-            {
-                TempData[ErrorMessage] = "Вие сте инструктор! Трябва първо да сте студент, за да видите всички лекции към курса";
-                return RedirectToAction("Become", "Instructor");
-            }
-
             return View(viewModel);
         }
 
