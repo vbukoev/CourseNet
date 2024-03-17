@@ -19,7 +19,7 @@ namespace CourseNet.Services.Data
         }
         public async Task<IEnumerable<CategorySelectionFormViewModel>> GetAllCategoriesAsync()
         {
-            IEnumerable<CategorySelectionFormViewModel> categories = await this.context.Categories
+            IEnumerable<CategorySelectionFormViewModel> categories = await context.Categories
                 .AsNoTracking()
                 .Select(c => new CategorySelectionFormViewModel
                 {

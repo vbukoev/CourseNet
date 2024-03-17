@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CourseNet.Web.ViewModels.Category;
+using CourseNet.Web.ViewModels.Lecture;
 
 namespace CourseNet.Services.Data.Interfaces
 {
-    internal class ILectureService
+    public interface ILectureService
     {
+        Task<IEnumerable<LectureSelectionFormViewModel>> GetAllLecturesForCourseAsync(string courseId);
+
+        Task<bool> LectureExists(int lectureId);
+
+        Task<bool> LectureExistsByCourseId(string courseId);
+
+        Task<IEnumerable<AllLecturesForCourseViewModel>> AllLecturesAsync();
     }
 }

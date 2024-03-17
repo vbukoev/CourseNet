@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CourseNet.Web.ViewModels.Lecture
+﻿namespace CourseNet.Web.ViewModels.Lecture
 {
-    internal class AllLectureViewModel
+    public class AllLecturesForCourseViewModel : LectureSelectionFormViewModel
     {
+
     }
 }
