@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
+using CourseNet.Common.DataConstants;
 using static CourseNet.Common.DataConstants.Material;
 namespace CourseNet.Data.Models.Entities
 {

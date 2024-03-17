@@ -8,7 +8,7 @@ namespace CourseNet.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.HasData(GenerateCategories());
+            //builder.HasData(GenerateCategories());
         }
 
         public Category[] GenerateCategories()
