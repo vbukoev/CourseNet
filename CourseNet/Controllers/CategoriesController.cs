@@ -102,6 +102,14 @@ namespace CourseNet.Web.Controllers
             var viewModel = await this.categoriesService.GetCategoryDetailsAsync(id);
             bool exists = await this.categoriesService.CategoryExists(id);
 
+            var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да редактирате тази категория";
+                return RedirectToAction("Become", "Instructor");
+            }
+
             if (!exists)
             {
                 TempData[ErrorMessage] = "Не съществува такава категория";
@@ -123,6 +131,14 @@ namespace CourseNet.Web.Controllers
             if (!exists)
             {
                 TempData[ErrorMessage] = "Не съществува такава категория";
+            }
+
+            var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да редактирате тази категория";
+                return RedirectToAction("Become", "Instructor");
             }
 
             try
@@ -165,7 +181,6 @@ namespace CourseNet.Web.Controllers
                 ModelState.AddModelError(string.Empty, "Възникна грешка при редактирането на категорията!");
                 viewModel.Categories = await categoriesService.GetAllCategoriesAsync();
                 return View(viewModel);
-
             }
 
             return RedirectToAction("Index", "Categories");
@@ -190,8 +205,6 @@ namespace CourseNet.Web.Controllers
                     "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да изтриете категория";
                 return RedirectToAction("Become", "Instructor");
             }
-
-            var instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
 
             try
             {
@@ -226,7 +239,6 @@ namespace CourseNet.Web.Controllers
 
             try
             {
-                
                 await coursesService.DeleteCoursesByCategoryIdAsync(id);
                 
                 await categoriesService.DeleteCategoryByIdAsync(id);
@@ -240,7 +252,6 @@ namespace CourseNet.Web.Controllers
                 return GeneralError();
             }
         }
-
 
         private IActionResult GeneralError()
         {
