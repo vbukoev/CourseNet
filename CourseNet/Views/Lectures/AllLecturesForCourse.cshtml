@@ -1,4 +1,11 @@
-﻿@model IEnumerable<LectureSelectionFormViewModel>
+﻿@using CourseNet.Services.Data.Interfaces
+@using CourseNet.Web.Infrastructure.Extensions
+@model IEnumerable<LectureSelectionFormViewModel>
+
+@inject IInstructorService InstructorService
+@{
+    bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId()!);
+}
 
 @{
     ViewData["Title"] = "Всички лекции за курс";

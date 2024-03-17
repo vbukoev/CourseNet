@@ -25,12 +25,14 @@
                  src="@Model.ImagePath" alt="Course Image">
             
             <p></p>
-            <div class="col-4 border-0">
-                <h6 class="text-center">Лекции към курса:</h6>
-                <a class="btn btn-primary" asp-controller="Lectures" asp-action="AllLecturesForCourse"
-                   asp-route-courseId="@Model.Id">Натисни тук</a>
-            </div>
-
+            @if ((User.Identity?.IsAuthenticated ?? false) && isUserInstructor && isUserEnrolled)
+            {
+                <div class="col-4 border-0">
+                    <h6 class="text-center">Лекции към курса:</h6>
+                    <a class="btn btn-primary" asp-controller="Lectures" asp-action="AllLecturesForCourse"
+                       asp-route-courseId="@Model.Id">Натисни тук</a>
+                </div>
+            }
         </div>
 
         <div class="card col-8 border-0">
