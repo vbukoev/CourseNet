@@ -4,6 +4,7 @@ using CourseNet.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseNet.Data.Migrations
 {
     [DbContext(typeof(CourseNetDbContext))]
-    partial class CourseNetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240317122926_SeedLectures")]
+    partial class SeedLectures
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -368,53 +370,6 @@ namespace CourseNet.Data.Migrations
                     b.ToTable("Materials");
 
                     b.HasComment("Material Table");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
-                            Description = "Този материал представя основните принципи на обектно-ориентираното програмиране (OOP), включително инкапсулация, наследяване и полиморфизъм.",
-                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
-                            LectureId = 1,
-                            Name = "Принципи на Обектно-ориентираното програмиране"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
-                            Description = "Този материал представя теми по програмирането на C#, включително работа с LINQ, асинхронно програмиране и напреднали структури на данни.",
-                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
-                            LectureId = 2,
-                            Name = "Програмиране на C#"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
-                            Description = "Този материал представя основни концепции и технологии в областта на базите данни, включително релационни бази данни, SQL заявки и моделиране на данни.",
-                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
-                            LectureId = 3,
-                            Name = "Основи на базите данни"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
-                            Description = "Този материал представя основни концепции в областта на бизнеса, включително управление на проекти, маркетинг и стратегическо планиране.",
-                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
-                            LectureId = 4,
-                            Name = "Основи на бизнеса"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
-                            Description = "Този материал представя основни принципи на дизайна, включително цветове, композиция и типография.",
-                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
-                            LectureId = 5,
-                            Name = "Дизайн принципи"
-                        });
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Review", b =>
@@ -733,7 +688,7 @@ namespace CourseNet.Data.Migrations
                     b.HasOne("CourseNet.Data.Models.Entities.Course", "Course")
                         .WithMany("Lectures")
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CourseNet.Data.Models.Entities.Instructor", "Instructor")
