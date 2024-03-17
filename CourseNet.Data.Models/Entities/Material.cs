@@ -35,7 +35,7 @@ namespace CourseNet.Data.Models.Entities
         public Instructor Instructor { get; set; }
 
         [Comment("Lecture Identifier")]
-        public Guid LectureId { get; set; }
+        public int LectureId { get; set; }
 
         [Comment("Lecture")]
         [ForeignKey(nameof(LectureId))]
