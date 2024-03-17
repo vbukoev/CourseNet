@@ -1,4 +1,12 @@
-﻿@model CategoryDetailsViewModel
+﻿@using CourseNet.Services.Data.Interfaces
+@using CourseNet.Web.Infrastructure.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CategoryDetailsViewModel
+
+@inject IInstructorService InstructorService
+@{
+    bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId()!);
+}
 
 @{
     ViewData["Title"] = "Редактиране на категория";
@@ -6,19 +14,23 @@
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <form asp-action="Edit" method="post">
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label">Име на категорията:</label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+@if (User.Identity?.IsAuthenticated ?? false)
+{
+    @if (isUserInstructor)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <form asp-action="Edit" method="post">
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label">Име на категорията:</label>
+                            <input asp-for="Name" class="form-control"/>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Запази промените</button>
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-primary">Запази промените</button>
-            </form>
+            </div>
         </div>
-    </div>
-</div>
-
+    }
+}

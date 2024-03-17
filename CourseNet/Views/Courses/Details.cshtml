@@ -23,7 +23,18 @@
         <div class="col-4">
             <img class="card-img-top" style="width: 20rem;"
                  src="@Model.ImagePath" alt="Course Image">
+            
+            <p></p>
+            @if ((User.Identity?.IsAuthenticated ?? false) && (isUserInstructor || isUserEnrolled))
+            {
+                <div class="col-4 border-0">
+                    <h6 class="text-center">Лекции към курса:</h6>
+                    <a class="btn btn-primary" asp-controller="Lectures" asp-action="AllLecturesForCourse"
+                       asp-route-courseId="@Model.Id">Натисни тук</a>
+                </div>
+            }
         </div>
+
         <div class="card col-8 border-0">
             <p>=<i>@(isUserEnrolled && !isUserInstructor ? "Записан" : "Незаписан")</i>=</p>
             <p style="font-size:25px;"><u>@Model.Title</u></p>
@@ -69,6 +80,7 @@
                     }
                 }
             </div>
+            
             <p></p>
             <div class="card" style="width: 18rem;">
                 <div class="card-body">

@@ -11,18 +11,18 @@ namespace CourseNet.Data.Configurations
             builder
                 .Property(c => c.CreatedOn)
                 .HasDefaultValueSql("GETDATE()");
-
+            
             builder.HasOne(c => c.Category)
                 .WithMany(c => c.Courses)
                 .HasForeignKey(c => c.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
-
+                .OnDelete(DeleteBehavior.Cascade);
+            
             builder.HasOne(c => c.Instructor)
                 .WithMany(i => i.CoursesTaught)
                 .HasForeignKey(c => c.InstructorId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasData(GenerateCourses());
+            //builder.HasData(GenerateCourses());
         }
 
         public Course[] GenerateCourses()

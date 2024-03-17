@@ -1,30 +1,42 @@
 ﻿@model IEnumerable<AllCategoryViewModel>
 @using CourseNet.Web.Infrastructure.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using CourseNet.Services.Data.Interfaces
+
+@inject IInstructorService InstructorService
+@{
+    bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId()!);
+}
+
 @{
     ViewData["Title"] = "Всичките категории";
 }
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
-
-<div class="d-flex justify-content-center"> <a asp-controller="Categories" asp-action="Create" class="btn btn-primary btn-outline-warning btn-sm mb-2">Създаване на категория</a></div>
-<div class="list-group">
-    @foreach (AllCategoryViewModel category in Model)
+@if (User.Identity?.IsAuthenticated ?? false)
+{
+    @if (isUserInstructor)
     {
-        <div class="list-group-item list-group-item-action d-flex justify-content-center">
-            <div class="text-center">
-                <p>@category.Name</p>
-                <a asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id" asp-route-information="@category.GetUrlInformation()" class="d-block mb-2"> - Детайли за категорията - </a>
-                <br>
-                <a asp-area="" asp-controller="Categories" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-primary btn-sm mb-2">Редакция на категория (смяна на името)</a>
-                <br>
-                <a asp-area="" asp-controller="Categories" asp-action="Delete" asp-route-id="@category.Id" class="btn btn-danger btn-sm">Премахване на категория</a>
-            </div>
+        <div class="d-flex justify-content-center"> <a asp-controller="Categories" asp-action="Create" class="btn btn-primary btn-outline-warning btn-sm mb-2">Създаване на категория</a></div>
+        <div class="list-group">
+            @foreach (AllCategoryViewModel category in Model)
+            {
+                <div class="list-group-item list-group-item-action d-flex justify-content-center">
+                    <div class="text-center">
+                        <p>@category.Name</p>
+                        <a asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id" asp-route-information="@category.GetUrlInformation()" class="d-block mb-2"> - Детайли за категорията - </a>
+                        <br>
+                        <a asp-area="" asp-controller="Categories" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-primary btn-sm mb-2">Редакция на категория (смяна на името)</a>
+                        <br>
+                        <a asp-area="" asp-controller="Categories" asp-action="Delete" asp-route-id="@category.Id" class="btn btn-danger btn-sm">Премахване на категория</a>
+                    </div>
+                </div>
+                <p></p>
+            }
         </div>
-        <p></p>
     }
-</div>
-
+}
 
 
 

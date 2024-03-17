@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseNet.Data.Migrations
 {
     [DbContext(typeof(CourseNetDbContext))]
-    [Migration("20240313081647_CategoryDescriptionAdd")]
-    partial class CategoryDescriptionAdd
+    [Migration("20240317120410_NewEntitiesAdd")]
+    partial class NewEntitiesAdd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,12 +35,6 @@ namespace CourseNet.Data.Migrations
 
                     b.Property<Guid?>("CourseId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)")
-                        .HasComment("Category Description");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -126,51 +120,6 @@ namespace CourseNet.Data.Migrations
                     b.ToTable("Courses");
 
                     b.HasComment("Course Table");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("02b23a1b-ebbd-4f9f-8941-febdfa88457a"),
-                            CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Научете основите на C# език за програмиране",
-                            Difficulty = 0,
-                            EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImagePath = "",
-                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
-                            Price = 0m,
-                            Status = 0,
-                            StudentId = new Guid("f2dedb39-40b0-4042-cbe4-08dc3524bc5d"),
-                            Title = "C# Fundamentals"
-                        },
-                        new
-                        {
-                            Id = new Guid("59ccc2a1-42e8-44c7-b6f8-59467d7b1dff"),
-                            CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Научете напреднали техники на дизайна",
-                            Difficulty = 2,
-                            EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImagePath = "",
-                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
-                            Price = 0m,
-                            Status = 2,
-                            Title = "Design Advanced "
-                        },
-                        new
-                        {
-                            Id = new Guid("54a03e3f-df13-497e-90f6-13a4d91fd03b"),
-                            CategoryId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Научете как да управлявате бизнеса си",
-                            Difficulty = 1,
-                            EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImagePath = "",
-                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
-                            Price = 0m,
-                            Status = 3,
-                            Title = "Business Management"
-                        });
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.CourseUser", b =>
@@ -286,22 +235,27 @@ namespace CourseNet.Data.Migrations
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Lecture", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("int")
                         .HasComment("Lecture Identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Course Identifier");
 
                     b.Property<DateTime>("Date")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()")
                         .HasComment("Lecture Date");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasComment("Lecture Description");
 
                     b.Property<Guid>("InstructorId")
@@ -310,7 +264,8 @@ namespace CourseNet.Data.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("Lecture Title");
 
                     b.HasKey("Id");
@@ -326,27 +281,35 @@ namespace CourseNet.Data.Migrations
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Material", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("int")
                         .HasComment("Material Identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier")
-                        .HasComment("Material Path");
+                        .HasComment("Course Identifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasComment("Material Description");
 
                     b.Property<Guid>("InstructorId")
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Instructor Identifier");
 
+                    b.Property<int>("LectureId")
+                        .HasColumnType("int")
+                        .HasComment("Lecture Identifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("Material Name");
 
                     b.HasKey("Id");
@@ -355,6 +318,8 @@ namespace CourseNet.Data.Migrations
 
                     b.HasIndex("InstructorId");
 
+                    b.HasIndex("LectureId");
+
                     b.ToTable("Materials");
 
                     b.HasComment("Material Table");
@@ -362,14 +327,17 @@ namespace CourseNet.Data.Migrations
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Review", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("int")
                         .HasComment("Review Identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Comment")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasComment("Review Comment");
 
                     b.Property<Guid>("CourseId")
@@ -386,7 +354,7 @@ namespace CourseNet.Data.Migrations
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier")
-                        .HasComment("Student Identifier");
+                        .HasComment("User Identifier");
 
                     b.HasKey("Id");
 
@@ -701,9 +669,17 @@ namespace CourseNet.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CourseNet.Data.Models.Entities.Lecture", "Lecture")
+                        .WithMany()
+                        .HasForeignKey("LectureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Course");
 
                     b.Navigation("Instructor");
+
+                    b.Navigation("Lecture");
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Review", b =>

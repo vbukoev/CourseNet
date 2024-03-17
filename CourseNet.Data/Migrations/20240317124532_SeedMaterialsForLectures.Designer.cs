@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseNet.Data.Migrations
 {
     [DbContext(typeof(CourseNetDbContext))]
-    [Migration("20240311155405_addingLectureMaterialReviewEntities")]
-    partial class addingLectureMaterialReviewEntities
+    [Migration("20240317124532_SeedMaterialsForLectures")]
+    partial class SeedMaterialsForLectures
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,23 +49,6 @@ namespace CourseNet.Data.Migrations
                     b.ToTable("Categories");
 
                     b.HasComment("Category Table");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Programming"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Design"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Business"
-                        });
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Course", b =>
@@ -137,51 +120,6 @@ namespace CourseNet.Data.Migrations
                     b.ToTable("Courses");
 
                     b.HasComment("Course Table");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("a1acfdbd-1ba2-48d5-b1f3-e43f4756172e"),
-                            CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Научете основите на C# език за програмиране",
-                            Difficulty = 0,
-                            EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImagePath = "",
-                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
-                            Price = 0m,
-                            Status = 0,
-                            StudentId = new Guid("f2dedb39-40b0-4042-cbe4-08dc3524bc5d"),
-                            Title = "C# Fundamentals"
-                        },
-                        new
-                        {
-                            Id = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
-                            CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Научете напреднали техники на дизайна",
-                            Difficulty = 2,
-                            EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImagePath = "",
-                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
-                            Price = 0m,
-                            Status = 2,
-                            Title = "Design Advanced "
-                        },
-                        new
-                        {
-                            Id = new Guid("407f3f88-7ae6-4941-9a42-5e29b457ce5e"),
-                            CategoryId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Научете как да управлявате бизнеса си",
-                            Difficulty = 1,
-                            EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImagePath = "",
-                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
-                            Price = 0m,
-                            Status = 3,
-                            Title = "Business Management"
-                        });
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.CourseUser", b =>
@@ -297,22 +235,27 @@ namespace CourseNet.Data.Migrations
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Lecture", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("int")
                         .HasComment("Lecture Identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Course Identifier");
 
                     b.Property<DateTime>("Date")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()")
                         .HasComment("Lecture Date");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasComment("Lecture Description");
 
                     b.Property<Guid>("InstructorId")
@@ -321,7 +264,8 @@ namespace CourseNet.Data.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("Lecture Title");
 
                     b.HasKey("Id");
@@ -333,31 +277,86 @@ namespace CourseNet.Data.Migrations
                     b.ToTable("Lectures");
 
                     b.HasComment("Lecture Table");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Лекцията за обектно-ориентирано програмиране (ООП) обяснява принципите на създаване на софтуерни обекти, които имат данни и функции, свързани с тях, взаимодействайки помежду си. Програмистите използват концепции като инкапсулация, наследяване и полиморфизъм, за да създадат по-структуриран, поддържаем и разширяем код.",
+                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
+                            Title = "OOP"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CourseId = new Guid("fdca4a09-56d7-4298-8393-c1271b2d83e5"),
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Лекцията за напреднало програмиране на C# обхваща по-сложни концепции и техники за разработка на софтуер. Тя се фокусира върху напреднали теми като асинхронно програмиране, многонишковост, LINQ заявки, динамично програмиране и други. Участването в такава лекция допринася за разширяване на уменията на програмистите и за разработването на по-ефективен и оптимизиран софтуер.",
+                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
+                            Title = "C# Advanced Lecture"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Лекцията за бази данни (DB) представя основните понятия и технологии, свързани със съхранение и управление на данни. Тя обхваща различни модели на бази данни като релационни, NoSQL и графови, както и техники за проектиране на бази данни, оптимизация на заявки и сигурност на данните. Участниците усвояват знания и умения, необходими за създаване, управление и използване на бази данни в различни софтуерни проекти.",
+                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
+                            Title = "DB Lecture"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Лекцията по бизнес представя основни принципи на бизнеса, включително стратегическо планиране, мениджмънт, маркетинг, финанси и операции. Участниците разбират как да анализират пазара, да разработят бизнес стратегии, да управляват финансовите ресурси и да създадат успешни продукти или услуги. Лекцията помага на студентите и професионалистите да разберат основите на бизнеса и да приложат тези знания в практиката.",
+                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
+                            Title = "Business Lecture"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Лекцията по дизайн представя ключови концепции и методи за създаване на визуално привлекателни и функционални продукти или интерфейси. Тя обхваща теми като цветови теории, композиция, типография, UX (потребителски опит) и UI (потребителски интерфейс) дизайн. Участниците усвояват практически умения и инструменти за проектиране, които им помагат да създадат усъвършенствани и интуитивни продукти за крайните потребители.",
+                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
+                            Title = "Design Lecture"
+                        });
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Material", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("int")
                         .HasComment("Material Identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier")
-                        .HasComment("Material Path");
+                        .HasComment("Course Identifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasComment("Material Description");
 
                     b.Property<Guid>("InstructorId")
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Instructor Identifier");
 
+                    b.Property<int>("LectureId")
+                        .HasColumnType("int")
+                        .HasComment("Lecture Identifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("Material Name");
 
                     b.HasKey("Id");
@@ -366,21 +365,73 @@ namespace CourseNet.Data.Migrations
 
                     b.HasIndex("InstructorId");
 
+                    b.HasIndex("LectureId");
+
                     b.ToTable("Materials");
 
                     b.HasComment("Material Table");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
+                            Description = "Този материал представя основните принципи на обектно-ориентираното програмиране (OOP), включително инкапсулация, наследяване и полиморфизъм.",
+                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
+                            LectureId = 1,
+                            Name = "Принципи на Обектно-ориентираното програмиране"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
+                            Description = "Този материал представя теми по програмирането на C#, включително работа с LINQ, асинхронно програмиране и напреднали структури на данни.",
+                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
+                            LectureId = 2,
+                            Name = "Програмиране на C#"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
+                            Description = "Този материал представя основни концепции и технологии в областта на базите данни, включително релационни бази данни, SQL заявки и моделиране на данни.",
+                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
+                            LectureId = 3,
+                            Name = "Основи на базите данни"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
+                            Description = "Този материал представя основни концепции в областта на бизнеса, включително управление на проекти, маркетинг и стратегическо планиране.",
+                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
+                            LectureId = 4,
+                            Name = "Основи на бизнеса"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
+                            Description = "Този материал представя основни принципи на дизайна, включително цветове, композиция и типография.",
+                            InstructorId = new Guid("2e96bdce-d188-4e4d-9f37-addfe53f8fa7"),
+                            LectureId = 5,
+                            Name = "Дизайн принципи"
+                        });
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Review", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("int")
                         .HasComment("Review Identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Comment")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasComment("Review Comment");
 
                     b.Property<Guid>("CourseId")
@@ -397,7 +448,7 @@ namespace CourseNet.Data.Migrations
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier")
-                        .HasComment("Student Identifier");
+                        .HasComment("User Identifier");
 
                     b.HasKey("Id");
 
@@ -648,13 +699,13 @@ namespace CourseNet.Data.Migrations
                     b.HasOne("CourseNet.Data.Models.Entities.Category", "Category")
                         .WithMany("Courses")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CourseNet.Data.Models.Entities.Instructor", "Instructor")
                         .WithMany("CoursesTaught")
                         .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CourseNet.Data.Models.Entities.CourseUser", "Student")
@@ -712,9 +763,17 @@ namespace CourseNet.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CourseNet.Data.Models.Entities.Lecture", "Lecture")
+                        .WithMany()
+                        .HasForeignKey("LectureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Course");
 
                     b.Navigation("Instructor");
+
+                    b.Navigation("Lecture");
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Review", b =>

@@ -1,0 +1,38 @@
+﻿@using CourseNet.Services.Data.Interfaces
+@using CourseNet.Web.Infrastructure.Extensions
+@model IEnumerable<LectureSelectionFormViewModel>
+
+@inject IInstructorService InstructorService
+@{
+    bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId()!);
+}
+
+@{
+    ViewData["Title"] = "Всички лекции за курс";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+@if (Model.Any())
+{
+    @if (isUserInstructor)
+    {
+        <div class="d-flex justify-content-center"> <a asp-controller="Lectures" asp-action="Create" class="btn btn-primary btn-outline-warning btn-sm mb-2">Създаване на нова лекция към курса</a>
+        </div>
+    }
+    <div class="list-group">
+        @foreach (var lecture in Model)
+        {
+            <div class="list-group-item">
+                <h4>@lecture.Title</h4>
+                <p>@lecture.Description</p>
+                <p>Дата: @lecture.Date</p>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p class="text-center">Няма налични лекции за този курс.</p>
+}

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using static CourseNet.Common.DataConstants.Lecture;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourseNet.Data.Models.Entities
@@ -10,25 +8,36 @@ namespace CourseNet.Data.Models.Entities
     [Comment("Lecture Table")]
     public class Lecture
     {
-        public Lecture()
-        {
-            this.Id = System.Guid.NewGuid();
-        }
+
         [Comment("Lecture Identifier")]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
+
         [Comment("Lecture Title")]
-        public string Title { get; set; }
+        [Required]
+        [MaxLength(TitleMaxLength)]
+        public string Title { get; set; } = string.Empty;
+
         [Comment("Lecture Description")]
-        public string Description { get; set; }
+        [Required]
+        [MaxLength(DescriptionMaxLength)]
+        public string Description { get; set; } = string.Empty;
+
         [Comment("Lecture Date")]
+        [Required]
         public DateTime Date { get; set; }
+
         [Comment("Course Identifier")]
         public Guid CourseId { get; set; }
+
         [Comment("Course")]
+        [ForeignKey(nameof(CourseId))]
         public Course Course { get; set; }
+
         [Comment("Instructor Identifier")]
         public Guid InstructorId { get; set; }
+
         [Comment("Instructor")]
+        [ForeignKey(nameof(InstructorId))]
         public Instructor Instructor { get; set; }
     }
 }
