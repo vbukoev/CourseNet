@@ -1,4 +1,5 @@
-﻿using CourseNet.Web.ViewModels.Category;
+﻿using CourseNet.Data.Models.Entities;
+using CourseNet.Web.ViewModels.Category;
 using CourseNet.Web.ViewModels.Lecture;
 
 namespace CourseNet.Services.Data.Interfaces
@@ -12,5 +13,7 @@ namespace CourseNet.Services.Data.Interfaces
         Task<bool> LectureExistsByCourseId(string courseId);
 
         Task<IEnumerable<AllLecturesForCourseViewModel>> AllLecturesAsync();
+
+        Task<string> CreateLectureAndReturnIdAsync();
     }
 }

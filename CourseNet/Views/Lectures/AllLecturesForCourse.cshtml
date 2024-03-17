@@ -16,6 +16,11 @@
 
 @if (Model.Any())
 {
+    @if (isUserInstructor)
+    {
+        <div class="d-flex justify-content-center"> <a asp-controller="Lectures" asp-action="Create" class="btn btn-primary btn-outline-warning btn-sm mb-2">Създаване на нова лекция към курса</a></div>
+        <div class="list-group">
+    }
     <div class="list-group">
         @foreach (var lecture in Model)
         {

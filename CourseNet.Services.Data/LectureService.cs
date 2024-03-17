@@ -4,7 +4,11 @@ using CourseNet.Web.ViewModels.Lecture;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using System.Globalization;
-using DateFormat = CourseNet.Common.DataConstants.Lecture;
+using CourseNet.Data.Models.Entities;
+using CourseNet.Web.ViewModels.Category;
+using static CourseNet.Common.DataConstants.Lecture;
+
+
 namespace CourseNet.Services.Data
 {
     public class LectureService : ILectureService
@@ -26,7 +30,7 @@ namespace CourseNet.Services.Data
                 {
                     Title = c.Title,
                     Description = c.Description,
-                    Date = c.Date,
+                    Date = c.Date.ToString(),
                 })
                 .ToListAsync();
 
@@ -55,11 +59,28 @@ namespace CourseNet.Services.Data
                 {
                     Title = c.Title,
                     Description = c.Description,
-                    Date = c.Date,
+                    Date = c.Date.ToString(CultureInfo.InvariantCulture),
                 })
                 .ToArrayAsync();
 
             return lectures;
+        }
+
+        public async Task<string> CreateLectureAndReturnIdAsync()
+        {
+            LectureSelectionFormViewModel model = null;
+
+            var lecture = new Lecture
+            {
+                Title = model.Title,
+                Description = model.Description,
+                Date = DateTime.ParseExact(model.Date, TimeAndDateFormat, CultureInfo.InvariantCulture),
+            };
+
+            await context.Lectures.AddAsync(lecture);
+            await context.SaveChangesAsync();
+
+            return lecture.Id.ToString();
         }
     }
 }

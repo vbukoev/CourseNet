@@ -16,6 +16,8 @@ namespace CourseNet.Web.ViewModels.Lecture
 
         [Required]
         [Display(Name = "Дата")]
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
+
+        public IEnumerable<LectureSelectionFormViewModel> Lectures { get; set; } = new List<LectureSelectionFormViewModel>();
     }
 }

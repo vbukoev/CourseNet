@@ -38,6 +38,74 @@ namespace CourseNet.Web.Controllers
 
             return View(viewModel);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Create(string courseId)
+        {
+            bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете лекция към курс";
+
+                return RedirectToAction("Become", "Instructor");
+            }
+
+            try
+            {
+                LectureSelectionFormViewModel viewModel = new LectureSelectionFormViewModel()
+                {
+                    Lectures = await lecturesService.GetAllLecturesForCourseAsync(courseId)
+                };
+
+                return View(viewModel);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(LectureSelectionFormViewModel viewModel, string courseId)
+        {
+            bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете лекция към курс";
+
+                return RedirectToAction("Become", "Instructor");
+            }
+
+            bool lectureExists = await lecturesService.LectureExistsByCourseId(courseId);
+
+            if (lectureExists)
+            {
+                TempData[ErrorMessage] = "Неуспешно добавяне на лекция към курс!";
+            }
+
+            if (!ModelState.IsValid)
+            {
+                viewModel.Lectures = await lecturesService.GetAllLecturesForCourseAsync(courseId);
+
+                return View(viewModel);
+            }
+
+            try
+            {
+                string lectureId = await lecturesService.CreateLectureAndReturnIdAsync();
+                TempData[SuccessMessage] = "Лекцията беше създадена успешно!";
+                return RedirectToAction("AllLecturesForCourse", "Lectures", new { id = lectureId });
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Възникна грешка при създаването на лекцията!");
+                viewModel.Lectures = await lecturesService.GetAllLecturesForCourseAsync(courseId);
+                return View(viewModel);
+            }
+        }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] = GeneralErrorMessage;

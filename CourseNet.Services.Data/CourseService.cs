@@ -50,7 +50,7 @@ namespace CourseNet.Services.Data
                 InstructorId = Guid.Parse(instructorId),
                 Status = CourseStatus.Active,
                 Difficulty = model.Difficulty,
-                EndDate = DateTime.ParseExact(model.EndDate, DateFormat, CultureInfo.InvariantCulture),
+                EndDate = DateTime.ParseExact(model.EndDate, TimeAndDateFormat, CultureInfo.InvariantCulture),
             };
 
             await context.Courses.AddAsync(course);
