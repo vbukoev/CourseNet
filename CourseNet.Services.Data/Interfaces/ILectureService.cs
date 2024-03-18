@@ -14,6 +14,6 @@ namespace CourseNet.Services.Data.Interfaces
 
         Task<IEnumerable<AllLecturesForCourseViewModel>> AllLecturesAsync();
 
-        Task<string> CreateLectureAndReturnIdAsync();
+        Task<string> CreateLectureAndReturnIdAsync(LectureSelectionFormViewModel model);
     }
 }

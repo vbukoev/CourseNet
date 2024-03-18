@@ -66,10 +66,8 @@ namespace CourseNet.Services.Data
             return lectures;
         }
 
-        public async Task<string> CreateLectureAndReturnIdAsync()
+        public async Task<string> CreateLectureAndReturnIdAsync(LectureSelectionFormViewModel model)
         {
-            LectureSelectionFormViewModel model = null;
-
             var lecture = new Lecture
             {
                 Title = model.Title,
