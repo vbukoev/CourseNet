@@ -66,21 +66,18 @@ namespace CourseNet.Services.Data
             return lectures;
         }
 
-        public async Task<string> CreateLectureAndReturnIdAsync()
+        public async Task CreateLectureAsync(LectureSelectionFormViewModel model, string courseId)
         {
-            LectureSelectionFormViewModel model = null;
-
             var lecture = new Lecture
             {
                 Title = model.Title,
                 Description = model.Description,
                 Date = DateTime.ParseExact(model.Date, TimeAndDateFormat, CultureInfo.InvariantCulture),
+                CourseId = Guid.Parse(courseId)
             };
 
             await context.Lectures.AddAsync(lecture);
             await context.SaveChangesAsync();
-
-            return lecture.Id.ToString();
         }
     }
 }

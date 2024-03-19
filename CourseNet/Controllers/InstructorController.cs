@@ -63,9 +63,9 @@ namespace CourseNet.Web.Controllers
 
             try
             {
-                await this.instructorService.Create(userId, model);
+                await instructorService.Create(userId, model);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 TempData[ErrorMessage] = "Неочаквана грешка! Моля свържете се с нас или опитайте отново по-късно.";
                 return RedirectToAction("Index", "Home");

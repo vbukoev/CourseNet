@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿    using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static CourseNet.Common.DataConstants.Instructor;
@@ -8,7 +8,7 @@ namespace CourseNet.Data.Models.Entities
     [Comment("Instructors Table")]
     public class Instructor
     {
-        public Instructor()
+        public Instructor()     
         {
             this.Id = System.Guid.NewGuid();
         }
