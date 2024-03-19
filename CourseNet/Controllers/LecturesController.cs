@@ -63,12 +63,6 @@ namespace CourseNet.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(LectureSelectionFormViewModel viewModel, string courseId)
         {
-            if (viewModel == null)
-            {
-                ModelState.AddModelError(string.Empty, "Моделът за лекция е невалиден.");
-                return View(viewModel);
-            }
-
             bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
 
             if (!isInstructor)
@@ -86,16 +80,14 @@ namespace CourseNet.Web.Controllers
 
             try
             {
-                string lectureId = await lecturesService.CreateLectureAndReturnIdAsync(viewModel);
-                TempData["SuccessMessage"] = "Лекцията беше създадена успешно!";
-                return RedirectToAction("AllLecturesForCourse", "Lectures", new { id = lectureId });
+                await lecturesService.CreateLectureAsync(viewModel, courseId);
             }
             catch (Exception)
             {
                 ModelState.AddModelError(string.Empty, "Възникна грешка при създаването на лекцията!");
-                viewModel.Lectures = await lecturesService.GetAllLecturesForCourseAsync(courseId);
-                return View(viewModel);
+                return RedirectToAction("Details", "Courses");
             }
+            return RedirectToAction("Details", "Courses");
         }
 
         private IActionResult GeneralError()

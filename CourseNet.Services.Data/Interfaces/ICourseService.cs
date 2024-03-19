@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CourseNet.Data.Models.Entities;
 using CourseNet.Services.Data.Models.Course;
 using CourseNet.Services.Data.Models.Statistics;
 using CourseNet.Web.ViewModels.Course;
