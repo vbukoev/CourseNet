@@ -10,6 +10,8 @@ namespace CourseNet.Services.Data.Interfaces
 
         Task<bool> LectureExists(int lectureId);
 
+        Task<bool> IsValidInstructor(string instructorId);
+
         Task<bool> LectureExistsByCourseId(string courseId);
 
         Task<IEnumerable<AllLecturesForCourseViewModel>> AllLecturesAsync();
