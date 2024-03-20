@@ -29,8 +29,7 @@
             {
                 <div class="col-4 border-0">
                     <h6 class="text-center">Лекции към курса:</h6>
-                    <a class="btn btn-primary" asp-controller="Lectures" asp-action="AllLecturesForCourse"
-                       asp-route-courseId="@Model.Id">Натисни тук</a>
+                    <a href="/Lectures/Create?courseId=@Model.Id">Създай лекция</a>
                 </div>
             }
         </div>
