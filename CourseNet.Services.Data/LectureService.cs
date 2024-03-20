@@ -7,6 +7,8 @@ using System.Globalization;
 using CourseNet.Data.Models.Entities;
 using CourseNet.Web.ViewModels.Category;
 using static CourseNet.Common.DataConstants.Lecture;
+using CourseNet.Common.DataConstants;
+using Lecture = CourseNet.Data.Models.Entities.Lecture;
 
 
 namespace CourseNet.Services.Data
@@ -44,6 +46,11 @@ namespace CourseNet.Services.Data
             return res;
         }
 
+        public async Task<bool> IsValidInstructor(string instructorId)
+        {
+            return await context.Instructors.AnyAsync(i => i.Id.ToString() == instructorId);
+        }
+
         public async Task<bool> LectureExistsByCourseId(string courseId)
         {
             bool res = await context.Lectures.AnyAsync(c => c.CourseId.ToString() == courseId);
@@ -66,14 +73,16 @@ namespace CourseNet.Services.Data
             return lectures;
         }
 
-        public async Task CreateLectureAsync(LectureSelectionFormViewModel model, string courseId)
+        public async Task CreateLectureAsync(LectureSelectionFormViewModel viewModel, string courseId)
         {
+           
+            if (viewModel == null)
+                throw new ArgumentNullException(nameof(viewModel));
+
             var lecture = new Lecture
             {
-                Title = model.Title,
-                Description = model.Description,
-                Date = DateTime.ParseExact(model.Date, TimeAndDateFormat, CultureInfo.InvariantCulture),
-                CourseId = Guid.Parse(courseId)
+                Title = viewModel.Title,
+                Description = viewModel.Description,
             };
 
             await context.Lectures.AddAsync(lecture);

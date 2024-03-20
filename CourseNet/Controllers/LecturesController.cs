@@ -1,4 +1,5 @@
 ﻿using CourseNet.Data;
+using CourseNet.Services.Data;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.Infrastructure.Extensions;
 using CourseNet.Web.ViewModels.Category;
@@ -34,60 +35,38 @@ namespace CourseNet.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create(string courseId)
+        public IActionResult Create()
         {
-            bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
-
-            if (!isInstructor)
-            {
-                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете лекция към курс";
-
-                return RedirectToAction("Become", "Instructor");
-            }
-
-            try
-            {
-                LectureSelectionFormViewModel viewModel = new LectureSelectionFormViewModel()
-                {
-                    Lectures = await lecturesService.GetAllLecturesForCourseAsync(courseId)
-                };
-
-                return View(viewModel);
-            }
-            catch (Exception)
-            {
-                return GeneralError();
-            }
+            return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(LectureSelectionFormViewModel viewModel, string courseId)
         {
-            bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
-
-            if (!isInstructor)
-            {
-                TempData["ErrorMessage"] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете лекция към курс";
-                return RedirectToAction("Become", "Instructor");
-            }
-
-            bool lectureExists = await lecturesService.LectureExistsByCourseId(courseId);
-
-            if (lectureExists)
-            {
-                TempData["ErrorMessage"] = "Неуспешно добавяне на лекция към курс!";
-            }
-
             try
             {
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (!await lecturesService.IsValidInstructor(viewModel.InstructorId))
+                {
+                    
+                    ModelState.AddModelError(string.Empty, "Избраният инструктор не е валиден.");
+                    return BadRequest(ModelState);
+                }
+
                 await lecturesService.CreateLectureAsync(viewModel, courseId);
+
+                return Ok();
             }
             catch (Exception)
             {
                 ModelState.AddModelError(string.Empty, "Възникна грешка при създаването на лекцията!");
-                return RedirectToAction("Details", "Courses");
+                return GeneralError();
             }
-            return RedirectToAction("Details", "Courses");
         }
 
         private IActionResult GeneralError()
