@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using static CourseNet.Common.DataConstants.Lecture;
+using CourseNet.Web.ViewModels.Category;
 
 namespace CourseNet.Web.ViewModels.Lecture
 {
@@ -21,10 +22,12 @@ namespace CourseNet.Web.ViewModels.Lecture
         [Display(Name = "Дата")]
         public string Date { get; set; }
 
-        [Required]
-        public Guid CourseId { get; set; }
+        [Required] 
+        public string CourseId { get; set; } = null!;
 
-        
-        public IEnumerable<LectureSelectionFormViewModel> Lectures { get; set; } = new List<LectureSelectionFormViewModel>();
+        [Required]
+        public string InstructorId { get; set; } = null!;
+
+        public IEnumerable<LectureSelectionFormViewModel> Lectures { get; set; } = new HashSet<LectureSelectionFormViewModel>();
     }
 }
