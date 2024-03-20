@@ -139,7 +139,7 @@ namespace CourseNet.Services.Data
 
         public async Task<IEnumerable<CourseAllViewModel>> AllByUserIdAsync(string userId)
         {
-            IEnumerable<CourseAllViewModel> allUserCourses = await this.context.Courses
+            IEnumerable<CourseAllViewModel> allUserCourses = await context.Courses
                 .Where(c => c.StudentId.HasValue && c.StudentId.ToString() == userId)
                 .Select(c => new CourseAllViewModel
                 {
