@@ -44,7 +44,7 @@ namespace CourseNet.Data.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasComment("Category Table");
                 });
@@ -115,7 +115,7 @@ namespace CourseNet.Data.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
 
                     b.HasComment("Course Table");
                 });
@@ -226,7 +226,7 @@ namespace CourseNet.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Instructors");
+                    b.ToTable("Instructors", (string)null);
 
                     b.HasComment("Instructors Table");
                 });
@@ -272,7 +272,7 @@ namespace CourseNet.Data.Migrations
 
                     b.HasIndex("InstructorId");
 
-                    b.ToTable("Lectures");
+                    b.ToTable("Lectures", (string)null);
 
                     b.HasComment("Lecture Table");
 
@@ -365,7 +365,7 @@ namespace CourseNet.Data.Migrations
 
                     b.HasIndex("LectureId");
 
-                    b.ToTable("Materials");
+                    b.ToTable("Materials", (string)null);
 
                     b.HasComment("Material Table");
 
@@ -454,7 +454,7 @@ namespace CourseNet.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
 
                     b.HasComment("Review Table");
                 });
@@ -530,7 +530,7 @@ namespace CourseNet.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
 
                     b.HasComment("Student Table");
                 });
@@ -547,7 +547,7 @@ namespace CourseNet.Data.Migrations
 
                     b.HasIndex("StudentsId");
 
-                    b.ToTable("CourseUser");
+                    b.ToTable("CourseUser", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
