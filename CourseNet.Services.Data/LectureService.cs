@@ -72,7 +72,6 @@ namespace CourseNet.Services.Data
             {
                 Title = model.Title,
                 Description = model.Description,
-                Date = DateTime.ParseExact(model.Date, TimeAndDateFormat, CultureInfo.InvariantCulture),
                 CourseId = Guid.Parse(courseId)
             };
 
