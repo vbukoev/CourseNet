@@ -1,4 +1,5 @@
 ﻿using CourseNet.Data;
+using CourseNet.Services.Data;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.Infrastructure.Extensions;
 using CourseNet.Web.ViewModels.Category;
@@ -34,40 +35,38 @@ namespace CourseNet.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create(string courseId)
+        public IActionResult Create()
         {
-            try
-            {
-                LectureSelectionFormViewModel viewModel = new LectureSelectionFormViewModel
-                {
-                    Lectures = await lecturesService.GetAllLecturesForCourseAsync(courseId),
-                    CourseId = Guid.Parse(courseId)
-                };
-
-                return View(viewModel);
-            }
-            catch (Exception)
-            {
-                return GeneralError();
-            }
+            return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(LectureSelectionFormViewModel viewModel)
+        public async Task<IActionResult> Create(LectureSelectionFormViewModel viewModel, string courseId)
         {
             try
             {
-                viewModel.CourseId = Guid.Parse(viewModel.CourseId.ToString());
 
-                await lecturesService.CreateLectureAsync(viewModel, viewModel.CourseId.ToString());
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (!await lecturesService.IsValidInstructor(viewModel.InstructorId))
+                {
+                    
+                    ModelState.AddModelError(string.Empty, "Избраният инструктор не е валиден.");
+                    return BadRequest(ModelState);
+                }
+
+                await lecturesService.CreateLectureAsync(viewModel, courseId);
+
+                return Ok();
             }
             catch (Exception)
             {
-                
                 ModelState.AddModelError(string.Empty, "Възникна грешка при създаването на лекцията!");
-                return RedirectToAction("Details", "Courses");
+                return GeneralError();
             }
-            return RedirectToAction("Details", "Courses");
         }
 
         private IActionResult GeneralError()
