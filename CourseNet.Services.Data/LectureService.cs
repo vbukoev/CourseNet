@@ -61,7 +61,7 @@ namespace CourseNet.Services.Data
         public async Task<IEnumerable<AllLecturesForCourseViewModel>> AllLecturesAsync()
         {
             IEnumerable<AllLecturesForCourseViewModel> lectures = await context.Lectures
-                .AsNoTracking() 
+                .AsNoTracking()
                 .Select(c => new AllLecturesForCourseViewModel
                 {
                     Title = c.Title,
@@ -73,20 +73,22 @@ namespace CourseNet.Services.Data
             return lectures;
         }
 
-        public async Task CreateLectureAsync(LectureSelectionFormViewModel viewModel, string courseId)
+        public async Task<string> CreateLectureAsync(LectureSelectionFormViewModel model)
         {
-           
-            if (viewModel == null)
-                throw new ArgumentNullException(nameof(viewModel));
-
             var lecture = new Lecture
             {
-                Title = viewModel.Title,
-                Description = viewModel.Description,
+                Title = model.Title,
+                Description = model.Description,
+                Date = DateTime.Parse(model.Date),
+                CourseId = Guid.Parse(model.CourseId),
+                InstructorId = Guid.Parse(model.InstructorId)
             };
 
             await context.Lectures.AddAsync(lecture);
             await context.SaveChangesAsync();
+
+            return lecture.Id.ToString();
+
         }
     }
 }
