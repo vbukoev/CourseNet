@@ -36,7 +36,7 @@ namespace CourseNet.Web.Controllers
 
             if (!isInstructor)
             {
-                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете курс";
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете категория";
 
                 return RedirectToAction("Become", "Instructor");
             }
@@ -63,7 +63,7 @@ namespace CourseNet.Web.Controllers
 
             if (!isInstructor)
             {
-                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете курс";
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете категория";
 
                 return RedirectToAction("Become", "Instructor");
             }
