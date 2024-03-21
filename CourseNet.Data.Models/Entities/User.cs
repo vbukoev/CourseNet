@@ -36,6 +36,5 @@ namespace CourseNet.Data.Models.Entities
         [MaxLength(PhoneNumberMaxLength)]
         public string Phone { get; set; } = string.Empty;
         
-        public IEnumerable<Course> EnrolledCourses { get; set; } = new List<Course>();
     }
 }
