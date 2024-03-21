@@ -21,25 +21,11 @@ namespace CourseNet.Data.Models.Entities
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; } = string.Empty;
 
-        [Comment("Course Identifier")]
-        public Guid CourseId { get; set; }
-
-        [Comment("Course")]
-        [ForeignKey(nameof(CourseId))]
-        public Course Course { get; set; }
-
-        [Comment("Instructor Identifier")]
-        public Guid InstructorId { get; set; }
-
-        [Comment("Instructor")]
-        [ForeignKey(nameof(InstructorId))]
-        public Instructor Instructor { get; set; }
-
-        [Comment("Lecture Identifier")]
+        [Comment("Lecture identifier")]
         public int LectureId { get; set; }
 
         [Comment("Lecture")]
         [ForeignKey(nameof(LectureId))]
-        public Lecture Lecture { get; set; }
+        public virtual Lecture Lecture { get; set; }
     }
 }

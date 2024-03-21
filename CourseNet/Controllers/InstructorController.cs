@@ -19,8 +19,8 @@ namespace CourseNet.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Become()
         {
-            string? userId = this.User.GetId();
-            bool isInstructor = await this.instructorService.InstructorExistsByUserId(userId);
+            string? userId = User.GetId();
+            bool isInstructor = await instructorService.InstructorExistsByUserId(userId);
 
             if (isInstructor)
             {
@@ -33,15 +33,15 @@ namespace CourseNet.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Become(BecomeInstructorFormModel model)
         {
-            string? userId = this.User.GetId();
-            bool isInstructor = await this.instructorService.InstructorExistsByUserId(userId);
+            string? userId = User.GetId();
+            bool isInstructor = await instructorService.InstructorExistsByUserId(userId);
 
             if (isInstructor)
             {
                 TempData[NotificationMessagesConstants.ErrorMessage] = "Вече си инструктор!";
                 return RedirectToAction("Index", "Home");
             }
-            bool isPhoneNumberTaken = await this.instructorService.InstructorExistsByPhoneNumber(model.PhoneNumber);
+            bool isPhoneNumberTaken = await instructorService.InstructorExistsByPhoneNumber(model.PhoneNumber);
 
             if (isPhoneNumberTaken)
             {

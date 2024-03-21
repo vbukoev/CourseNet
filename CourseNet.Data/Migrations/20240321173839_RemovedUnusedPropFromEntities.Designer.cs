@@ -4,6 +4,7 @@ using CourseNet.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseNet.Data.Migrations
 {
     [DbContext(typeof(CourseNetDbContext))]
-    partial class CourseNetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240321173839_RemovedUnusedPropFromEntities")]
+    partial class RemovedUnusedPropFromEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,14 +242,11 @@ namespace CourseNet.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<Guid>("CourseId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("Course Identifier");
+                    b.Property<Guid?>("CourseId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Date")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()")
                         .HasComment("Lecture Date");
 
                     b.Property<string>("Description")
@@ -269,48 +268,6 @@ namespace CourseNet.Data.Migrations
                     b.ToTable("Lectures");
 
                     b.HasComment("Lecture Table");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Лекцията за обектно-ориентирано програмиране (ООП) обяснява принципите на създаване на софтуерни обекти, които имат данни и функции, свързани с тях, взаимодействайки помежду си. Програмистите използват концепции като инкапсулация, наследяване и полиморфизъм, за да създадат по-структуриран, поддържаем и разширяем код.",
-                            Title = "OOP"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Лекцията за напреднало програмиране на C# обхваща по-сложни концепции и техники за разработка на софтуер. Тя се фокусира върху напреднали теми като асинхронно програмиране, многонишковост, LINQ заявки, динамично програмиране и други. Участването в такава лекция допринася за разширяване на уменията на програмистите и за разработването на по-ефективен и оптимизиран софтуер.",
-                            Title = "C# Advanced Lecture"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CourseId = new Guid("fdca4a09-56d7-4298-8393-c1271b2d83e5"),
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Лекцията за бази данни (DB) представя основните понятия и технологии, свързани със съхранение и управление на данни. Тя обхваща различни модели на бази данни като релационни, NoSQL и графови, както и техники за проектиране на бази данни, оптимизация на заявки и сигурност на данните. Участниците усвояват знания и умения, необходими за създаване, управление и използване на бази данни в различни софтуерни проекти.",
-                            Title = "DB Lecture"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CourseId = new Guid("fdca4a09-56d7-4298-8393-c1271b2d83e5"),
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Лекцията по бизнес представя основни принципи на бизнеса, включително стратегическо планиране, мениджмънт, маркетинг, финанси и операции. Участниците разбират как да анализират пазара, да разработят бизнес стратегии, да управляват финансовите ресурси и да създадат успешни продукти или услуги. Лекцията помага на студентите и професионалистите да разберат основите на бизнеса и да приложат тези знания в практиката.",
-                            Title = "Business Lecture"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CourseId = new Guid("fdca4a09-56d7-4298-8393-c1271b2d83e5"),
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Лекцията по дизайн представя ключови концепции и методи за създаване на визуално привлекателни и функционални продукти или интерфейси. Тя обхваща теми като цветови теории, композиция, типография, UX (потребителски опит) и UI (потребителски интерфейс) дизайн. Участниците усвояват практически умения и инструменти за проектиране, които им помагат да създадат усъвършенствани и интуитивни продукти за крайните потребители.",
-                            Title = "Design Lecture"
-                        });
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Material", b =>
@@ -331,10 +288,6 @@ namespace CourseNet.Data.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasComment("Material Description");
 
-                    b.Property<int>("LectureId")
-                        .HasColumnType("int")
-                        .HasComment("Lecture identifier");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -344,8 +297,6 @@ namespace CourseNet.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
-
-                    b.HasIndex("LectureId");
 
                     b.ToTable("Materials");
 
@@ -367,9 +318,8 @@ namespace CourseNet.Data.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasComment("Review Comment");
 
-                    b.Property<Guid>("CourseId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("Course Identifier");
+                    b.Property<Guid?>("CourseId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2")
@@ -406,9 +356,6 @@ namespace CourseNet.Data.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("CourseId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -468,11 +415,24 @@ namespace CourseNet.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
-
                     b.ToTable("Students");
 
                     b.HasComment("Student Table");
+                });
+
+            modelBuilder.Entity("CourseUser", b =>
+                {
+                    b.Property<Guid>("EnrolledCoursesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StudentsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("EnrolledCoursesId", "StudentsId");
+
+                    b.HasIndex("StudentsId");
+
+                    b.ToTable("CourseUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -655,13 +615,9 @@ namespace CourseNet.Data.Migrations
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Lecture", b =>
                 {
-                    b.HasOne("CourseNet.Data.Models.Entities.Course", "Course")
+                    b.HasOne("CourseNet.Data.Models.Entities.Course", null)
                         .WithMany("Lectures")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
+                        .HasForeignKey("CourseId");
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Material", b =>
@@ -669,23 +625,13 @@ namespace CourseNet.Data.Migrations
                     b.HasOne("CourseNet.Data.Models.Entities.Course", null)
                         .WithMany("Materials")
                         .HasForeignKey("CourseId");
-
-                    b.HasOne("CourseNet.Data.Models.Entities.Lecture", "Lecture")
-                        .WithMany("Materials")
-                        .HasForeignKey("LectureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lecture");
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Review", b =>
                 {
-                    b.HasOne("CourseNet.Data.Models.Entities.Course", "Course")
+                    b.HasOne("CourseNet.Data.Models.Entities.Course", null)
                         .WithMany("Reviews")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CourseId");
 
                     b.HasOne("CourseNet.Data.Models.Entities.User", "User")
                         .WithMany()
@@ -693,16 +639,22 @@ namespace CourseNet.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Course");
-
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CourseNet.Data.Models.Entities.User", b =>
+            modelBuilder.Entity("CourseUser", b =>
                 {
                     b.HasOne("CourseNet.Data.Models.Entities.Course", null)
-                        .WithMany("Students")
-                        .HasForeignKey("CourseId");
+                        .WithMany()
+                        .HasForeignKey("EnrolledCoursesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CourseNet.Data.Models.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -770,8 +722,6 @@ namespace CourseNet.Data.Migrations
                     b.Navigation("Materials");
 
                     b.Navigation("Reviews");
-
-                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.CourseUser", b =>
@@ -782,11 +732,6 @@ namespace CourseNet.Data.Migrations
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Instructor", b =>
                 {
                     b.Navigation("CoursesTaught");
-                });
-
-            modelBuilder.Entity("CourseNet.Data.Models.Entities.Lecture", b =>
-                {
-                    b.Navigation("Materials");
                 });
 #pragma warning restore 612, 618
         }

@@ -8,6 +8,7 @@ using CourseNet.Data.Models.Entities;
 using CourseNet.Web.ViewModels.Category;
 using static CourseNet.Common.DataConstants.Lecture;
 using CourseNet.Common.DataConstants;
+using Course = CourseNet.Data.Models.Entities.Course;
 using Lecture = CourseNet.Data.Models.Entities.Lecture;
 
 
@@ -24,15 +25,14 @@ namespace CourseNet.Services.Data
             this.courseService = courseService;
         }
 
-        public async Task<IEnumerable<LectureSelectionFormViewModel>> GetAllLecturesForCourseAsync(string courseId)
+        public async Task<IEnumerable<LecturesForCourseViewModel>> GetAllLecturesForCourseAsync(string courseId)
         {
             var lectures = await context.Lectures
                     .Where(l => l.CourseId.ToString() == courseId)
-                .Select(c => new LectureSelectionFormViewModel
+                .Select(c => new LecturesForCourseViewModel
                 {
                     Title = c.Title,
                     Description = c.Description,
-                    Date = c.Date.ToString(),
                 })
                 .ToListAsync();
 
@@ -53,40 +53,47 @@ namespace CourseNet.Services.Data
 
         public async Task<bool> LectureExistsByCourseId(string courseId)
         {
-            bool res = await context.Lectures.AnyAsync(c => c.CourseId.ToString() == courseId);
+            bool res = await context.Lectures.AnyAsync(l => l.Course.Id.ToString() == courseId);
 
             return res;
         }
 
-        public async Task<IEnumerable<AllLecturesForCourseViewModel>> AllLecturesAsync()
+        public async Task<IEnumerable<LecturesForCourseViewModel>> AllLecturesAsync()
         {
-            IEnumerable<AllLecturesForCourseViewModel> lectures = await context.Lectures
-                .AsNoTracking() 
-                .Select(c => new AllLecturesForCourseViewModel
+            IEnumerable<LecturesForCourseViewModel> lectures = await context.Lectures
+                .AsNoTracking()
+                .Select(c => new LecturesForCourseViewModel
                 {
                     Title = c.Title,
                     Description = c.Description,
-                    Date = c.Date.ToString(CultureInfo.InvariantCulture),
                 })
                 .ToArrayAsync();
 
             return lectures;
         }
 
-        public async Task CreateLectureAsync(LectureSelectionFormViewModel viewModel, string courseId)
+        public async Task<int> AddLectureToCourseAsync(LectureSelectionFormViewModel model, string courseId)
         {
            
-            if (viewModel == null)
-                throw new ArgumentNullException(nameof(viewModel));
+            bool courseExists = await courseService.ExistsByIdAsync(courseId);
+            if (!courseExists)
+            {
+                throw new Exception("Курсът не съществува.");
+            }
 
             var lecture = new Lecture
             {
-                Title = viewModel.Title,
-                Description = viewModel.Description,
+                Title = model.Title,
+                Description = model.Description,
+                Date = model.Date,
+                CourseId = Guid.Parse(courseId)
             };
 
-            await context.Lectures.AddAsync(lecture);
+            context.Lectures.Add(lecture);
             await context.SaveChangesAsync();
+
+            return lecture.Id;
         }
+
     }
 }

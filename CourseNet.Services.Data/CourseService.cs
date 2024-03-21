@@ -158,11 +158,11 @@ namespace CourseNet.Services.Data
             return allUserCourses;
         }
 
-        public async Task<bool> ExistsByIdAsync(string houseId)
+        public async Task<bool> ExistsByIdAsync(string courseId)
         {
             bool result = await context
                 .Courses
-                .AnyAsync(h => h.Id.ToString() == houseId);
+                .AnyAsync(h => h.Id.ToString() == courseId);
 
             return result;
         }
@@ -324,7 +324,7 @@ namespace CourseNet.Services.Data
         {
             var coursesToDelete = context.Courses.Where(c => c.CategoryId == categoryId);
 
-            context.Courses.RemoveRange(coursesToDelete); // We use RemoveRange to delete all courses with the given categoryId
+            context.Courses.RemoveRange(coursesToDelete); // We use RemoveRange(course) to delete all courses with the given categoryId
 
             await context.SaveChangesAsync();
         }

@@ -7,8 +7,8 @@
 <hr />
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-        <form method="post">
-            <input type="hidden" name="courseId" />
+        <form asp-controller="Lectures" asp-action="Create" method="post">
+            <input type="hidden" name="courseId" value="@ViewBag.CourseId" />
 
             <div class="form-group">
                 <label asp-for="Title">Заглавие</label>
@@ -18,10 +18,9 @@
             <div class="form-group">
                 <label asp-for="Description">Описание</label>
                 <textarea asp-for="Description" rows="4" class="form-control"
-                  placeholder="Описание на лекцията"></textarea>
+                          placeholder="Описание на лекцията"></textarea>
                 <span asp-validation-for="Description" class="small text-danger"></span>
             </div>
-
             <div class="text-center">
                 <input class="btn btn-primary mt-3" type="submit" value="Създай лекция" />
             </div>

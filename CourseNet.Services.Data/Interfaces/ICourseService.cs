@@ -17,7 +17,6 @@ namespace CourseNet.Services.Data.Interfaces
         Task<IEnumerable<IndexViewModel>> GetAllCoursesAsync();
 
         Task<string> CreateCourseAndReturnIdAsync(CourseFormViewModel model, string instructorId);
-
         Task<AllCoursesFilteredAndPagedServiceModel> AllAsync(AllCoursesQueryModel queryModel);
 
         Task<IEnumerable<CourseAllViewModel>> AllByInstructorIdAsync(string instructorId);
