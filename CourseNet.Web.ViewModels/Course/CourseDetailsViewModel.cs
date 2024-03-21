@@ -14,7 +14,7 @@ namespace CourseNet.Web.ViewModels.Course
         
         public InstructorInfoOfCourseViewModel Instructor { get; set; } = null!;
 
-        public IEnumerable<AllLecturesForCourseViewModel> Lectures { get; set; } =
-            new List<AllLecturesForCourseViewModel>();
+        public IEnumerable<LecturesForCourseViewModel> Lectures { get; set; } =
+            new List<LecturesForCourseViewModel>();
     }
 }
