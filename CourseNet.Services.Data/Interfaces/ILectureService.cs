@@ -6,7 +6,7 @@ namespace CourseNet.Services.Data.Interfaces
 {
     public interface ILectureService
     {
-        Task<IEnumerable<LectureSelectionFormViewModel>> GetAllLecturesForCourseAsync(string courseId);
+        Task<IEnumerable<LecturesForCourseViewModel>> GetAllLecturesForCourseAsync(string courseId);
 
         Task<bool> LectureExists(int lectureId);
 
@@ -14,8 +14,8 @@ namespace CourseNet.Services.Data.Interfaces
 
         Task<bool> LectureExistsByCourseId(string courseId);
 
-        Task<IEnumerable<AllLecturesForCourseViewModel>> AllLecturesAsync();
+        Task<IEnumerable<LecturesForCourseViewModel>> AllLecturesAsync();
 
-        Task<string> CreateLectureAsync(LectureSelectionFormViewModel model);
+        Task<int> AddLectureToCourseAsync(LectureSelectionFormViewModel model, string courseId);
     }
 }
