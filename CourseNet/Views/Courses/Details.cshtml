@@ -25,11 +25,11 @@
                  src="@Model.ImagePath" alt="Course Image">
             
             <p></p>
-            @if ((User.Identity?.IsAuthenticated ?? false) @* && (isUserInstructor || isUserEnrolled) *@)
+            @if ((User.Identity?.IsAuthenticated ?? false) && (isUserInstructor || isUserEnrolled) )
             {
                 <div class="col-4 border-0">
                     <h6 class="text-center">Лекции към курса:</h6>
-                    <a class="btn btn-primary" href="/Lectures/Create?courseId=@Model.Id.ToUpper()">Натисни тук</a>
+                    <a class="btn btn-primary" href="/Lectures/AllLecturesForCourse?courseId=@Model.Id.ToUpper()">Натисни тук</a>
                 </div>
             }
         </div>
