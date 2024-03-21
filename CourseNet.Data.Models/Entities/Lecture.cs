@@ -31,12 +31,9 @@ namespace CourseNet.Data.Models.Entities
 
         [Comment("Course")]
         [ForeignKey(nameof(CourseId))]
-        public Course Course { get; set; }
+        public virtual Course Course { get; set; }
 
-        [Comment("Instructor Identifier")]
-        public Guid InstructorId { get; set; }
-        [Comment("Instructor")]
-        [ForeignKey(nameof(InstructorId))]
-        public Instructor Instructor { get; set; }
+        [Comment("Collection of Materials")]
+        public virtual ICollection<Material> Materials { get; set; } = new HashSet<Material>();
     }
 }
