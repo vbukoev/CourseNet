@@ -13,6 +13,7 @@ using System;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using static CourseNet.Common.Notifications.NotificationMessagesConstants;
 using static CourseNet.Common.ValidationErrors.General;
+using CourseNet.Common.DataConstants;
 
 
 namespace CourseNet.Web.Controllers
@@ -33,53 +34,73 @@ namespace CourseNet.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AllLecturesForCourse(string courseId)
+        public async Task<IActionResult> AllLecturesForCourse(Guid courseId)
         {
-            var viewModel = await lecturesService.GetAllLecturesForCourseAsync(courseId);
-
-            return View(viewModel);
+            try
+            {
+                var viewModel = await lecturesService.GetAllLecturesForCourseAsync(courseId);
+                return View(viewModel);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(string courseId)
         {
             bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
             if (!isInstructor)
             {
-                TempData[ErrorMessage] = "Трябва да си инструктор, за да се опиташ да създадеш лекция към курс!";
-                return RedirectToAction("Index", "Home");
-            }
-            
-            return View();
-        }
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете лекцията";
 
-        [HttpPost]
-        public async Task<IActionResult> Create(LectureSelectionFormViewModel model, string courseId)
-        {
-            bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
-            if (!isInstructor)
-            {
-                TempData[ErrorMessage] = "Трябва да си инструктор, за да създадеш лекция към курс!";
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return View(model);
+                return RedirectToAction("Become", "Instructor");
             }
 
             try
             {
-                await lecturesService.AddLectureToCourseAsync(model, courseId);
+                LectureSelectionFormViewModel viewModel = new LectureSelectionFormViewModel();
+                viewModel.CourseId = courseId.ToUpper();
+                return View(viewModel);
             }
             catch (Exception)
             {
-                TempData[ErrorMessage] = "Неочаквана грешка! Моля свържете се с нас или опитайте отново по-късно.";
-                return RedirectToAction("Index", "Home");
+                return GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(LectureSelectionFormViewModel viewModel)
+        {
+            bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете лекцията";
+
+                return RedirectToAction("Become", "Instructor");
             }
 
-            return RedirectToAction("Index", "Courses");
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            try
+            {
+                await lecturesService.AddLectureToCourseAsync(viewModel, viewModel.CourseId.ToUpper());
+                TempData[SuccessMessage] = "Лекцията беше създадена успешно!";
+                return RedirectToAction("AllLecturesForCourse", "Lectures");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Възникна грешка при създаването на лекцията!");
+                return View(viewModel);
+            }
         }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] = GeneralErrorMessage;

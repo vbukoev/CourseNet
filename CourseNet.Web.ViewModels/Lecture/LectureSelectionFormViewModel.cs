@@ -1,29 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static CourseNet.Common.DataConstants.Lecture;
 
-namespace CourseNet.Web.ViewModels.Lecture
+public class LectureSelectionFormViewModel
 {
-    public class LectureSelectionFormViewModel
-    {
-        [Required]
-        public int Id { get; set; }
+    [Required(ErrorMessage = "Полето \"{0}\" е задължително.")]
+    [Display(Name = "Заглавие")]
+    public string Title { get; set; }
 
-        [Required]
-        [StringLength(TitleMaxLength, MinimumLength = TitleMinLength)]
-        [Display(Name = "Име на лекцията")]
-        public string Title { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Полето \"{0}\" е задължително.")]
+    [Display(Name = "Описание")]
+    public string Description { get; set; }
 
-        [Required]
-        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
-        [Display(Name = "Описание")]
-        public string Description { get; set; } = string.Empty;
+    //[Display(Name = "Дата")]
+    //[DataType(DataType.Date)]
+    //public DateTime Date { get; set; }
 
-        [Required]
-        [Display(Name = "Дата")]
-        public DateTime Date { get; set; } 
+    public string CourseId { get; set; }
 
-        public Guid CourseId { get; set; }
-        
-        public IEnumerable<LectureSelectionFormViewModel> Lectures { get; set; } = new HashSet<LectureSelectionFormViewModel>();
-    }
 }

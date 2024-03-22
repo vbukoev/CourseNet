@@ -1,6 +1,6 @@
 ﻿@using CourseNet.Services.Data.Interfaces
 @using CourseNet.Web.Infrastructure.Extensions
-@model IEnumerable<LectureSelectionFormViewModel>
+@model IEnumerable<CourseNet.Data.Models.Entities.Lecture>
 
 @inject IInstructorService InstructorService
 @{
@@ -16,19 +16,13 @@
 
 @if (Model.Any())
 {
-    @if (isUserInstructor)
-    {
-        <div class="d-flex justify-content-center">
-            <a asp-controller="Lectures" asp-action="Create" class="btn btn-primary">Създай лекция</a>
-        </div>
-    }
     <div class="list-group">
         @foreach (var lecture in Model)
         {
             <div class="list-group-item">
                 <h4>@lecture.Title</h4>
                 <p>@lecture.Description</p>
-                <p>Дата: @lecture.Date</p>
+                @* <p>Дата: @lecture.Date</p> *@
             </div>
         }
     </div>

@@ -38,6 +38,15 @@ namespace CourseNet.Services.Data
             return courses;
         }
 
+        public async Task<string?> GetCourseIdByCourseNameAsync(string courseTitle)
+        {
+            var course = await context.Courses
+                .Where(c => c.Title == courseTitle)
+                .FirstOrDefaultAsync();
+
+            return course?.Id.ToString();
+        }
+
 
         public async Task<string> CreateCourseAndReturnIdAsync(CourseFormViewModel model, string instructorId)
         {

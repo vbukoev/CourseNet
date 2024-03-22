@@ -27,7 +27,7 @@ namespace CourseNet.Data.Models.Entities
         public DateTime Date { get; set; }
 
         [Comment("Course Identifier")]
-        public Guid CourseId { get; set; }
+        public Guid CourseId { get; set; }  
 
         [Comment("Course")]
         [ForeignKey(nameof(CourseId))]

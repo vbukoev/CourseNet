@@ -54,13 +54,20 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(config =>
+app.UseEndpoints(endpoints =>
 {
-    config.MapControllerRoute(name: "UrlProtection", pattern: "/{controller}/{action}/{id}/{information}",
-        defaults: new { controller = "Categories", action = "Details" });
-    config.MapDefaultControllerRoute();
-    config.MapRazorPages();
-   
+    // Стандартен маршрут за контролери
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+    // Маршрут за контролера Lectures
+    endpoints.MapControllerRoute(
+        name: "LecturesRoute",
+        pattern: "{controller=Lectures}/{action=AllLecturesForCourse}/{courseId?}");
+
+    // Разрешаване на Razor Pages
+    endpoints.MapRazorPages();
 });
 
 app.MapDefaultControllerRoute();
