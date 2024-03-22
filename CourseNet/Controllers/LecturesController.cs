@@ -92,7 +92,7 @@ namespace CourseNet.Web.Controllers
             {
                 await lecturesService.AddLectureToCourseAsync(viewModel, viewModel.CourseId.ToUpper());
                 TempData[SuccessMessage] = "Лекцията беше създадена успешно!";
-                return RedirectToAction("AllLecturesForCourse", "Lectures");
+                return RedirectToAction("AllLecturesForCourse", "Lectures", new { viewModel.CourseId });
             }
             catch (Exception)
             {
