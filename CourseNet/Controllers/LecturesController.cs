@@ -101,6 +101,71 @@ namespace CourseNet.Web.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var model = await lecturesService.GetLectureForDeleteByIdAsync(id);
+
+            if (model == null)
+            {
+                TempData[ErrorMessage] = "Лекцията не съществува!";
+                return RedirectToAction("Index", "Courses");
+            }
+
+            var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] =
+                    "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да изтриете лекцията";
+                return RedirectToAction("Become", "Instructor");
+            }
+
+            try
+            {
+                LectureSelectionFormViewModel lectureDeleteViewModel = await lecturesService.GetLectureForDeleteByIdAsync(id);
+
+                return View(lectureDeleteViewModel);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(LectureSelectionFormViewModel viewModel, int id)
+        {
+            var model = await lecturesService.GetLectureForDeleteByIdAsync(id);
+
+            if (model == null)
+            {
+                TempData[ErrorMessage] = "Лекцията не съществува!";
+                return RedirectToAction("Index", "Courses"); 
+            }
+
+            var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да изтриете лекцията";
+                return RedirectToAction("Become", "Instructor");
+            }
+
+            try
+            {
+                await lecturesService.DeleteLectureByIdAsync(id);
+
+                TempData[WarningMessage] = "Лекцията беше успешно изтрита!";
+
+                return RedirectToAction("Index", "Courses" );
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] = GeneralErrorMessage;
