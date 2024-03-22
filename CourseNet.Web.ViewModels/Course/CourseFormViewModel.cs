@@ -19,9 +19,8 @@ namespace CourseNet.Web.ViewModels.Course
         [Display(Name = "Път към снимката")]
         public string ImagePath { get; set; } = null!;
 
-        [Required]
         [Display(Name = "Крайна дата")]
-        public string EndDate { get; set; }
+        public string EndDate { get; set; } = null!;
         [Required]
         [Display(Name = "Трудност")]
         [Range(0, 2)]
