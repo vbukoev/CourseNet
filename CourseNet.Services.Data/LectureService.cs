@@ -38,6 +38,7 @@ namespace CourseNet.Services.Data
             {
                 Title = viewModel.Title,
                 Description = viewModel.Description,
+                Date = viewModel.Date,
                 CourseId = Guid.Parse(courseId)
             };
 
