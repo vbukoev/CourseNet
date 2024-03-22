@@ -33,6 +33,7 @@ namespace CourseNet.Services.Data
                 {
                     Title = c.Title,
                     Description = c.Description,
+                    CourseId = c.CourseId.ToString()
                 })
                 .ToListAsync();
 
@@ -58,21 +59,22 @@ namespace CourseNet.Services.Data
             return res;
         }
 
-        public async Task<IEnumerable<LectureCreateViewModel>> AllLecturesAsync()
+        public async Task<IEnumerable<LectureSelectionFormViewModel>> AllLecturesAsync()
         {
-            IEnumerable<LectureCreateViewModel> lectures = await context.Lectures
+            IEnumerable<LectureSelectionFormViewModel> lectures = await context.Lectures
                 .AsNoTracking()
-                .Select(c => new LectureCreateViewModel
+                .Select(c => new LectureSelectionFormViewModel
                 {
                     Title = c.Title,
                     Description = c.Description,
+                    
                 })
                 .ToArrayAsync();
 
             return lectures;
         }
 
-        public async Task AddLectureToCourseAsync(LectureSelectionFormViewModel model)
+        public async Task AddLectureToCourseAsync(LectureSelectionFormViewModel model, string courseId)
         {
             var lecture = new Lecture
             {
