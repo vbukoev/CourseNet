@@ -53,7 +53,7 @@ namespace CourseNet.Web.Controllers
                 return View(model);
             }
 
-            bool userHasAppliedCourses = await this.instructorService.HasAppliedCoursesByUserIdAsync(userId);
+            bool userHasAppliedCourses = await instructorService.HasAppliedCoursesByUserIdAsync(userId);
 
             if (userHasAppliedCourses)
             {
