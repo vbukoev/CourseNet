@@ -15,7 +15,10 @@
     <div class="card mb-3">
         <img class="card-img-top" src="@Model.ImagePath" alt="Course Image">
         <div class="card-body text-center">
-            <h6>=<b>@(isUserEnrolled ? "Записан" : "Незаписан")</b>=</h6>
+            @if (!isUserInstructor)
+            {
+                <h6>=<b>@(isUserEnrolled ? "Записан" : "Незаписан")</b>=</h6>
+            }
             <h4><b>@Model.Title</b></h4>
             <h6>
                 Цена:

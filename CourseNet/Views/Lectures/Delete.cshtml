@@ -1,0 +1,31 @@
+﻿@model LectureSelectionFormViewModel
+@{
+    ViewBag.Title = "Изтрий лекция";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<form method="post" asp-action="Delete">
+    <div class="row">
+        <h3>Сигурни ли сте, че искате да изтриете лекцията?</h3>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label asp-for="Title" class="control-label">Заглавие</label>
+                <input asp-for="Title" class="form-control" disabled="disabled" />
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Изтрий" class="btn btn-danger" />
+            </div>
+            <div class="form-group mt-2">
+                <input type="button" onclick="goBack()" value="Назад" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
