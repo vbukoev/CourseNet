@@ -5,8 +5,8 @@ namespace CourseNet.Web.ViewModels.Lecture
 {
     public class LectureSelectionFormViewModel
     {
-        [Required]
-        public int Id { get; set; }
+        //[Required]
+        //public int Id { get; set; }
 
         [Required]
         [StringLength(TitleMaxLength, MinimumLength = TitleMinLength)]
@@ -18,11 +18,9 @@ namespace CourseNet.Web.ViewModels.Lecture
         [Display(Name = "Описание")]
         public string Description { get; set; } = string.Empty;
 
-        [Required]
-        [Display(Name = "Дата")]
-        public DateTime Date { get; set; } 
-
-        public Guid CourseId { get; set; }
+        //[Required]
+        //[Display(Name = "Дата")]
+        //public DateTime Date { get; set; } 
         
         public IEnumerable<LectureSelectionFormViewModel> Lectures { get; set; } = new HashSet<LectureSelectionFormViewModel>();
     }
