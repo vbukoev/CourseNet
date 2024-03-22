@@ -35,7 +35,7 @@ namespace CourseNet.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> AllLecturesForCourse(string courseId)
         {
-            var viewModel = await lecturesService.GetAllLecturesForCourseAsync(courseId);
+            IEnumerable<LecturesForCourseViewModel> viewModel = await lecturesService.GetAllLecturesForCourseAsync(courseId);
 
             return View(viewModel);
         }
@@ -44,42 +44,46 @@ namespace CourseNet.Web.Controllers
         public async Task<IActionResult> Create()
         {
             bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
             if (!isInstructor)
             {
-                TempData[ErrorMessage] = "Трябва да си инструктор, за да се опиташ да създадеш лекция към курс!";
-                return RedirectToAction("Index", "Home");
-            }
-            
-            return View();
-        }
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете лекция";
 
-        [HttpPost]
-        public async Task<IActionResult> Create(LectureSelectionFormViewModel model, string courseId)
-        {
-            bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
-            if (!isInstructor)
-            {
-                TempData[ErrorMessage] = "Трябва да си инструктор, за да създадеш лекция към курс!";
-                return RedirectToAction("Index", "Home");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return View(model);
+                return RedirectToAction("Become", "Instructor");
             }
 
             try
             {
-                await lecturesService.AddLectureToCourseAsync(model, courseId);
+                var viewModel = new LectureSelectionFormViewModel();
+                return View(viewModel);
             }
             catch (Exception)
             {
-                TempData[ErrorMessage] = "Неочаквана грешка! Моля свържете се с нас или опитайте отново по-късно.";
-                return RedirectToAction("Index", "Home");
+                return GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(LectureSelectionFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
             }
 
-            return RedirectToAction("Index", "Courses");
+            try
+            {
+                await lecturesService.AddLectureToCourseAsync(viewModel);
+
+                return RedirectToAction("AllLecturesForCourse", "Lectures");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Възникна грешка при създаването на лекцията: ");
+                return View(viewModel);
+            }
         }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] = GeneralErrorMessage;
