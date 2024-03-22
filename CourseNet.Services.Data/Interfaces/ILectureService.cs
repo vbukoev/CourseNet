@@ -8,6 +8,10 @@ namespace CourseNet.Services.Data.Interfaces
     {
         Task<IEnumerable<Lecture>> GetAllLecturesForCourseAsync(Guid courseId);
         
-        Task AddLectureToCourseAsync(LectureSelectionFormViewModel model, string courseId); 
+        Task AddLectureToCourseAsync(LectureSelectionFormViewModel model, string courseId);
+
+        Task<LectureSelectionFormViewModel> GetLectureForDeleteByIdAsync(int lectureId);
+
+        Task DeleteLectureByIdAsync(int lectureId);
     }
 }
