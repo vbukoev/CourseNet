@@ -58,11 +58,11 @@ namespace CourseNet.Services.Data
             return res;
         }
 
-        public async Task<IEnumerable<LecturesForCourseViewModel>> AllLecturesAsync()
+        public async Task<IEnumerable<LectureCreateViewModel>> AllLecturesAsync()
         {
-            IEnumerable<LecturesForCourseViewModel> lectures = await context.Lectures
+            IEnumerable<LectureCreateViewModel> lectures = await context.Lectures
                 .AsNoTracking()
-                .Select(c => new LecturesForCourseViewModel
+                .Select(c => new LectureCreateViewModel
                 {
                     Title = c.Title,
                     Description = c.Description,
@@ -72,27 +72,17 @@ namespace CourseNet.Services.Data
             return lectures;
         }
 
-        public async Task<int> AddLectureToCourseAsync(LectureSelectionFormViewModel model, string courseId)
+        public async Task AddLectureToCourseAsync(LectureSelectionFormViewModel model)
         {
-           
-            bool courseExists = await courseService.ExistsByIdAsync(courseId);
-            if (!courseExists)
-            {
-                throw new Exception("Курсът не съществува.");
-            }
-
             var lecture = new Lecture
             {
                 Title = model.Title,
                 Description = model.Description,
-                Date = model.Date,
-                CourseId = Guid.Parse(courseId)
+                //Date = model.Date,
             };
 
             context.Lectures.Add(lecture);
             await context.SaveChangesAsync();
-
-            return lecture.Id;
         }
 
     }
