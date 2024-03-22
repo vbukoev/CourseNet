@@ -10,9 +10,9 @@ public class LectureSelectionFormViewModel
     [Display(Name = "Описание")]
     public string Description { get; set; }
 
-    //[Display(Name = "Дата")]
-    //[DataType(DataType.Date)]
-    //public DateTime Date { get; set; }
+    [Display(Name = "Дата")]
+    [DataType(DataType.Date)]
+    public DateTime Date { get; set; } = DateTime.UtcNow;
 
     public string CourseId { get; set; }
 
