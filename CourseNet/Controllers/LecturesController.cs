@@ -13,6 +13,7 @@ using System;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using static CourseNet.Common.Notifications.NotificationMessagesConstants;
 using static CourseNet.Common.ValidationErrors.General;
+using CourseNet.Common.DataConstants;
 
 
 namespace CourseNet.Web.Controllers
@@ -35,13 +36,21 @@ namespace CourseNet.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> AllLecturesForCourse(string courseId)
         {
-            IEnumerable<LecturesForCourseViewModel> viewModel = await lecturesService.GetAllLecturesForCourseAsync(courseId);
+            IEnumerable<LecturesForCourseViewModel> lectures = await lecturesService.GetAllLecturesForCourseAsync(courseId);
+
+            var viewModel = lectures.Select(lecture => new LecturesForCourseViewModel
+            {
+                Title = lecture.Title,
+                Description = lecture.Description,
+                Date = lecture.Date,
+                CourseId = lecture.CourseId 
+            });
 
             return View(viewModel);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(string courseId)
         {
             bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
 
@@ -55,6 +64,7 @@ namespace CourseNet.Web.Controllers
             try
             {
                 var viewModel = new LectureSelectionFormViewModel();
+                viewModel.CourseId = courseId;
                 return View(viewModel);
             }
             catch (Exception)
@@ -62,7 +72,6 @@ namespace CourseNet.Web.Controllers
                 return GeneralError();
             }
         }
-
         [HttpPost]
         public async Task<IActionResult> Create(LectureSelectionFormViewModel viewModel)
         {
@@ -73,9 +82,11 @@ namespace CourseNet.Web.Controllers
 
             try
             {
-                await lecturesService.AddLectureToCourseAsync(viewModel);
+                string courseId = Request.Form["courseId"];
 
-                return RedirectToAction("AllLecturesForCourse", "Lectures");
+                await lecturesService.AddLectureToCourseAsync(viewModel, courseId);
+
+                return RedirectToAction("AllLecturesForCourse", "Lectures", new { courseId = courseId });
             }
             catch (Exception)
             {
