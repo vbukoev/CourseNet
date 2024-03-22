@@ -31,12 +31,13 @@
                     <h6 class="text-center">Лекции към курса:</h6>
                     <a class="btn btn-primary" href="/Lectures/AllLecturesForCourse?courseId=@Model.Id">Натисни тук</a>
                 </div>
-            }
-            @if (isUserInstructor)
-            {
                 <div class="d-flex justify-content-center">
                     <a class="btn btn-primary" href="/Lectures/Create?courseId=@Model.Id">Създай лекция</a>
                 </div>
+            }
+            @if (isUserInstructor)
+            {
+                
             }
         </div>
 
