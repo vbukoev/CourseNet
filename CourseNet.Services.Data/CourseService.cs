@@ -100,7 +100,7 @@ namespace CourseNet.Services.Data
                     .ThenByDescending(c => c.CreatedOn)
             };
 
-            IEnumerable<CourseAllViewModel> courses = await courseQuery
+            var courses = await courseQuery
                 .Skip((queryModel.CurrentPage - 1) * queryModel.CoursesPerPage)
                 .Take(queryModel.CoursesPerPage)
                 .Select(c => new CourseAllViewModel
@@ -112,10 +112,8 @@ namespace CourseNet.Services.Data
                     Price = c.Price,
                     Difficulty = c.Difficulty.ToString(),
                     Status = c.Status.ToString(),
-                    EndDate = c.EndDate.ToString(),
                     IsEnrolled = c.StudentId.HasValue,
-                })
-                .ToListAsync();
+                }).ToListAsync();
             int totalCourses = courseQuery.Count();
 
             return new AllCoursesFilteredAndPagedServiceModel
