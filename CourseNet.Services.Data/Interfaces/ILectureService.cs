@@ -14,8 +14,8 @@ namespace CourseNet.Services.Data.Interfaces
 
         Task<bool> LectureExistsByCourseId(string courseId);
 
-        Task<IEnumerable<LectureCreateViewModel>> AllLecturesAsync();
+        Task<IEnumerable<LectureSelectionFormViewModel>> AllLecturesAsync();
 
-        Task AddLectureToCourseAsync(LectureSelectionFormViewModel model); 
+        Task AddLectureToCourseAsync(LectureSelectionFormViewModel model, string courseId); 
     }
 }
