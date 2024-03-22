@@ -1,6 +1,6 @@
 ﻿@using CourseNet.Services.Data.Interfaces
 @using CourseNet.Web.Infrastructure.Extensions
-@model IEnumerable<LecturesForCourseViewModel>
+@model IEnumerable<CourseNet.Data.Models.Entities.Lecture>
 
 @inject IInstructorService InstructorService
 @{
@@ -14,22 +14,15 @@
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
 
-@if (isUserInstructor)
-{
-    <div class="d-flex justify-content-center">
-        <a asp-action="Create" asp-controller="Lectures" class="btn btn-primary" value="@ViewData["CourseId"]">Създай лекция</a>
-    </div>
-}
 @if (Model.Any())
 {
-    
     <div class="list-group">
         @foreach (var lecture in Model)
         {
             <div class="list-group-item">
                 <h4>@lecture.Title</h4>
                 <p>@lecture.Description</p>
-                <p>Дата: @lecture.Date</p> 
+                @* <p>Дата: @lecture.Date</p> *@
             </div>
         }
     </div>

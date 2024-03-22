@@ -23,13 +23,19 @@
         <div class="col-4">
             <img class="card-img-top" style="width: 20rem;"
                  src="@Model.ImagePath" alt="Course Image">
-            
+
             <p></p>
-            @if ((User.Identity?.IsAuthenticated ?? false) && (isUserInstructor || isUserEnrolled) )
+            @if ((User.Identity?.IsAuthenticated ?? false) && (isUserInstructor || isUserEnrolled))
             {
                 <div class="col-4 border-0">
                     <h6 class="text-center">Лекции към курса:</h6>
-                    <a class="btn btn-primary" href="/Lectures/AllLecturesForCourse?courseId=@Model.Id.ToUpper()">Натисни тук</a>
+                    <a class="btn btn-primary" href="/Lectures/AllLecturesForCourse?courseId=@Model.Id">Натисни тук</a>
+                </div>
+            }
+            @if (isUserInstructor)
+            {
+                <div class="d-flex justify-content-center">
+                    <a class="btn btn-primary" href="/Lectures/Create?courseId=@Model.Id">Създай лекция</a>
                 </div>
             }
         </div>
@@ -65,7 +71,7 @@
                                 <input class="btn btn-primary" type="submit" value="Запиши се" />
                             </form>
                         }
-                       
+
                     }
                     else
                     {
@@ -79,7 +85,7 @@
                     }
                 }
             </div>
-            
+
             <p></p>
             <div class="card" style="width: 18rem;">
                 <div class="card-body">

@@ -34,19 +34,17 @@ namespace CourseNet.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AllLecturesForCourse(string courseId)
+        public async Task<IActionResult> AllLecturesForCourse(Guid courseId)
         {
-            IEnumerable<LecturesForCourseViewModel> lectures = await lecturesService.GetAllLecturesForCourseAsync(courseId);
-
-            var viewModel = lectures.Select(lecture => new LecturesForCourseViewModel
+            try
             {
-                Title = lecture.Title,
-                Description = lecture.Description,
-                Date = lecture.Date,
-                CourseId = lecture.CourseId 
-            });
-
-            return View(viewModel);
+                var viewModel = await lecturesService.GetAllLecturesForCourseAsync(courseId);
+                return View(viewModel);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpGet]
@@ -56,15 +54,15 @@ namespace CourseNet.Web.Controllers
 
             if (!isInstructor)
             {
-                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете лекция";
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете лекцията";
 
                 return RedirectToAction("Become", "Instructor");
             }
 
             try
             {
-                var viewModel = new LectureSelectionFormViewModel();
-                viewModel.CourseId = courseId;
+                LectureSelectionFormViewModel viewModel = new LectureSelectionFormViewModel();
+                viewModel.CourseId = courseId.ToUpper();
                 return View(viewModel);
             }
             catch (Exception)
@@ -72,9 +70,19 @@ namespace CourseNet.Web.Controllers
                 return GeneralError();
             }
         }
+
         [HttpPost]
         public async Task<IActionResult> Create(LectureSelectionFormViewModel viewModel)
         {
+            bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да създадете лекцията";
+
+                return RedirectToAction("Become", "Instructor");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(viewModel);
@@ -82,15 +90,13 @@ namespace CourseNet.Web.Controllers
 
             try
             {
-                string courseId = Request.Form["courseId"];
-
-                await lecturesService.AddLectureToCourseAsync(viewModel, courseId);
-
-                return RedirectToAction("AllLecturesForCourse", "Lectures", new { courseId = courseId });
+                await lecturesService.AddLectureToCourseAsync(viewModel, viewModel.CourseId.ToUpper());
+                TempData[SuccessMessage] = "Лекцията беше създадена успешно!";
+                return RedirectToAction("AllLecturesForCourse", "Lectures");
             }
             catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, "Възникна грешка при създаването на лекцията: ");
+                ModelState.AddModelError(string.Empty, "Възникна грешка при създаването на лекцията!");
                 return View(viewModel);
             }
         }

@@ -1,4 +1,5 @@
 ﻿@model LectureSelectionFormViewModel
+
 @{
     ViewData["Title"] = "Създай лекция към този курс";
 }
@@ -8,7 +9,7 @@
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
         <form asp-controller="Lectures" asp-action="Create" method="post">
-            
+            <input type="hidden" name="CourseId" value="@Model.CourseId.ToString().ToUpper()" />
             <div class="form-group">
                 <label asp-for="Title">Заглавие</label>
                 <input asp-for="Title" class="form-control" placeholder="Заглавие на лекцията...">
@@ -20,7 +21,8 @@
                 <span asp-validation-for="Description" class="small text-danger"></span>
             </div>
             <div class="text-center">
-                <input class="btn btn-primary mt-3" type="submit" value="Създай лекция" />
+                <input type="hidden" name="courseId" value="@ViewBag.CourseId"/>
+                <input class="btn btn-primary mt-3" type="submit" value="Създай лекция"/>
             </div>
         </form>
     </div>

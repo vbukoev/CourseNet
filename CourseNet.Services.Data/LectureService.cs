@@ -25,65 +25,23 @@ namespace CourseNet.Services.Data
             this.courseService = courseService;
         }
 
-        public async Task<IEnumerable<LecturesForCourseViewModel>> GetAllLecturesForCourseAsync(string courseId)
+        public async Task<IEnumerable<Lecture>> GetAllLecturesForCourseAsync(Guid courseId)
         {
-            var lectures = await context.Lectures
-                    .Where(l => l.CourseId.ToString() == courseId)
-                .Select(c => new LecturesForCourseViewModel
-                {
-                    Title = c.Title,
-                    Description = c.Description,
-                    CourseId = c.CourseId.ToString()
-                })
+            return await context.Lectures
+                .Where(l => l.CourseId == courseId)
                 .ToListAsync();
-
-            return lectures;
         }
 
-        public async Task<bool> LectureExists(int lectureId)
-        {
-            bool res = await context.Lectures.AnyAsync(c => c.Id == lectureId);
-
-            return res;
-        }
-
-        public async Task<bool> IsValidInstructor(string instructorId)
-        {
-            return await context.Instructors.AnyAsync(i => i.Id.ToString() == instructorId);
-        }
-
-        public async Task<bool> LectureExistsByCourseId(string courseId)
-        {
-            bool res = await context.Lectures.AnyAsync(l => l.Course.Id.ToString() == courseId);
-
-            return res;
-        }
-
-        public async Task<IEnumerable<LectureSelectionFormViewModel>> AllLecturesAsync()
-        {
-            IEnumerable<LectureSelectionFormViewModel> lectures = await context.Lectures
-                .AsNoTracking()
-                .Select(c => new LectureSelectionFormViewModel
-                {
-                    Title = c.Title,
-                    Description = c.Description,
-                    
-                })
-                .ToArrayAsync();
-
-            return lectures;
-        }
-
-        public async Task AddLectureToCourseAsync(LectureSelectionFormViewModel model, string courseId)
+        public async Task AddLectureToCourseAsync(LectureSelectionFormViewModel viewModel, string courseId)
         {
             var lecture = new Lecture
             {
-                Title = model.Title,
-                Description = model.Description,
-                //Date = model.Date,
+                Title = viewModel.Title,
+                Description = viewModel.Description,
+                CourseId = Guid.Parse(courseId)
             };
 
-            context.Lectures.Add(lecture);
+            await context.Lectures.AddAsync(lecture);
             await context.SaveChangesAsync();
         }
 
