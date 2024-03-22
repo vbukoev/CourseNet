@@ -46,5 +46,26 @@ namespace CourseNet.Services.Data
             await context.SaveChangesAsync();
         }
 
+        public async Task<LectureSelectionFormViewModel> GetLectureForDeleteByIdAsync(int lectureId)
+        {
+            var lecture = await context
+                .Lectures
+                .FirstAsync(l => l.Id == lectureId);
+
+            return new LectureSelectionFormViewModel
+            {
+                Title = lecture.Title,
+            };
+        }
+
+        public async Task DeleteLectureByIdAsync(int lectureId)
+        {
+            var lectureToDelete = await context.Lectures.FindAsync(lectureId);
+            if (lectureToDelete != null)
+            {
+                context.Lectures.Remove(lectureToDelete);
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }
