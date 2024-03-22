@@ -22,6 +22,8 @@ namespace CourseNet.Web.ViewModels.Lecture
         //[Display(Name = "Дата")]
         //public DateTime Date { get; set; } 
         
+        public string? CourseId { get; set; }
+
         public IEnumerable<LectureSelectionFormViewModel> Lectures { get; set; } = new HashSet<LectureSelectionFormViewModel>();
     }
 }
