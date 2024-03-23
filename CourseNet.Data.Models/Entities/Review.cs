@@ -20,14 +20,7 @@ namespace CourseNet.Data.Models.Entities
 
         [Comment("Review Date")]
         public DateTime Date { get; set; }
-
-        [Comment("User Identifier")]
-        public Guid UserId { get; set; }
-
-        [Comment("User")]
-        [ForeignKey(nameof(UserId))]
-        public User User { get; set; }
-
+        
         [Comment("Course Identifier")]
         public Guid CourseId { get; set; }
 
