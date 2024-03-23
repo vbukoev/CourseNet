@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="Material\" />
-    <Folder Include="Review\" />
   </ItemGroup>
 
 </Project>
