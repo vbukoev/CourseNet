@@ -19,7 +19,7 @@ namespace CourseNet.Data
         public DbSet<Course> Courses { get; set; } = null!;
         public DbSet<Instructor> Instructors { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
-        public DbSet<User> Students { get; set; } = null!;
+        public DbSet<CourseUser> Students { get; set; } = null!;
         public DbSet<Lecture> Lectures { get; set; } = null!;
         public DbSet<Material> Materials { get; set; } = null!;
         public DbSet<Review> Reviews { get; set; } = null!;
