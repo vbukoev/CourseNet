@@ -1,0 +1,37 @@
+﻿@using CourseNet.Services.Data.Interfaces
+@using CourseNet.Web.Infrastructure.Extensions
+@model IEnumerable<CourseNet.Data.Models.Entities.Review>
+
+@inject IInstructorService InstructorService
+@{
+    bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId()!);
+}
+
+@{
+    ViewData["Title"] = "Всички ревюта за курс";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+@if (Model.Any())
+{
+    <div class="list-group">
+        @foreach (var review in Model)
+        {
+            <div class="list-group-item">
+                <h4><b>Рейтинг: </b>@review.Rating</h4>
+                <p><i>@review.Comment</i></p>
+                <p><b>Дата: </b> @review.Date</p>
+                @if (isUserInstructor)
+                {
+                    <a asp-area="" asp-controller="Lectures" asp-action="Delete" asp-route-id="@review.Id" class="btn btn-danger btn-sm">Премахване на ревю</a>
+                }
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p class="text-center">Все още няма налични ревюта за този курс.</p>
+}
