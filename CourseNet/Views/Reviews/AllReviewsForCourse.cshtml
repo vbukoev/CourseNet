@@ -20,7 +20,7 @@
         @foreach (var review in Model)
         {
             <div class="list-group-item">
-                <h4><b>Рейтинг: </b>@review.Rating</h4>
+                <p><b>Рейтинг: </b>@review.Rating/10</p>
                 <p><i>@review.Comment</i></p>
                 <p><b>Дата: </b> @review.Date</p>
                 @if (isUserInstructor)
