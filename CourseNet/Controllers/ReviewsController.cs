@@ -18,15 +18,13 @@ namespace CourseNet.Web.Controllers
         private readonly IReviewService reviewsService;
         private readonly IInstructorService instructorService;
         private readonly ICourseService coursesService;
-        private readonly UserManager<CourseUser> userManager;
 
-        public ReviewsController(CourseNetDbContext context, IReviewService reviewsService, IInstructorService instructorService, ICourseService coursesService, UserManager<CourseUser> userManager)
+        public ReviewsController(CourseNetDbContext context, IReviewService reviewsService, IInstructorService instructorService, ICourseService coursesService)
         {
             this.context = context;
             this.reviewsService = reviewsService;
             this.instructorService = instructorService;
             this.coursesService = coursesService;
-            this.userManager = userManager;
         }
 
         [HttpGet]
@@ -46,7 +44,6 @@ namespace CourseNet.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Create(string courseId)
         {
-            var userId = User.GetId();
             try
             {
                 ReviewSelectionFormViewModel viewModel = new ReviewSelectionFormViewModel();
