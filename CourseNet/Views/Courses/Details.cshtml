@@ -25,19 +25,39 @@
                  src="@Model.ImagePath" alt="Course Image">
 
             <p></p>
+
             @if ((User.Identity?.IsAuthenticated ?? false) && (isUserInstructor || isUserEnrolled))
             {
-                <div class="col-4 border-0">
-                    <h6 class="text-center">Лекции към курса:</h6>
-                    <a class="btn btn-primary" href="/Lectures/AllLecturesForCourse?courseId=@Model.Id">Натисни тук</a>
-                </div>
-                <p></p>
-                @if (isUserInstructor)
-                {
-                    <div class="col-4 border-0">
-                        <a class="btn btn-primary" href="/Lectures/Create?courseId=@Model.Id">Създай лекция</a>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                    
+                        <h6 class="text-center">Лекции към курса:</h6>
+                        <a class="btn btn-primary" href="/Lectures/AllLecturesForCourse?courseId=@Model.Id">Натисни тук</a>
+
+                        <p></p>
+                        @if (isUserInstructor)
+                        {
+                            <a class="btn btn-primary" href="/Lectures/Create?courseId=@Model.Id">Създай лекция</a>
+                        }
+                    
                     </div>
-                }
+                </div>
+            }
+            <p></p>
+
+            @if ((User.Identity?.IsAuthenticated ?? false) && (!isUserInstructor || isUserEnrolled))
+            {
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    
+                        <h6 class="text-center">Ревюта към курса:</h6>
+                        <a class="btn btn-primary" href="/Reviews/AllReviewsForCourse?courseId=@Model.Id">Натисни тук</a>
+
+                        <p></p>
+                        <a class="btn btn-primary" href="/Reviews/Create?courseId=@Model.Id">Добави ревю</a>
+                    
+                </div>
+            </div>
             }
         </div>
 
@@ -73,7 +93,7 @@
                         {
                             <form class="ml-2" asp-controller="Courses"
                                   asp-action="Enroll" asp-route-id="@Model.Id" method="post">
-                                <input class="btn btn-primary" type="submit" value="Запиши се"/>
+                                <input class="btn btn-primary" type="submit" value="Запиши се" />
                             </form>
                         }
 
@@ -84,7 +104,7 @@
                         {
                             <form class="ml-2" asp-controller="Courses" asp-action="Leave"
                                   asp-route-id="@Model.Id" method="post">
-                                <input class="btn btn-danger" type="submit" value="Напусни"/>
+                                <input class="btn btn-danger" type="submit" value="Напусни" />
                             </form>
                         }
                     }
