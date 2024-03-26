@@ -1,28 +1,44 @@
-﻿@model MaterialSelectionFormViewModel
+﻿@using CourseNet.Services.Data.Interfaces
+@using CourseNet.Web.Infrastructure.Extensions
+@model MaterialSelectionFormViewModel
+@inject IInstructorService InstructorService
+@{
+    bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId()!);
+}
+
+@{
+    ViewData["Title"] = "Редактиране на материала";
+}
+
 @{
     ViewBag.Title = "Изтрий материал";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
-
-<form method="post" asp-action="Delete">
-    <div class="row">
-        <h3>Сигурни ли сте, че искате да изтриете този материал?</h3>
-        <div class="col-md-8">
-            <div class="form-group">
-                <label asp-for="Name" class="control-label">Име на материал</label>
-                <input asp-for="Name" class="form-control" disabled="disabled" />
+@if (User.Identity?.IsAuthenticated ?? false)
+{
+    @if (isUserInstructor)
+    {
+        <form method="post" asp-action="Delete">
+            <div class="row">
+                <h3>Сигурни ли сте, че искате да изтриете този материал?</h3>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label">Име на материал</label>
+                        <input asp-for="Name" class="form-control" disabled="disabled"/>
+                    </div>
+                    <div class="form-group mt-2">
+                        <input type="submit" value="Изтрий" class="btn btn-danger"/>
+                    </div>
+                    <div class="form-group mt-2">
+                        <input type="button" onclick="goBack()" value="Назад" class="btn btn-primary"/>
+                    </div>
+                </div>
             </div>
-            <div class="form-group mt-2">
-                <input type="submit" value="Изтрий" class="btn btn-danger" />
-            </div>
-            <div class="form-group mt-2">
-                <input type="button" onclick="goBack()" value="Назад" class="btn btn-primary" />
-            </div>
-        </div>
-    </div>
-</form>
+        </form>
+    }
+}
 
 <script>
     function goBack() {
