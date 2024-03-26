@@ -12,7 +12,7 @@ namespace CourseNet.Services.Data.Interfaces
     {
         Task<IEnumerable<Material>> GetAllMaterialsForLectureAsync(int lectureId);
 
-        Task AddMaterialToLectureAsync(MaterialSelectionFormViewModel material, int lectureId);
+        Task AddMaterialToLectureAsync(MaterialSelectionFormViewModel material);
 
         public Task<MaterialSelectionFormViewModel> GetMaterialForDeleteByIdAsync(int materialId);
 
