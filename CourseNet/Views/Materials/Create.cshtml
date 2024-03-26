@@ -1,5 +1,29 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model MaterialSelectionFormViewModel
+
 @{
+    ViewData["Title"] = "Добави материал към тази лекция";
 }
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-controller="Materials" asp-action="Create" method="post">
+            <input type="hidden" name="CourseId" value="@Model.LectureId" />
+            <div class="form-group">
+                <label asp-for="Name">Име на материал</label>
+                <textarea asp-for="Name" rows="4" class="form-control" placeholder="Добавате името на материала към лекцията"></textarea>
+                <span asp-validation-for="Name" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description">Описание</label>
+                <textarea asp-for="Description" rows="4" class="form-control" placeholder="Описание на материала към тази лекция"></textarea>
+                <span asp-validation-for="Description" class="small text-danger"></span>
+            </div>
+            <div class="text-center">
+                <input type="hidden" name="courseId" value="@ViewBag.CourseId" />
+                <input class="btn btn-primary mt-3" type="submit" value="Добави материал към тази лекция" />
+            </div>
+        </form>
+    </div>
+</div>
