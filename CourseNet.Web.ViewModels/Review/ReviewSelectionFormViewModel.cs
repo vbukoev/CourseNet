@@ -18,7 +18,5 @@ namespace CourseNet.Web.ViewModels.Review
         public DateTime Date { get; set; } = DateTime.UtcNow;
 
         public string CourseId { get; set; }
-
-
     }
 }
