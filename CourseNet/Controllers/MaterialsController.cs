@@ -64,7 +64,7 @@ namespace CourseNet.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(MaterialSelectionFormViewModel viewModel)
+        public async Task<IActionResult> Create(MaterialSelectionFormViewModel viewModel, int lectureId)
         {
             bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
 
@@ -82,9 +82,9 @@ namespace CourseNet.Web.Controllers
 
             try
             {
-                await materialService.AddMaterialToLectureAsync(viewModel, viewModel.LectureId);
+                await materialService.AddMaterialToLectureAsync(viewModel, lectureId);
                 TempData[SuccessMessage] = "Материала към тази лекция беше създадена успешно!";
-                return RedirectToAction("AllMaterialsForLecture", "Materials", new { viewModel.LectureId });
+                return RedirectToAction("AllMaterialsForLecture", "Materials", new { lectureId });
             }
             catch (Exception)
             {
