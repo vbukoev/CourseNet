@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace CourseNet.Web.ViewModels.Material
 {
-    internal class MaterialSelectionFormViewModel
+    public class MaterialSelectionFormViewModel
     {
+        public string Name { get; set; } = string.Empty;
+
+        public string Description { get; set; } = string.Empty;
+
+        public int LectureId { get; set; } 
     }
 }
