@@ -1,10 +1,6 @@
 ﻿using CourseNet.Data;
-using CourseNet.Data.Models.Entities;
-using CourseNet.Services.Data;
 using CourseNet.Services.Data.Interfaces;
-using CourseNet.Web.Infrastructure.Extensions;
 using CourseNet.Web.ViewModels.Review;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 using static CourseNet.Common.Notifications.NotificationMessagesConstants;
@@ -14,17 +10,11 @@ namespace CourseNet.Web.Controllers
 {
     public class ReviewsController : Controller
     {
-        private readonly CourseNetDbContext context;
         private readonly IReviewService reviewsService;
-        private readonly IInstructorService instructorService;
-        private readonly ICourseService coursesService;
 
-        public ReviewsController(CourseNetDbContext context, IReviewService reviewsService, IInstructorService instructorService, ICourseService coursesService)
+        public ReviewsController(IReviewService reviewsService)
         {
-            this.context = context;
             this.reviewsService = reviewsService;
-            this.instructorService = instructorService;
-            this.coursesService = coursesService;
         }
 
         [HttpGet]
@@ -76,7 +66,7 @@ namespace CourseNet.Web.Controllers
                 return View(viewModel);
             }
         }
-
+        
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] = GeneralErrorMessage;
