@@ -84,7 +84,6 @@ namespace CourseNet.Services.Data
 
             material.Name = model.Name;
             material.Description = model.Description;
-            material.LectureId = model.LectureId;
 
             await context.SaveChangesAsync();
         }
