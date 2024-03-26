@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CourseNet.Data;
+﻿using CourseNet.Data;
 using CourseNet.Data.Models.Entities;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.ViewModels.Material;
@@ -28,13 +23,13 @@ namespace CourseNet.Services.Data
                 .ToListAsync();
         }
 
-        public async Task AddMaterialToLectureAsync(MaterialSelectionFormViewModel model, int lectureId)
+        public async Task AddMaterialToLectureAsync(MaterialSelectionFormViewModel model)
         {
             var material = new Material
             {
                 Name = model.Name,
                 Description = model.Description,
-                LectureId = lectureId,
+                LectureId = model.LectureId,
             };
 
             await context.Materials.AddAsync(material);
