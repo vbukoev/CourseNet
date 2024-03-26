@@ -12,7 +12,7 @@
             <input type="hidden" name="LectureId" value="@Model.LectureId" />
             <div class="form-group">
                 <label asp-for="Name">Име на материал</label>
-                <textarea asp-for="Name" rows="4" class="form-control" placeholder="Добавате името на материала към лекцията"></textarea>
+                <input asp-for="Name" rows="4" class="form-control" placeholder="Добавате името на материала към лекцията"></input>
                 <span asp-validation-for="Name" class="small text-danger"></span>
             </div>
             <div class="form-group">
