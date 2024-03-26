@@ -26,10 +26,10 @@
                 @if (isUserInstructor)
                 {
                     <a asp-area="" asp-controller="Lectures" asp-action="Delete" asp-route-id="@lecture.Id" class="btn btn-danger btn-sm">Премахване на лекцията</a>
-                    
-                    <a asp-area="" asp-controller="Materials" asp-action="AllMaterialsForLecture" asp-route-id="@lecture.Id" class="btn btn-primary btn-sm">Виж налични материали за лекцията</a>
 
-                    <a asp-area="" asp-controller="Materials" asp-action="Create" asp-route-id="@lecture.Id" class="btn btn-primary btn-sm">Добави материал към лекцията</a>
+                    <a class="btn btn-primary" href="/Materials/AllMaterialsForLecture?lectureId=@lecture.Id">Виж налични материали за лекцията</a>
+                    
+                    <a class="btn btn-primary" href="/Materials/Create?lectureId=@lecture.Id">Добави материал към лекцията</a>
                     }
             </div>
         }
