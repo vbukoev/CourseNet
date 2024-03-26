@@ -226,7 +226,7 @@ namespace CourseNet.Web.Controllers
                 return View(model);
 
             }
-            return RedirectToAction("AllMaterialsForLecture", "Materials", new { id });
+            return RedirectToAction("Details", "Courses");
         }
 
         private IActionResult GeneralError()
