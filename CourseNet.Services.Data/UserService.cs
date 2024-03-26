@@ -11,7 +11,5 @@ namespace CourseNet.Services.Data
         {
             this.context = context;
         }
-
-
     }
 }

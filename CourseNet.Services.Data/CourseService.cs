@@ -46,8 +46,7 @@ namespace CourseNet.Services.Data
 
             return course?.Id.ToString();
         }
-
-
+        
         public async Task<string> CreateCourseAndReturnIdAsync(CourseFormViewModel model, string instructorId)
         {
             var course = new Course
