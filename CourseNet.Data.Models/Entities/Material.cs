@@ -26,6 +26,6 @@ namespace CourseNet.Data.Models.Entities
 
         [Comment("Lecture")]
         [ForeignKey(nameof(LectureId))]
-        public virtual Lecture Lecture { get; set; }
+        public virtual Lecture Lecture { get; set; } 
     }
 }
