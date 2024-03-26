@@ -25,6 +25,7 @@
                 @if (isUserInstructor)
                 {
                     <a asp-area="" asp-controller="Materials" asp-action="Delete" asp-route-id="@material.Id" class="btn btn-danger btn-sm">Премахване на материала</a>
+                    <a asp-area="" asp-controller="Materials" asp-action="Update" asp-route-id="@material.Id" class="btn btn-primary btn-sm">Редактирай материала</a>
                 }
             </div>
         }
