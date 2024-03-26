@@ -1,6 +1,9 @@
 ﻿using CourseNet.Data;
+using CourseNet.Data.Models.Entities;
+using CourseNet.Services.Data;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.Infrastructure.Extensions;
+using CourseNet.Web.ViewModels.Course;
 using CourseNet.Web.ViewModels.Material;
 using Microsoft.AspNetCore.Mvc;
 using static CourseNet.Common.Notifications.NotificationMessagesConstants;
@@ -155,7 +158,77 @@ namespace CourseNet.Web.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            var model = await materialService.GetMaterialForUpdateAsync(id);
 
+            if (model == null)
+            {
+                TempData[ErrorMessage] = "Този материал не съществува!";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да редактирате този материал";
+                return RedirectToAction("Become", "Instructor");
+            }
+
+            var instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
+            
+            try
+            {
+                MaterialSelectionFormViewModel materialFormViewModel = await materialService.GetMaterialForUpdateAsync(id);
+
+                TempData[WarningMessage] = "Влязохте в режим - Редакция на материал!";
+                return View(materialFormViewModel);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, MaterialSelectionFormViewModel formViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(formViewModel);
+            }
+
+            var model = await materialService.GetMaterialForUpdateAsync(id);
+
+            if (model == null)
+            {
+                TempData[ErrorMessage] = "Този материал не съществува!";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
+
+            if (!isInstructor)
+            {
+                TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да редактирате този материал.";
+                return RedirectToAction("Become", "Instructor");
+            }
+
+            try
+            {
+                await materialService.UpdateMaterialAsync(formViewModel, id);
+                TempData[SuccessMessage] = "Материала беше редактиран успешно!";
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Възникна грешка при редактирането на материала!");
+                return View(model);
+
+            }
+            return RedirectToAction("AllMaterialsForLecture", "Materials", new { id });
+        }
 
         private IActionResult GeneralError()
         {
