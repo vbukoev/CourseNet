@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
         <form asp-controller="Materials" asp-action="Create" method="post">
-            <input type="hidden" name="CourseId" value="@Model.LectureId" />
+            <input type="hidden" name="LectureId" value="@Model.LectureId" />
             <div class="form-group">
                 <label asp-for="Name">Име на материал</label>
                 <textarea asp-for="Name" rows="4" class="form-control" placeholder="Добавате името на материала към лекцията"></textarea>
