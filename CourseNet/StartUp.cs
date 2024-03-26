@@ -56,17 +56,17 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
-    // Стандартен маршрут за контролери
     endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
 
-    // Маршрут за контролера Lectures
     endpoints.MapControllerRoute(
         name: "LecturesRoute",
         pattern: "{controller=Lectures}/{action=AllLecturesForCourse}/{courseId?}");
 
-    // Разрешаване на Razor Pages
+    endpoints.MapControllerRoute(
+        name: "materials",
+        pattern: "{controller=Materials}/{action=Create}/{lectureId?}");
     endpoints.MapRazorPages();
 });
 
