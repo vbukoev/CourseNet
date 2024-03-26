@@ -11,8 +11,4 @@
     <ProjectReference Include="..\CourseNet.Data.Models\CourseNet.Data.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Material\" />
-  </ItemGroup>
-
 </Project>
