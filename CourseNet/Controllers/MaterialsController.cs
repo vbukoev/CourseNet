@@ -100,7 +100,7 @@ namespace CourseNet.Web.Controllers
 
             if (model == null)
             {
-                TempData[ErrorMessage] = "Материала не съществува!";
+                TempData[ErrorMessage] = "Материалът не съществува!";
                 return RedirectToAction("Index", "Courses");
             }
 
@@ -132,7 +132,7 @@ namespace CourseNet.Web.Controllers
 
             if (model == null)
             {
-                TempData[ErrorMessage] = "Материала не съществува!";
+                TempData[ErrorMessage] = "Материалът не съществува!";
                 return RedirectToAction("Index", "Courses");
             }
 
@@ -148,7 +148,7 @@ namespace CourseNet.Web.Controllers
             {
                 await materialService.DeleteMaterialByIdAsync(id);
 
-                TempData[WarningMessage] = "Материала беше успешно изтрита!";
+                TempData[WarningMessage] = "Материалът беше успешно изтрит!";
 
                 return RedirectToAction("Index", "Courses");
             }
@@ -177,7 +177,6 @@ namespace CourseNet.Web.Controllers
                 return RedirectToAction("Become", "Instructor");
             }
 
-            var instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
             
             try
             {
@@ -219,7 +218,7 @@ namespace CourseNet.Web.Controllers
             try
             {
                 await materialService.UpdateMaterialAsync(formViewModel, id);
-                TempData[SuccessMessage] = "Материала беше редактиран успешно!";
+                TempData[SuccessMessage] = "Материалът беше редактиран успешно!";
             }
             catch (Exception)
             {
