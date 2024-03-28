@@ -31,7 +31,7 @@
             <p></p>
             @if (User.Identity?.IsAuthenticated ?? false)
             {
-                @if (isUserInstructor && isInstructorTeachingCourse)
+                @if ((isUserInstructor && isInstructorTeachingCourse) || User.IsAdmin())
                 {
                     <a asp-area="" asp-controller="Courses" asp-action="Edit" asp-route-id="@Model.Id"
                        class="btn btn-primary">Редактирай</a>
@@ -43,7 +43,7 @@
 
                 @if (!Model.IsEnrolled)
                 {
-                    @if (!isUserInstructor)
+                    @if (!isUserInstructor || User.IsAdmin())
                     {
                         <form class="input-group-sm" asp-area="" asp-controller="Courses"
                               asp-action="Enroll" asp-route-id="@Model.Id" method="post">

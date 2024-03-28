@@ -132,7 +132,7 @@ namespace CourseNet.Web.Controllers
 
             var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
 
-            if (!isInstructor)
+            if (!isInstructor && !User.IsAdmin())
             {
                 TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да редактирате курс";
                 return RedirectToAction("Become", "Instructor");
@@ -140,7 +140,7 @@ namespace CourseNet.Web.Controllers
 
             var instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
             bool isInstructorOwnerOfCourse = await courseService.IsInstructorOfCourseAsync(id, instructorId!);
-            if (!isInstructorOwnerOfCourse)
+            if (!isInstructorOwnerOfCourse && !User.IsAdmin())
             {
                 TempData[ErrorMessage] = "Вие не сте собственик на този курс!";
                 return RedirectToAction("Mine", "Courses");
@@ -178,7 +178,7 @@ namespace CourseNet.Web.Controllers
 
             var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
 
-            if (!isInstructor)
+            if (!isInstructor && !User.IsAdmin())
             {
                 TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да редактирате курс";
                 return RedirectToAction("Become", "Instructor");
@@ -186,7 +186,7 @@ namespace CourseNet.Web.Controllers
 
             var instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
             bool isInstructorOwnerOfCourse = await courseService.IsInstructorOfCourseAsync(id, instructorId!);
-            if (!isInstructorOwnerOfCourse)
+            if (!isInstructorOwnerOfCourse && !User.IsAdmin())
             {
                 TempData[ErrorMessage] = "Вие не сте собственик на този курс!";
                 return RedirectToAction("Mine", "Courses");
@@ -219,7 +219,7 @@ namespace CourseNet.Web.Controllers
 
             var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
 
-            if (!isInstructor)
+            if (!isInstructor && !User.IsAdmin())
             {
                 TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да изтриете курс";
                 return RedirectToAction("Become", "Instructor");
@@ -227,7 +227,7 @@ namespace CourseNet.Web.Controllers
 
             var instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
             bool isInstructorOwnerOfCourse = await courseService.IsInstructorOfCourseAsync(id, instructorId!);
-            if (!isInstructorOwnerOfCourse)
+            if (!isInstructorOwnerOfCourse && !User.IsAdmin())
             {
                 TempData[ErrorMessage] = "Вие не сте собственик на този курс!";
                 return RedirectToAction("Mine", "Courses");
@@ -258,7 +258,7 @@ namespace CourseNet.Web.Controllers
 
             var isInstructor = await instructorService.InstructorExistsByUserId(User.GetId());
 
-            if (!isInstructor)
+            if (!isInstructor && !User.IsAdmin())
             {
                 TempData[ErrorMessage] = "Вие не сте инструктор! Трябва първо да станете инструктор, за да успеете да редактирате курс";
                 return RedirectToAction("Become", "Instructor");
@@ -266,7 +266,7 @@ namespace CourseNet.Web.Controllers
 
             var instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
             bool isInstructorOwnerOfCourse = await courseService.IsInstructorOfCourseAsync(id, instructorId!);
-            if (!isInstructorOwnerOfCourse)
+            if (!isInstructorOwnerOfCourse && !User.IsAdmin())
             {
                 TempData[ErrorMessage] = "Вие не сте собственик на този курс!";
                 return RedirectToAction("Mine", "Courses");
@@ -295,7 +295,21 @@ namespace CourseNet.Web.Controllers
             bool isInstructor = await instructorService.InstructorExistsByUserId(userId);
             try
             {
-                if (isInstructor)
+                if(User.IsAdmin())
+                {
+                    string instructorId = await instructorService.GetInstructorIdByUserId(userId);
+                    
+                    //added courses as an instructor
+                    courses.AddRange(await courseService.AllByInstructorIdAsync(instructorId!));
+                    
+                    //enrolled courses as user
+                    courses.AddRange(await courseService.AllByUserIdAsync(userId));
+
+                    courses = courses
+                        .DistinctBy(c => c.Id)
+                        .ToList();
+                }
+                else if (isInstructor)
                 {
                     string instructorId = await instructorService.GetInstructorIdByUserId(userId);
                     courses.AddRange(await courseService.AllByInstructorIdAsync(instructorId!));
@@ -337,7 +351,7 @@ namespace CourseNet.Web.Controllers
 
             bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId()!);
 
-            if (isInstructor)
+            if (isInstructor && !User.IsAdmin())
             {
                 TempData[ErrorMessage] = "Вие сте инструктор! Не може да се записвате за курсове!";
 

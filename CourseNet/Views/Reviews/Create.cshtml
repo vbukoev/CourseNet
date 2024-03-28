@@ -1,8 +1,18 @@
-﻿@model ReviewSelectionFormViewModel
-
+﻿@using CourseNet.Services.Data.Interfaces
+@using CourseNet.Web.Infrastructure.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using CourseNet.Services.Data
+@model ReviewSelectionFormViewModel
+@inject IInstructorService InstructorService
+@inject ICourseService CourseService
 @{
     ViewData["Title"] = "Добави ревю към този курс";
 }
+@{
+    bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId()!);
+    bool isUserEnrolled = await CourseService.IsEnrolledByIdAsync(Model.CourseId, User.GetId()!);
+}
+@if ((!isUserInstructor && isUserEnrolled) || User.IsAdmin()) {
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
@@ -27,3 +37,7 @@
         </form>
     </div>
 </div>
+}
+else{
+    <h2 class="text-center">Само студенти могат да добавят ревюта</h2>
+}

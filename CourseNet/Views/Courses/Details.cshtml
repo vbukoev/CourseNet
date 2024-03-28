@@ -9,6 +9,7 @@
 @{
     bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId()!);
     bool isUserEnrolled = await CourseService.IsEnrolledByIdAsync(Model.Id, User.GetId()!);
+    bool isInstructorTeachingCourse = await InstructorService.HasCourseWithIdAsync(User.GetId(), Model.Id);
 }
 
 @{
@@ -78,7 +79,7 @@
             <div class="form-inline">
                 @if (User.Identity?.IsAuthenticated ?? false)
                 {
-                    @if (isUserInstructor)
+                    @if (isInstructorTeachingCourse || User.IsAdmin())
                     {
                         <a class="btn btn-primary" asp-controller="Courses" asp-action="Edit"
                            asp-route-id="@Model.Id">Редактирай</a>
@@ -89,7 +90,7 @@
                     <p></p>
                     @if (!isUserEnrolled)
                     {
-                        @if (!isUserInstructor)
+                        @if (!isUserInstructor || User.IsAdmin())
                         {
                             <form class="ml-2" asp-controller="Courses"
                                   asp-action="Enroll" asp-route-id="@Model.Id" method="post">
