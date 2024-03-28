@@ -2,7 +2,6 @@ using System.Reflection;
 using CourseNet.Data;
 using CourseNet.Data.Models.Entities;
 using CourseNet.Services.Data.Interfaces;
-using CourseNet.Services.Mapping;
 using CourseNet.Web.Infrastructure.Extensions;
 using CourseNet.Web.Infrastructure.ModelBinders;
 using CourseNet.Web.ViewModels.Home;
@@ -45,7 +44,6 @@ builder.Services
     });
 var app = builder.Build();
 
-AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

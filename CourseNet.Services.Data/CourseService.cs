@@ -1,18 +1,14 @@
-﻿using System.Globalization;
-using System.Runtime.Serialization;
-using CourseNet.Common.DataConstants;
-using CourseNet.Data;
-using CourseNet.Data.Models.Entities;
-using CourseNet.Data.Models.Entities.Enums;
+﻿using CourseNet.Data;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Services.Data.Models.Course;
 using CourseNet.Services.Data.Models.Statistics;
-using CourseNet.Services.Mapping;
 using CourseNet.Web.ViewModels.Course;
 using CourseNet.Web.ViewModels.Course.Enums;
 using CourseNet.Web.ViewModels.Home;
 using CourseNet.Web.ViewModels.Instructor;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using CourseNet.Data.Models.Entities.Enums;
 using Course = CourseNet.Data.Models.Entities.Course;
 using static CourseNet.Common.DataConstants.Course;
 namespace CourseNet.Services.Data
@@ -28,7 +24,12 @@ namespace CourseNet.Services.Data
         public async Task<IEnumerable<IndexViewModel>> GetAllCoursesAsync()
         {
             IEnumerable<IndexViewModel> courses = await context.Courses
-                .To<IndexViewModel>()
+                .Select(c => new IndexViewModel
+                {
+                    Id = c.Id.ToString(),
+                    Title = c.Title,
+                    ImagePath = c.ImagePath,
+                })
                 .ToListAsync();
 
             return courses;
@@ -57,7 +58,7 @@ namespace CourseNet.Services.Data
                 Difficulty = model.Difficulty,
                 EndDate = DateTime.ParseExact(model.EndDate, TimeAndDateFormat, CultureInfo.InvariantCulture),
             };
-
+            
             await context.Courses.AddAsync(course);
             await context.SaveChangesAsync();
 

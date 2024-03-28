@@ -46,7 +46,7 @@
             }
             <p></p>
 
-            @if ((User.Identity?.IsAuthenticated ?? false) && (!isUserInstructor || isUserEnrolled))
+            @if ((User.Identity?.IsAuthenticated ?? false) && (!isUserInstructor || isUserEnrolled || User.IsAdmin()))
             {
             <div class="card" style="width: 18rem;">
                 <div class="card-body">

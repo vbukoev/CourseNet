@@ -1,7 +1,6 @@
-﻿using CourseNet.Services.Mapping;
-namespace CourseNet.Web.ViewModels.Home
+﻿namespace CourseNet.Web.ViewModels.Home
 {
-    public class IndexViewModel : IMapFrom<Data.Models.Entities.Course>
+    public class IndexViewModel 
     {
         public string Id { get; set; } = null!;
         public string Title { get; set; } = null!; 

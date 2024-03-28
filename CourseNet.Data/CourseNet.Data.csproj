@@ -21,7 +21,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\CourseNet.Data.Models\CourseNet.Data.Models.csproj" />
-		<ProjectReference Include="..\CourseNet.Services.Mapping\CourseNet.Services.Mapping.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

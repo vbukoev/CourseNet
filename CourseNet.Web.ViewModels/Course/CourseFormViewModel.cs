@@ -4,7 +4,7 @@ using CourseNet.Data.Models.Entities.Enums;
 using static CourseNet.Common.DataConstants.Course;
 namespace CourseNet.Web.ViewModels.Course
 {
-    public class CourseFormViewModel
+    public class CourseFormViewModel 
     {
         [Required]
         [StringLength(TitleMaxLength, MinimumLength = TitleMinLength)]
@@ -31,5 +31,6 @@ namespace CourseNet.Web.ViewModels.Course
         [Display(Name = "Категория")]
         public int CategoryId { get; set; }
         public IEnumerable<CategorySelectionFormViewModel> Categories { get; set; } = new HashSet<CategorySelectionFormViewModel>();
+        
     }
 }
