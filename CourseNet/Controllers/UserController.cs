@@ -1,5 +1,6 @@
 ﻿using CourseNet.Data.Models.Entities;
 using CourseNet.Web.ViewModels.User;
+using Griesoft.AspNetCore.ReCaptcha;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -79,6 +80,7 @@ namespace CourseNet.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateRecaptcha(Action = nameof(Register), ValidationFailedAction = ValidationFailedAction.ContinueRequest)]
         public async Task<IActionResult> Login(LoginFormModel model)
         {
             if (!ModelState.IsValid)

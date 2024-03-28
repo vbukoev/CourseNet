@@ -30,6 +30,8 @@ builder.Services.AddDefaultIdentity<CourseUser>(options =>
 
 builder.Services.AddApplicationServices(typeof(ICourseService));
 
+builder.Services.AddRecaptchaService();
+
 builder.Services.ConfigureApplicationCookie(cfg =>
 {
     cfg.LoginPath = "/User/Login";
