@@ -3,23 +3,27 @@ using CourseNet.Data.Models.Entities;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.Infrastructure.Extensions;
 using CourseNet.Web.Infrastructure.ModelBinders;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static CourseNet.Common.DataConstants.GeneralApplicationConstants;
+using static CourseNet.Web.Infrastructure.Extensions.WebApplicationBuilderExtensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<CourseNetDbContext>(options =>
-    options.UseSqlServer(connectionString));
+options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<CourseUser>(options =>
     {
         options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
         options.Password.RequiredLength = builder.Configuration.GetValue<int>("Password:SignIn:RequiredLength");
         options.Password.RequireLowercase = builder.Configuration.GetValue<bool>("Password:SignIn:RequireLowercase");
-        options.Password.RequireNonAlphanumeric = builder.Configuration.GetValue<bool>("Password:SignIn:RequireNonAlphanumeric"); 
-        options.Password.RequireUppercase = builder.Configuration.GetValue<bool>("Password:SignIn:RequireUppercase"); 
+        options.Password.RequireNonAlphanumeric = builder.Configuration.GetValue<bool>("Password:SignIn:RequireNonAlphanumeric");
+        options.Password.RequireUppercase = builder.Configuration.GetValue<bool>("Password:SignIn:RequireUppercase");
     })
+    .AddRoles<IdentityRole<Guid>>()
     .AddEntityFrameworkStores<CourseNetDbContext>();
 
 builder.Services.AddApplicationServices(typeof(ICourseService));
@@ -59,6 +63,11 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+if (app.Environment.IsDevelopment())
+{
+    app.SeedAdministrator(DevelopmentAdminEmail);
+}
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
@@ -79,3 +88,4 @@ app.MapDefaultControllerRoute();
 app.MapRazorPages();
 
 app.Run();
+
