@@ -1,7 +1,9 @@
 ﻿using CourseNet.Data.Models.Entities;
 using CourseNet.Web.ViewModels.User;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using static CourseNet.Common.Notifications.NotificationMessagesConstants;
 
 namespace CourseNet.Web.Controllers
 {
@@ -61,6 +63,40 @@ namespace CourseNet.Web.Controllers
             //memoryCache.Remove(UsersCacheKey);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Login(string? returnUrl = null)
+        {
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            LoginFormModel model = new LoginFormModel()
+            {
+                ReturnUrl = returnUrl
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var result =
+                await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+
+            if (!result.Succeeded)
+            {
+                TempData[ErrorMessage] =
+                    "Получи се грешка докато се опитвахте да се логнете! Моля опитайте отново по-късно или се свържете с администратор.";
+                return View(model);
+            }
+
+            return Redirect(model.ReturnUrl ?? "/Home/Index");
         }
 
         public IActionResult Profile()

@@ -17,11 +17,13 @@ namespace CourseNet.Web.Controllers
         private readonly ICategoryService categoryService;
         private readonly IInstructorService instructorService;
         private readonly ICourseService courseService;
-        public CoursesController(ICategoryService categoryService, IInstructorService instructorService, ICourseService courseService)
+        private readonly IUserService userService;
+        public CoursesController(ICategoryService categoryService, IInstructorService instructorService, ICourseService courseService, IUserService userService)
         {
             this.categoryService = categoryService;
             this.instructorService = instructorService;
             this.courseService = courseService;
+            this.userService = userService;
         }
 
         [HttpGet]
@@ -109,7 +111,6 @@ namespace CourseNet.Web.Controllers
         public async Task<IActionResult> Details(string id)
         {
             var model = await courseService.DetailsAsync(id);
-
             if (model == null)
             {
                 return GeneralError();

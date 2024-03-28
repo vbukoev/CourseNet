@@ -24,6 +24,11 @@ builder.Services.AddDefaultIdentity<CourseUser>(options =>
 
 builder.Services.AddApplicationServices(typeof(ICourseService));
 
+builder.Services.ConfigureApplicationCookie(cfg =>
+{
+    cfg.LoginPath = "/User/Login";
+});
+
 builder.Services
     .AddControllersWithViews()
     .AddMvcOptions(options =>
