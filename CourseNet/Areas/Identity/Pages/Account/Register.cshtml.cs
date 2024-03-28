@@ -15,18 +15,15 @@ namespace CourseNet.Web.Areas.Identity.Pages.Account
         private readonly SignInManager<CourseUser> _signInManager;
         private readonly UserManager<CourseUser> _userManager;
         private readonly IUserStore<CourseUser> _userStore;
-        private readonly ILogger<RegisterModel> _logger;
 
         public RegisterModel(
             UserManager<CourseUser> userManager,
             IUserStore<CourseUser> userStore,
-            SignInManager<CourseUser> signInManager,
-            ILogger<RegisterModel> logger)
+            SignInManager<CourseUser> signInManager)
         {
             _userManager = userManager;
             _userStore = userStore;
             _signInManager = signInManager;
-            _logger = logger;
         }
 
         /// <summary>
@@ -107,8 +104,6 @@ namespace CourseNet.Web.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("Успешно създаден нов акаунт с парола.");
-
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }
