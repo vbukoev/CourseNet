@@ -7,6 +7,7 @@ using CourseNet.Data.Models.Entities.Enums;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Services.Data.Models.Course;
 using CourseNet.Services.Data.Models.Statistics;
+using CourseNet.Services.Mapping;
 using CourseNet.Web.ViewModels.Course;
 using CourseNet.Web.ViewModels.Course.Enums;
 using CourseNet.Web.ViewModels.Home;
@@ -27,12 +28,7 @@ namespace CourseNet.Services.Data
         public async Task<IEnumerable<IndexViewModel>> GetAllCoursesAsync()
         {
             IEnumerable<IndexViewModel> courses = await context.Courses
-                .Select(c => new IndexViewModel
-                {
-                    Id = c.Id.ToString(),
-                    Title = c.Title,
-                    ImagePath = c.ImagePath,
-                })
+                .To<IndexViewModel>()
                 .ToListAsync();
 
             return courses;

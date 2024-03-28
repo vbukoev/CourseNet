@@ -26,6 +26,7 @@
     <ProjectReference Include="..\CourseNet.Data\CourseNet.Data.csproj" />
     <ProjectReference Include="..\CourseNet.Services.Data.Models\CourseNet.Services.Data.Models.csproj" />
     <ProjectReference Include="..\CourseNet.Services.Data\CourseNet.Services.Data.csproj" />
+    <ProjectReference Include="..\CourseNet.Services.Mapping\CourseNet.Services.Mapping.csproj" />
     <ProjectReference Include="..\CourseNet.Web.Infrastructure\CourseNet.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\CourseNet.Web.ViewModels\CourseNet.Web.ViewModels.csproj" />
   </ItemGroup>

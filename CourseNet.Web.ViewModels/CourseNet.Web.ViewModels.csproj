@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CourseNet.Common\CourseNet.Common.csproj" />
     <ProjectReference Include="..\CourseNet.Data.Models\CourseNet.Data.Models.csproj" />
+    <ProjectReference Include="..\CourseNet.Services.Mapping\CourseNet.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>
