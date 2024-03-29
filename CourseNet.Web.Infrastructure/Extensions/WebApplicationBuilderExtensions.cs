@@ -1,5 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using CourseNet.Data.Models.Entities;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using static CourseNet.Common.DataConstants.GeneralApplicationConstants;
+
 namespace CourseNet.Web.Infrastructure.Extensions
 {
     public static class WebApplicationBuilderExtensions
@@ -34,6 +39,48 @@ namespace CourseNet.Web.Infrastructure.Extensions
 
                 services.AddScoped(interfaceType, type);
             }
+        }
+        /// <summary>
+        /// This method seeds admin role if it does not exist.
+        /// Passed email should be valid email of existing user in the application.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static IApplicationBuilder SeedAdministrator(this IApplicationBuilder app, string email)
+        {
+            using var scopedServices = app.ApplicationServices.CreateScope();
+
+            var serviceProvider = scopedServices.ServiceProvider;
+
+            var userManager = serviceProvider.GetRequiredService<UserManager<CourseUser>>();
+
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+
+            Task.Run(async () =>
+            {
+                if (await roleManager.RoleExistsAsync(AdministratorRoleName))
+                {
+                    return;
+                }
+
+                var role = new IdentityRole<Guid>(AdministratorRoleName);
+
+                await roleManager.CreateAsync(role);
+
+                var adminUser = userManager.FindByEmailAsync(email);
+
+                if (adminUser == null)
+                {
+                    return;
+                }
+
+                await userManager.AddToRoleAsync(adminUser.Result, role.Name);
+            })
+            .GetAwaiter()
+            .GetResult();
+
+            return app;
         }
     }
 }

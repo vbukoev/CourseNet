@@ -1,5 +1,7 @@
 ﻿using CourseNet.Data;
+using CourseNet.Services.Data;
 using CourseNet.Services.Data.Interfaces;
+using CourseNet.Web.Infrastructure.Extensions;
 using CourseNet.Web.ViewModels.Review;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,19 +13,33 @@ namespace CourseNet.Web.Controllers
     public class ReviewsController : Controller
     {
         private readonly IReviewService reviewsService;
+        private readonly ICourseService courseService;
+        private readonly IInstructorService instructorService;
 
-        public ReviewsController(IReviewService reviewsService)
+        public ReviewsController(IReviewService reviewsService, ICourseService courseService, IInstructorService instructorService)
         {
             this.reviewsService = reviewsService;
+            this.courseService = courseService;
+            this.instructorService = instructorService;
         }
 
         [HttpGet]
         public async Task<IActionResult> AllReviewsForCourse(Guid courseId)
         {
+            var instructorId = await instructorService.GetInstructorIdByUserId(User.GetId());
+            bool isInstructorOwnerOfCourse =
+                await courseService.IsInstructorOfCourseAsync(courseId.ToString(), instructorId!);
+            if (!isInstructorOwnerOfCourse || !User.IsAdmin())
+            {
+                TempData[ErrorMessage] = "Вие не сте собственик на този курс!";
+                return RedirectToAction("Mine", "Courses");
+            }
+
             try
             {
                 var viewModel = await reviewsService.GetAllReviewsForCourseAsync(courseId);
                 return View(viewModel);
+
             }
             catch (Exception)
             {
@@ -66,7 +82,7 @@ namespace CourseNet.Web.Controllers
                 return View(viewModel);
             }
         }
-        
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] = GeneralErrorMessage;

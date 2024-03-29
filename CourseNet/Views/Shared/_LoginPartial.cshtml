@@ -6,15 +6,17 @@
 @inject SignInManager<CourseUser> SignInManager
 @inject UserManager<CourseUser> UserManager
 @inject IInstructorService InstructorService
+@inject IUserService UserService
 
 @{
     bool isInstructor = await InstructorService.InstructorExistsByUserId(User.GetId());
+    string userFullName = await UserService.GetFullNameByEmailAsync(User.Identity?.Name!);
 }
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравейте, @User.Identity?.Name!</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравейте, @userFullName</a>
         </li>
         @if (!isInstructor)
         {
@@ -31,10 +33,10 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Register">Регистрация</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Вход</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Вход</a>
         </li>
     }
 </ul>

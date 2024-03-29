@@ -1,0 +1,45 @@
+﻿@model LoginFormModel
+
+@{
+    ViewData["Title"] = "Вход";
+}
+<h1 class = "text-center col-md-4 col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-4 col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <section>
+            <form id="account" method="post">
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-floating mb-2">
+                    <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" />
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-2">
+                    <input asp-for="Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                    <label asp-for="Password" class="form-label">Парола</label>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div>
+                    <div class="checkbox mb-2">
+                        <label asp-for="RememberMe" class="form-label"> 
+                            <input class="form-check-input" asp-for="RememberMe" />
+                            @Html.DisplayNameFor(m => m.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary mb-2">Вход</button>
+                </div>
+                <div>
+                    <p>
+                        <a class="mb-2" asp-controller="User" asp-action="Register">Регистрирай се като нов потребител</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
