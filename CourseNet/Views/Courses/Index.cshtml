@@ -1,5 +1,9 @@
-﻿@model AllCoursesQueryModel
-
+﻿@using CourseNet.Services.Data
+@using CourseNet.Services.Data.Interfaces
+@using CourseNet.Web.Infrastructure.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model AllCoursesQueryModel
+@inject IInstructorService InstructorService
 @{
     ViewBag.Title = "Всички курсове";
 
@@ -10,7 +14,36 @@
     }
 
     int maxPage = (int)Math.Ceiling((double)Model.TotalCourses / Model.CoursesPerPage);
+
+    bool isUserInstructor = await InstructorService.InstructorExistsByUserId(User.GetId()!);
+
 }
+
+<div class="row mt-4">
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+           asp-controller="Courses"
+           asp-action="Index"
+           asp-route-currentPage="@previousPage"
+           asp-route-category="@Model.Category"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.CourseSorting)"><< Предишна</a>
+    </div>
+
+    @{
+        bool shouldNextPageBeDisabled = Model.CurrentPage == maxPage || !Model.Courses.Any();
+    }
+
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary @(shouldNextPageBeDisabled ? "disabled" : string.Empty)"
+           asp-controller="Courses"
+           asp-action="Index"
+           asp-route-currentPage="@(Model.CurrentPage + 1)"
+           asp-route-category="@Model.Category"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.CourseSorting)">Следваща >></a>
+    </div>
+</div>
 
 <div class="container mt-4">
     <h2 class="text-center">@ViewBag.Title</h2>
@@ -48,7 +81,10 @@
                     <option value="1">Най-стар</option>
                     <option value="2">Цена (възходящ ред)</option>
                     <option value="3">Цена (низходящ ред)</option>
-                    <option value="4">Незаписаните първо</option>
+                    @if (isUserInstructor || User.IsAdmin())
+                    {
+                        <option value="4">Незаписаните първо</option>
+                    }
                 </select>
             </div>
         </div>
@@ -78,31 +114,6 @@
         }
     </div>
 
-    <div class="row mt-4">
-        <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
-            <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
-               asp-controller="Courses"
-               asp-action="Index"
-               asp-route-currentPage="@previousPage"
-               asp-route-category="@Model.Category"
-               asp-route-searchTerm="@Model.SearchTerm"
-               asp-route-sorting="@((int)Model.CourseSorting)"><< Предишна</a>
-        </div>
-
-        @{
-            bool shouldNextPageBeDisabled = Model.CurrentPage == maxPage || !Model.Courses.Any();
-        }
-
-        <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
-            <a class="btn btn-primary @(shouldNextPageBeDisabled ? "disabled" : string.Empty)"
-               asp-controller="Courses"
-               asp-action="Index"
-               asp-route-currentPage="@(Model.CurrentPage + 1)"
-               asp-route-category="@Model.Category"
-               asp-route-searchTerm="@Model.SearchTerm"
-               asp-route-sorting="@((int)Model.CourseSorting)">Следваща >></a>
-        </div>
-    </div>
 </div>
 
 @section Scripts {
