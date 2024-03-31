@@ -3,6 +3,9 @@ using static CourseNet.Common.DataConstants.Category;
 using static CourseNet.Common.DataConstants.GeneralApplicationConstants;
 namespace CourseNet.Web.ViewModels.Course
 {
+    /// <summary>
+    /// Course Category Select Form Model which help selecting category for the course
+    /// </summary>
     public class CourseCategorySelectFormModel
     {
         /// <summary>
