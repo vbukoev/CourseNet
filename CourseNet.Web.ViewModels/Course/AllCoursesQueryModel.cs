@@ -3,13 +3,11 @@ using System.ComponentModel.DataAnnotations;
 using static CourseNet.Common.DataConstants.GeneralApplicationConstants;
 namespace CourseNet.Web.ViewModels.Course
 {
+    /// <summary>
+    /// All Courses Query Model which help to filter and sort the courses
+    /// </summary>
     public class AllCoursesQueryModel
     {
-        public AllCoursesQueryModel()
-        {
-            CurrentPage = DefaultPage;
-            CoursesPerPage = EntitiesPerPage;
-        }
         /// <summary>
         /// Тhe category of the course
         /// </summary>
@@ -30,12 +28,13 @@ namespace CourseNet.Web.ViewModels.Course
         /// <summary>
         /// The current page of the courses
         /// </summary>
-        public int CurrentPage { get; set; }
+        public int CurrentPage { get; set; } = DefaultPage;
 
         /// <summary>
         /// Total courses per a page
         /// </summary>
-        public int CoursesPerPage { get; set; }
+        public int CoursesPerPage { get; set; } = EntitiesPerPage;
+
         /// <summary>
         /// The total count of the courses
         /// </summary>
