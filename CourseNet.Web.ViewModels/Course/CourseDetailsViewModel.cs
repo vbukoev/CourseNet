@@ -4,6 +4,9 @@ using CourseNet.Web.ViewModels.Lecture;
 
 namespace CourseNet.Web.ViewModels.Course
 {
+    /// <summary>
+    /// Course Details View Model 
+    /// </summary>
     public class CourseDetailsViewModel : CourseAllViewModel
     {
         /// <summary>
