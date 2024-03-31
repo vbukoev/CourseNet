@@ -3,6 +3,9 @@ using static CourseNet.Common.DataConstants.Course;
 using static CourseNet.Common.DataConstants.GeneralApplicationConstants;
 namespace CourseNet.Web.ViewModels.Course
 {
+    /// <summary>
+    /// Course All View Model which help creating the view for all courses
+    /// </summary>
     public class CourseAllViewModel
     {
         /// <summary>
