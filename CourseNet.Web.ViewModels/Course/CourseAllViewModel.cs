@@ -15,7 +15,7 @@ namespace CourseNet.Web.ViewModels.Course
         /// Title of the course
         /// </summary>
         [Required(ErrorMessage = RequireErrorMessage)]
-        [StringLength(TitleMaxLength, MinimumLength = TitleMinLength)]
+        [StringLength(TitleMaxLength, MinimumLength = TitleMinLength, ErrorMessage = LengthErrorMessage)]
         public string Title { get; set; } = null!;
         /// <summary>
         /// Image Path of the course image
@@ -28,6 +28,7 @@ namespace CourseNet.Web.ViewModels.Course
         /// </summary>
         [Required(ErrorMessage = RequireErrorMessage)]
         [Display(Name = "Описание")]
+        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength, ErrorMessage = LengthErrorMessage)]
         public string Description { get; set; } = null!;
 
         /// <summary>
@@ -35,6 +36,7 @@ namespace CourseNet.Web.ViewModels.Course
         /// </summary>
         [Required(ErrorMessage = RequireErrorMessage)]
         [Display(Name = "Цена")]
+        [Range(typeof(decimal), PriceMinValue, PriceMaxValue, ErrorMessage = LengthErrorMessage)]
         public decimal Price { get; set; }
 
         /// <summary>
