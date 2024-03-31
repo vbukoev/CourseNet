@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.ComponentModel.DataAnnotations;
+using static CourseNet.Common.DataConstants.Course;
+using static CourseNet.Common.DataConstants.GeneralApplicationConstants;
 namespace CourseNet.Web.ViewModels.Course
 {
     public class CourseDeleteViewModel
