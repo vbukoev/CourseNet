@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 namespace CourseNet.Web.ViewModels.Course
 {
+    /// <summary>
+    /// Course Delete View Model which help creating the delete view
+    /// </summary>
     public class CourseDeleteViewModel
     {
         /// <summary>
