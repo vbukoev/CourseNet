@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static CourseNet.Common.DataConstants.Course;
-using static CourseNet.Common.DataConstants.GeneralApplicationConstants;
 namespace CourseNet.Web.ViewModels.Course
 {
     public class CourseDeleteViewModel
