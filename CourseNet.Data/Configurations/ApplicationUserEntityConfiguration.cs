@@ -9,13 +9,13 @@ namespace CourseNet.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<CourseUser> builder)
         {
-            //builder.Property(u => u.FirstName)
-            //    .HasDefaultValue("Test");
+            builder.Property(u => u.FirstName)
+                .HasDefaultValue("Test");
 
-            //builder.Property(u => u.LastName)
-            //    .HasDefaultValue("Testov");
+            builder.Property(u => u.LastName)
+                .HasDefaultValue("Testov");
 
-           // builder.HasData(GenerateUsers());
+           builder.HasData(GenerateUsers());
         }
 
         public CourseUser[] GenerateUsers()
@@ -23,20 +23,20 @@ namespace CourseNet.Data.Configurations
             ICollection<CourseUser> users = new HashSet<CourseUser>();
             var hasher = new PasswordHasher<CourseUser>();
            
-            //var student = new CourseUser
-            //{
-            //    Id = Guid.NewGuid(),
-            //    FirstName = "Student",
-            //    LastName = "Studentov",
-            //    UserName = "test@students.com",
-            //    NormalizedUserName = "TEST@STUDENTS.COM",
-            //    Email = "test@students.com",
-            //    NormalizedEmail = "TEST@STUDENTS.COM",
-            //    SecurityStamp = Guid.NewGuid().ToString()
-            //};
+            var student = new CourseUser
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "Student",
+                LastName = "Studentov",
+                UserName = "test@students.com",
+                NormalizedUserName = "TEST@STUDENTS.COM",
+                Email = "test@students.com",
+                NormalizedEmail = "TEST@STUDENTS.COM",
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
 
-            //student.PasswordHash = hasher.HashPassword(student, "123456");
-            //users.Add(student);
+            student.PasswordHash = hasher.HashPassword(student, "123456");
+            users.Add(student);
 
             var futureInstructor = new CourseUser()
             {
