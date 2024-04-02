@@ -18,7 +18,7 @@ namespace CourseNet.Data.Configurations
                 .HasForeignKey(l => l.CourseId);
 
 
-           //builder.HasData(GenerateLectures());
+           builder.HasData(GenerateLectures());
         }
 
         public Lecture[] GenerateLectures()
