@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CourseNet.Data.Models.Entities;
+﻿using CourseNet.Data.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -18,7 +13,7 @@ namespace CourseNet.Data.Configurations
                 .WithMany(l => l.Materials)
                 .HasForeignKey(m => m.LectureId);
 
-            //builder.HasData(GenerateMaterials());
+            builder.HasData(GenerateMaterials());
         }
 
         public Material[] GenerateMaterials()
