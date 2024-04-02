@@ -15,7 +15,7 @@ namespace CourseNet.Data.Configurations
             //builder.Property(u => u.LastName)
             //    .HasDefaultValue("Testov");
 
-            builder.HasData(GenerateUsers());
+           // builder.HasData(GenerateUsers());
         }
 
         public CourseUser[] GenerateUsers()
