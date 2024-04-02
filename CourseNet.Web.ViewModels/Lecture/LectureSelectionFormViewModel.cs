@@ -1,19 +1,38 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static CourseNet.Common.DataConstants.GeneralApplicationConstants;
 
-public class LectureSelectionFormViewModel
+namespace CourseNet.Web.ViewModels.Lecture
 {
-    [Required(ErrorMessage = "Полето \"{0}\" е задължително.")]
-    [Display(Name = "Заглавие")]
-    public string Title { get; set; }
+    /// <summary>
+    /// Lecture Selection Form View Model
+    /// </summary>
+    public class LectureSelectionFormViewModel
+    {
+        /// <summary>
+        /// Title of the lecture
+        /// </summary>
+        [Required(ErrorMessage = RequireErrorMessage)]
+        [Display(Name = "Заглавие")]
+        public string Title { get; set; } = null!;
 
-    [Required(ErrorMessage = "Полето \"{0}\" е задължително.")]
-    [Display(Name = "Описание")]
-    public string Description { get; set; }
+        /// <summary>
+        /// Description of the lecture
+        /// </summary>
+        [Required(ErrorMessage = RequireErrorMessage)]
+        [Display(Name = "Описание")]
+        public string Description { get; set; } = null!;
 
-    [Display(Name = "Дата")]
-    [DataType(DataType.Date)]
-    public DateTime Date { get; set; } = DateTime.UtcNow;
+        /// <summary>
+        /// Date of the lecture
+        /// </summary>
+        [Display(Name = "Дата")]
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; } = DateTime.UtcNow;
 
-    public string CourseId { get; set; }
+        /// <summary>
+        /// Course Identifier
+        /// </summary>
+        public string CourseId { get; set; }
 
+    }
 }
