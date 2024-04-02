@@ -22,7 +22,7 @@ namespace CourseNet.Data.Configurations
                 .HasForeignKey(c => c.InstructorId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            //builder.HasData(GenerateCourses());
+            builder.HasData(GenerateCourses());
         }
 
         public Course[] GenerateCourses()
