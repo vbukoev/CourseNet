@@ -13,12 +13,12 @@ namespace CourseNet.Data.Models.Entities
             this.Id = System.Guid.NewGuid();
         }
 
-        [Comment("Student First Name")]
+        [Comment("First Name of the User")]
         [Required]
         [MaxLength(FirstNameMaxLength)]
         public string FirstName { get; set; } = null!;
 
-        [Comment("Student Last Name")]
+        [Comment("Last Name of the User")]
         [Required]
         [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; } = null!;
