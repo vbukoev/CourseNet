@@ -27,47 +27,10 @@ namespace CourseNet.Services.Data
             return $"{user.FirstName} {user.LastName}";
         }
 
-        public async Task<string> GetFullNameByIdAsync(string userId)
+        public Task<string> GetFullNameByIdAsync(string userId)
         {
-            CourseUser? user = await this.context
-                .Users
-                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
-            if (user == null)
-            {
-                return string.Empty;
-            }
-
-            return $"{user.FirstName} {user.LastName}";
+            throw new NotImplementedException();
         }
-
-        //public async Task<IEnumerable<UserViewModel>> AllAsync()
-        //{
-        //    List<UserViewModel> allUsers = await this.context
-        //        .Users
-        //        .Select(u => new UserViewModel()
-        //        {
-        //            Id = u.Id.ToString(),
-        //            Email = u.Email,
-        //            FullName = u.FirstName + " " + u.LastName
-        //        })
-        //        .ToListAsync();
-        //    foreach (UserViewModel user in allUsers)
-        //    {
-        //        Instructor? agent = this.context
-        //            .Instructors
-        //            .FirstOrDefault(a => a.UserId.ToString() == user.Id);
-        //        if (agent != null)
-        //        {
-        //            user.PhoneNumber = agent.PhoneNumber;
-        //        }
-        //        else
-        //        {
-        //            user.PhoneNumber = string.Empty;
-        //        }
-        //    }
-
-        //    return allUsers;
-        //}
     }
 }
 
