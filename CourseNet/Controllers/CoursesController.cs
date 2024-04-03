@@ -3,6 +3,7 @@ using CourseNet.Services.Data.Models.Course;
 using CourseNet.Web.Infrastructure.Extensions;
 using CourseNet.Web.ViewModels.Course;
 using static CourseNet.Common.ValidationErrors.General;
+using static CourseNet.Common.DataConstants.GeneralApplicationConstants;
 
 using static CourseNet.Common.Notifications.NotificationMessagesConstants;
 
@@ -290,9 +291,15 @@ namespace CourseNet.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Mine()
         {
+            if (User.IsInRole(AdministratorRoleName))
+            {
+                return RedirectToAction("Mine", "Courses", new { Area = AdminAreaName});
+            }
+
             List<CourseAllViewModel> courses = new List<CourseAllViewModel>();
             string userId = User.GetId();
             bool isInstructor = await instructorService.InstructorExistsByUserId(userId);
+
             try
             {
                 if(User.IsAdmin())
@@ -309,11 +316,13 @@ namespace CourseNet.Web.Controllers
                         .DistinctBy(c => c.Id)
                         .ToList();
                 }
+
                 else if (isInstructor)
                 {
                     string instructorId = await instructorService.GetInstructorIdByUserId(userId);
                     courses.AddRange(await courseService.AllByInstructorIdAsync(instructorId!));
                 }
+
                 else
                 {
                     courses.AddRange(await courseService.AllByUserIdAsync(userId));
@@ -323,7 +332,6 @@ namespace CourseNet.Web.Controllers
             }
             catch (Exception)
             {
-
                 return GeneralError();
             }
         }
@@ -373,12 +381,15 @@ namespace CourseNet.Web.Controllers
         public async Task<IActionResult> Leave(string id)
         {
             bool courseExists = await courseService.ExistsByIdAsync(id);
+
             if (!courseExists)
             {
                 TempData[ErrorMessage] = "Курсът не съществува!";
                 return RedirectToAction("Index", "Courses");
             }
+
             bool isCourseEnrolled = await courseService.IsEnrolledByIdAsync(id);
+
             if (!isCourseEnrolled)
             {
                 TempData[ErrorMessage] = "Вие трябва да сте студент и да сте записани за този курс, за да можете да го напуснете!";
@@ -386,6 +397,7 @@ namespace CourseNet.Web.Controllers
             }
 
             bool isUserStudent = await courseService.IsEnrolledByIdAsync(id, User.GetId()!);
+
             if (!isUserStudent)
             {
                 TempData[ErrorMessage] = "Вие не сте записани за този курс и не може да го напуснете!";
@@ -409,7 +421,6 @@ namespace CourseNet.Web.Controllers
         {
             TempData[ErrorMessage] = GeneralErrorMessage;
             return RedirectToAction("Index", "Home");
-
         }
     }
 }
