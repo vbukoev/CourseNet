@@ -77,15 +77,20 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+        pattern: "/{controller=Home}/{action=Index}/{id?}");
+
+    endpoints.MapControllerRoute(
+        name: "areas",
+        pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
     endpoints.MapControllerRoute(
         name: "LecturesRoute",
-        pattern: "{controller=Lectures}/{action=AllLecturesForCourse}/{courseId?}");
+        pattern: "/{controller=Lectures}/{action=AllLecturesForCourse}/{courseId?}");
 
     endpoints.MapControllerRoute(
         name: "materials",
-        pattern: "{controller=Materials}/{action=Create}/{lectureId?}");
+        pattern: "/{controller=Materials}/{action=Create}/{lectureId?}");
+
     endpoints.MapRazorPages();
 });
 
