@@ -35,6 +35,7 @@ builder.Services.AddRecaptchaService();
 builder.Services.ConfigureApplicationCookie(cfg =>
 {
     cfg.LoginPath = "/User/Login";
+    cfg.AccessDeniedPath = "/Home/Error/401";
 });
 
 builder.Services
@@ -77,25 +78,18 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "areas",
-        pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}");
+        pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
 
     endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "/{controller=Home}/{action=Index}/{id?}");
+        name: "ProtectingUrlRoute",
+        pattern: "/{controller}/{action}/{id}/{information}",
+        defaults: new { Controller = "Categories", Action = "Details" });
 
-    endpoints.MapControllerRoute(
-        name: "LecturesRoute",
-        pattern: "/{controller=Lectures}/{action=AllLecturesForCourse}/{courseId?}");
-
-    endpoints.MapControllerRoute(
-        name: "materials",
-        pattern: "/{controller=Materials}/{action=Create}/{lectureId?}");
+    endpoints.MapDefaultControllerRoute();
 
     endpoints.MapRazorPages();
 });
-
-app.MapDefaultControllerRoute();
-app.MapRazorPages();
 
 app.Run();
 

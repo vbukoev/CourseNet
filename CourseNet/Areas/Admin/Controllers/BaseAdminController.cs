@@ -7,9 +7,6 @@ namespace CourseNet.Web.Areas.Admin.Controllers
     [Authorize(Roles = AdministratorRoleName)]
     public class BaseAdminController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+
     }
 }

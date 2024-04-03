@@ -16,7 +16,7 @@ namespace CourseNet.Web.Controllers
         {
             if (User.IsInRole(AdministratorRoleName))
             {
-                RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+                return RedirectToAction("Index", "Home", new { Area = AdminAreaName });
             }
             IEnumerable<IndexViewModel> viewModel = await courseService.GetAllCoursesAsync();
 
