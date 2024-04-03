@@ -1,4 +1,5 @@
-﻿using CourseNet.Data;
+﻿using CourseNet.Common.DataConstants;
+using CourseNet.Data;
 using CourseNet.Data.Models.Entities;
 using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.ViewModels.User;
@@ -42,9 +43,25 @@ namespace CourseNet.Services.Data
 
         public async Task<IEnumerable<UserViewModel>> GetAllUsersAsync()
         {
-            var users = new HashSet<UserViewModel>();
+            var users = await context
+                .Users
+                .Select(u => new UserViewModel
+                {
+                    Id = u.Id.ToString(),
+                    Email = u.Email,
+                    FullName = u.FirstName + " " + u.LastName
+                })
+                .ToListAsync();
 
-            var instructors = await context.Instructors.Include(i=>i.User).ToListAsync();
+            foreach (UserViewModel user in users)
+            {
+                var instructor = context
+                    .Instructors
+                    .FirstOrDefault(a => a.UserId.ToString() == user.Id);
+                user.PhoneNumber = instructor != null ? instructor.PhoneNumber : string.Empty;
+            }
+
+            return users;
         }
     }
 }

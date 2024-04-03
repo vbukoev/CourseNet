@@ -100,15 +100,5 @@ namespace CourseNet.Web.Controllers
 
             return Redirect(model.ReturnUrl ?? "/Home/Index");
         }
-
-        public IActionResult Profile()
-        {
-            return View();
-        }
-
-        public IActionResult EditProfile()
-        {
-            return View();
-        }
     }
 }
