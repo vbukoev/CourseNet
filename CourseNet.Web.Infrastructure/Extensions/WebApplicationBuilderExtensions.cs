@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using CourseNet.Data.Models.Entities;
+using CourseNet.Web.Infrastructure.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using static CourseNet.Common.DataConstants.GeneralApplicationConstants;
@@ -81,6 +82,11 @@ namespace CourseNet.Web.Infrastructure.Extensions
             .GetResult();
 
             return app;
+        }
+
+        public static IApplicationBuilder EnableOnlineUsersCheck(this IApplicationBuilder applicationBuilder)
+        {
+            return applicationBuilder.UseMiddleware<OnlineUsersMiddleware>();
         }
     }
 }
