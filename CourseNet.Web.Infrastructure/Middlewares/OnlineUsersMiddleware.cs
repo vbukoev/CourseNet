@@ -35,8 +35,6 @@ namespace CourseNet.Web.Infrastructure.Middlewares
                     context.Response.Cookies.Append(this.cookieName, userId, new CookieOptions
                     {
                         HttpOnly = true,
-                        Secure = true,
-                        SameSite = SameSiteMode.Strict,
                         MaxAge = TimeSpan.FromDays(30)
                     });
                 }

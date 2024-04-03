@@ -1,4 +1,4 @@
-﻿@* @using CourseNet.Web.Infrastructure.Middlewares; *@
+﻿@using CourseNet.Web.Infrastructure.Middlewares;
 @model IEnumerable<UserViewModel>
 
 @{
@@ -28,23 +28,23 @@
                 <td>
                     @if (user.PhoneNumber != string.Empty)
                     {
-                        <label>✔</label>
+                        <label class="text-center">✅</label>
                     }
                     else
                     {
                         <label class="text-center">❌</label>
                     }
                 </td>
-                @* <td>
-            @if (OnlineUsersMiddleware.CheckIfUserIsOnline(user.Id))
-            {
-            <label>✔</label>
-            }
-            else
-            {
-            <label class="text-center">❌</label>
-            }
-            </td> *@
+                <td>
+                    @if (OnlineUsersMiddleware.CheckIfUserIsOnline(user.Id))
+                    {
+                        <label class="text-center">🟢</label>
+                    }
+                    else
+                    {
+                        <label class="text-center">🔴</label>
+                    }
+                </td>
             </tr>
         }
     </tbody>
