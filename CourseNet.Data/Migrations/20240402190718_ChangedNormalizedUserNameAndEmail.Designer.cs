@@ -4,6 +4,7 @@ using CourseNet.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseNet.Data.Migrations
 {
     [DbContext(typeof(CourseNetDbContext))]
-    partial class CourseNetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240402190718_ChangedNormalizedUserNameAndEmail")]
+    partial class ChangedNormalizedUserNameAndEmail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,6 +200,25 @@ namespace CourseNet.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
 
                     b.HasComment("User Table");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d01ec426-abe0-49fe-94f2-792c342147b4"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e990116b-f46d-4474-bc92-40448f529f3f",
+                            Email = "test@students.com",
+                            EmailConfirmed = false,
+                            FirstName = "Student",
+                            LastName = "Studentov",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TEST@STUDENTS.COM",
+                            NormalizedUserName = "TEST@STUDENTS.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKrzLMw6fX9MoSu2fp3rt6NIauhBo+BRMNQ3SkgIXJgK1kSDhfUq4TS+Y8HH5S2B8A==",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UserName = "test@students.com"
+                        });
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Instructor", b =>
@@ -241,17 +262,6 @@ namespace CourseNet.Data.Migrations
                     b.ToTable("Instructors");
 
                     b.HasComment("Instructors Table");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("c80e6eb5-a73a-449d-9a4c-2284b8ddbbea"),
-                            Email = "futureInstructor@instructors.com",
-                            FirstName = "Future",
-                            LastName = "Instructor",
-                            PhoneNumber = "+359123456789",
-                            UserId = new Guid("120206e2-d1e9-4b04-bf2c-943fe9a1793d")
-                        });
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Lecture", b =>
@@ -292,6 +302,48 @@ namespace CourseNet.Data.Migrations
                     b.ToTable("Lectures");
 
                     b.HasComment("Lecture Table");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Лекцията за обектно-ориентирано програмиране (ООП) обяснява принципите на създаване на софтуерни обекти, които имат данни и функции, свързани с тях, взаимодействайки помежду си. Програмистите използват концепции като инкапсулация, наследяване и полиморфизъм, за да създадат по-структуриран, поддържаем и разширяем код.",
+                            Title = "OOP"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CourseId = new Guid("3ce6e9d9-287a-4aa4-8c61-58fabc462dce"),
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Лекцията за напреднало програмиране на C# обхваща по-сложни концепции и техники за разработка на софтуер. Тя се фокусира върху напреднали теми като асинхронно програмиране, многонишковост, LINQ заявки, динамично програмиране и други. Участването в такава лекция допринася за разширяване на уменията на програмистите и за разработването на по-ефективен и оптимизиран софтуер.",
+                            Title = "C# Advanced Lecture"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CourseId = new Guid("fdca4a09-56d7-4298-8393-c1271b2d83e5"),
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Лекцията за бази данни (DB) представя основните понятия и технологии, свързани със съхранение и управление на данни. Тя обхваща различни модели на бази данни като релационни, NoSQL и графови, както и техники за проектиране на бази данни, оптимизация на заявки и сигурност на данните. Участниците усвояват знания и умения, необходими за създаване, управление и използване на бази данни в различни софтуерни проекти.",
+                            Title = "DB Lecture"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CourseId = new Guid("fdca4a09-56d7-4298-8393-c1271b2d83e5"),
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Лекцията по бизнес представя основни принципи на бизнеса, включително стратегическо планиране, мениджмънт, маркетинг, финанси и операции. Участниците разбират как да анализират пазара, да разработят бизнес стратегии, да управляват финансовите ресурси и да създадат успешни продукти или услуги. Лекцията помага на студентите и професионалистите да разберат основите на бизнеса и да приложат тези знания в практиката.",
+                            Title = "Business Lecture"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CourseId = new Guid("fdca4a09-56d7-4298-8393-c1271b2d83e5"),
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Лекцията по дизайн представя ключови концепции и методи за създаване на визуално привлекателни и функционални продукти или интерфейси. Тя обхваща теми като цветови теории, композиция, типография, UX (потребителски опит) и UI (потребителски интерфейс) дизайн. Участниците усвояват практически умения и инструменти за проектиране, които им помагат да създадат усъвършенствани и интуитивни продукти за крайните потребители.",
+                            Title = "Design Lecture"
+                        });
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Material", b =>
@@ -331,6 +383,43 @@ namespace CourseNet.Data.Migrations
                     b.ToTable("Materials");
 
                     b.HasComment("Material Table");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Този материал представя основните принципи на обектно-ориентираното програмиране (OOP), включително инкапсулация, наследяване и полиморфизъм.",
+                            LectureId = 1,
+                            Name = "Принципи на Обектно-ориентираното програмиране"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Този материал представя теми по програмирането на C#,включително работа с LINQ, асинхронно програмиране и напреднали структури на данни.",
+                            LectureId = 2,
+                            Name = "Програмиране на C#"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Този материал представя основни концепции и технологии в областта на базите данни, включително релационни бази данни, SQL заявки и моделиране на данни.",
+                            LectureId = 3,
+                            Name = "Основи на базите данни"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Този материал представя основни концепции в областта на бизнеса,включително управление на проекти, маркетинг и стратегическо планиране.",
+                            LectureId = 4,
+                            Name = "Основи на бизнеса"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Този материал представя основни принципи на дизайна, включителноцветове, композиция и типография.",
+                            LectureId = 5,
+                            Name = "Дизайн принципи"
+                        });
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Review", b =>

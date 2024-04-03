@@ -20,10 +20,12 @@ namespace CourseNet.Data.Models.Entities
         [Required]
         [MaxLength(FirstNameMaxLength)]
         public string FirstName { get; set; } = string.Empty;
+
         [Comment("Instructor Last Name")]
         [Required]
         [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; } = string.Empty;
+
         [Comment("Instructor Email Address")]
         [Required]
         public string Email { get; set; } = null!;
@@ -32,8 +34,10 @@ namespace CourseNet.Data.Models.Entities
         [Required]
         [MaxLength(PhoneNumberMaxLength)]
         public string PhoneNumber { get; set; } = null!;
+
         [Comment("User Identifier")]
         public Guid UserId { get; set; }
+
         [ForeignKey(nameof(UserId))]
         public virtual CourseUser User { get; set; } = null!;
 

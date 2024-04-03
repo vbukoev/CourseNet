@@ -1,8 +1,7 @@
-﻿using System.Diagnostics;
-using CourseNet.Services.Data.Interfaces;
+﻿using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
-
+using static CourseNet.Common.DataConstants.GeneralApplicationConstants;
 namespace CourseNet.Web.Controllers
 {
     public class HomeController : Controller
@@ -15,6 +14,10 @@ namespace CourseNet.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            if (User.IsInRole(AdministratorRoleName))
+            {
+                return RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+            }
             IEnumerable<IndexViewModel> viewModel = await courseService.GetAllCoursesAsync();
 
             return View(viewModel);

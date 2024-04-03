@@ -1,0 +1,51 @@
+﻿@using CourseNet.Web.Infrastructure.Middlewares;
+@model IEnumerable<UserViewModel>
+
+@{
+    ViewBag.Title = "All Users";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th><label>Email</label></th>
+            <th><label>Име</label></th>
+            <th><label>Телефонен номер</label></th>
+            <th><label>Инструктор ли е?</label></th>
+            <th><label>Online ли е потребителя?</label></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td><label>@user.Email</label></td>
+                <td><label>@user.FullName</label></td>
+                <td><label>@user.PhoneNumber</label></td>
+                <td>
+                    @if (user.PhoneNumber != string.Empty)
+                    {
+                        <label class="text-center">✅</label>
+                    }
+                    else
+                    {
+                        <label class="text-center">❌</label>
+                    }
+                </td>
+                <td>
+                    @if (OnlineUsersMiddleware.CheckIfUserIsOnline(user.Id))
+                    {
+                        <label class="text-center">🟢</label>
+                    }
+                    else
+                    {
+                        <label class="text-center">🔴</label>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

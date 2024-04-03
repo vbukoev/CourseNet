@@ -4,6 +4,7 @@ using CourseNet.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseNet.Data.Migrations
 {
     [DbContext(typeof(CourseNetDbContext))]
-    partial class CourseNetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240402194029_ChangedFutureInstructorNormalizedUsernameAndEmail")]
+    partial class ChangedFutureInstructorNormalizedUsernameAndEmail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,6 +200,26 @@ namespace CourseNet.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
 
                     b.HasComment("User Table");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("120206e2-d1e9-4b04-bf2c-943fe9a1793d"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5e250d88-7bff-4450-a760-85b4979b9fe6",
+                            Email = "futureInstructor@instructors.com",
+                            EmailConfirmed = false,
+                            FirstName = "Future",
+                            LastName = "Instructor",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "FUTUREINSTRUCTOR@INSTRUCTORS.COM",
+                            NormalizedUserName = "FUTUREINSTRUCTOR@INSTRUCTORS.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDLla1IkEe9tqOl+WlDP8cGFOThn8a9ajXn87VBR0GYLkK57J3/+8HD3x7y/U5+RMw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "6ac9b051-54d9-486f-acd0-42b99c639fb5",
+                            TwoFactorEnabled = false,
+                            UserName = "futureInstructor@instructors.com"
+                        });
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Instructor", b =>
@@ -241,17 +263,6 @@ namespace CourseNet.Data.Migrations
                     b.ToTable("Instructors");
 
                     b.HasComment("Instructors Table");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("c80e6eb5-a73a-449d-9a4c-2284b8ddbbea"),
-                            Email = "futureInstructor@instructors.com",
-                            FirstName = "Future",
-                            LastName = "Instructor",
-                            PhoneNumber = "+359123456789",
-                            UserId = new Guid("120206e2-d1e9-4b04-bf2c-943fe9a1793d")
-                        });
                 });
 
             modelBuilder.Entity("CourseNet.Data.Models.Entities.Lecture", b =>

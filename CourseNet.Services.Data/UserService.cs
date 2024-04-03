@@ -1,6 +1,8 @@
-﻿using CourseNet.Data;
+﻿using CourseNet.Common.DataConstants;
+using CourseNet.Data;
 using CourseNet.Data.Models.Entities;
 using CourseNet.Services.Data.Interfaces;
+using CourseNet.Web.ViewModels.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourseNet.Services.Data
@@ -29,9 +31,8 @@ namespace CourseNet.Services.Data
 
         public async Task<string> GetFullNameByIdAsync(string userId)
         {
-            CourseUser? user = await this.context
-                .Users
-                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
             if (user == null)
             {
                 return string.Empty;
@@ -40,34 +41,28 @@ namespace CourseNet.Services.Data
             return $"{user.FirstName} {user.LastName}";
         }
 
-        //public async Task<IEnumerable<UserViewModel>> AllAsync()
-        //{
-        //    List<UserViewModel> allUsers = await this.context
-        //        .Users
-        //        .Select(u => new UserViewModel()
-        //        {
-        //            Id = u.Id.ToString(),
-        //            Email = u.Email,
-        //            FullName = u.FirstName + " " + u.LastName
-        //        })
-        //        .ToListAsync();
-        //    foreach (UserViewModel user in allUsers)
-        //    {
-        //        Instructor? agent = this.context
-        //            .Instructors
-        //            .FirstOrDefault(a => a.UserId.ToString() == user.Id);
-        //        if (agent != null)
-        //        {
-        //            user.PhoneNumber = agent.PhoneNumber;
-        //        }
-        //        else
-        //        {
-        //            user.PhoneNumber = string.Empty;
-        //        }
-        //    }
+        public async Task<IEnumerable<UserViewModel>> GetAllUsersAsync()
+        {
+            var users = await context
+                .Users
+                .Select(u => new UserViewModel
+                {
+                    Id = u.Id.ToString(),
+                    Email = u.Email,
+                    FullName = u.FirstName + " " + u.LastName
+                })
+                .ToListAsync();
 
-        //    return allUsers;
-        //}
+            foreach (UserViewModel user in users)
+            {
+                var instructor = context
+                    .Instructors
+                    .FirstOrDefault(a => a.UserId.ToString() == user.Id);
+                user.PhoneNumber = instructor != null ? instructor.PhoneNumber : string.Empty;
+            }
+
+            return users;
+        }
     }
 }
 

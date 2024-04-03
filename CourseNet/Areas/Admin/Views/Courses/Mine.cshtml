@@ -1,0 +1,43 @@
+﻿@model MyCoursesViewModel
+
+@{
+    ViewData["Title"] = "Моите курсове";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">@ViewBag.Title</h2>
+    <hr />
+
+    @if (!Model.AddedCourses.Any())
+    {
+        <h2 class="text-center">Все още нямаш курсове!</h2>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var course in Model.AddedCourses)
+            {
+                @await Html.PartialAsync("~/Views/Shared/_CoursePartial.cshtml", course)
+            }
+        </div>
+    }
+
+    <h2 class="text-center">Моите записани курсове</h2>
+    <hr />
+    @if (!Model.EnrolledCourses.Any())
+    {
+        <h2 class="text-center">Все още не си се записал за курсове!</h2>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var course in Model.EnrolledCourses)
+            {
+                @await Html.PartialAsync("~/Views/Shared/_CoursePartial.cshtml", course)
+            }
+        </div>
+    }
+    <br/>
+    <br />
+    <br />
+</div>

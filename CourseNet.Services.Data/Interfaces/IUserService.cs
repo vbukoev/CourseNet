@@ -1,4 +1,6 @@
-﻿namespace CourseNet.Services.Data.Interfaces
+﻿using CourseNet.Web.ViewModels.User;
+
+namespace CourseNet.Services.Data.Interfaces
 {
     public interface IUserService
     {
@@ -6,6 +8,6 @@
 
         Task<string> GetFullNameByIdAsync(string userId);
 
-        //Task<IEnumerable<UserViewModel>> AllAsync();
+        Task<IEnumerable<UserViewModel>> GetAllUsersAsync();
     }
 }
