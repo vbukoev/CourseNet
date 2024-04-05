@@ -27,6 +27,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseNet.Services.Data.Mod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseNet.WebApi", "CourseNet.WebApi\CourseNet.WebApi.csproj", "{2F4A7877-6E27-47FB-8F9B-22EDA40708CF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FF812B96-5B5A-4227-BDE6-DACC09022CBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseNet.Services.Tests", "CourseNet.Services.Tests\CourseNet.Services.Tests.csproj", "{3922E72D-CB3E-4F61-8C36-F04C5DA0FE7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,10 @@ Global
 		{2F4A7877-6E27-47FB-8F9B-22EDA40708CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F4A7877-6E27-47FB-8F9B-22EDA40708CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F4A7877-6E27-47FB-8F9B-22EDA40708CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3922E72D-CB3E-4F61-8C36-F04C5DA0FE7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3922E72D-CB3E-4F61-8C36-F04C5DA0FE7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3922E72D-CB3E-4F61-8C36-F04C5DA0FE7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3922E72D-CB3E-4F61-8C36-F04C5DA0FE7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +90,7 @@ Global
 		{77C78438-CF66-492C-A148-26426B51B8C5} = {BA798A8F-E999-4C52-A5E4-820784CA9139}
 		{91E3462B-6117-48A7-BA74-1AF89119E459} = {E9CA8792-8CF7-4155-AA4A-45039594BB00}
 		{2F4A7877-6E27-47FB-8F9B-22EDA40708CF} = {BA798A8F-E999-4C52-A5E4-820784CA9139}
+		{3922E72D-CB3E-4F61-8C36-F04C5DA0FE7E} = {FF812B96-5B5A-4227-BDE6-DACC09022CBF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {404C2E6D-1E2C-4B6C-BDAA-18C059DEEFFC}
