@@ -2,6 +2,7 @@
 using CourseNet.Services.Data.Models.Course;
 using CourseNet.Web.Infrastructure.Extensions;
 using CourseNet.Web.ViewModels.Course;
+using Microsoft.Extensions.Caching.Memory;
 using static CourseNet.Common.ValidationErrors.General;
 using static CourseNet.Common.DataConstants.GeneralApplicationConstants;
 
@@ -19,12 +20,14 @@ namespace CourseNet.Web.Controllers
         private readonly IInstructorService instructorService;
         private readonly ICourseService courseService;
         private readonly IUserService userService;
-        public CoursesController(ICategoryService categoryService, IInstructorService instructorService, ICourseService courseService, IUserService userService)
+        private readonly IMemoryCache memoryCache;
+        public CoursesController(ICategoryService categoryService, IInstructorService instructorService, ICourseService courseService, IUserService userService, IMemoryCache memoryCache)
         {
             this.categoryService = categoryService;
             this.instructorService = instructorService;
             this.courseService = courseService;
             this.userService = userService;
+            this.memoryCache = memoryCache;
         }
 
         [HttpGet]
@@ -375,6 +378,8 @@ namespace CourseNet.Web.Controllers
                 return GeneralError();
             }
 
+            memoryCache.Remove(EnrollCacheKey);
+
             return RedirectToAction("Mine", "Courses");
         }
 
@@ -413,6 +418,8 @@ namespace CourseNet.Web.Controllers
             {
                 return GeneralError();
             }
+
+            memoryCache.Remove(EnrollCacheKey);
 
             return RedirectToAction("Mine", "Courses");
         }

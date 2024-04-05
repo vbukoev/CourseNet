@@ -14,7 +14,8 @@
 
         public const string UsersCacheKey = "UsersCacheKey";
         public const string EnrollCacheKey = "EnrollsCacheKey";
-        public const int CacheExpirationInMinutes = 5;
+        public const int UsersCacheExpirationInMinutes = 5;
+        public const int EnrollCacheExpirationInMinutes = 10;
 
         public const string OnlineUsersCookieName = "OnlineUsers";
         public const int LastActivityBeforeOffline = 10;

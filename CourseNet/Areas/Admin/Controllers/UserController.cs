@@ -25,7 +25,7 @@ namespace CourseNet.Web.Areas.Admin.Controllers
                 users = await userService.GetAllUsersAsync();
 
                 var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(CacheExpirationInMinutes));
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(UsersCacheExpirationInMinutes));
 
                 memoryCache.Set(UsersCacheKey, users, cacheOptions);
             }
