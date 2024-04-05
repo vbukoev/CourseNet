@@ -26,6 +26,7 @@ namespace CourseNet.Services.Data
                 .Select(c => new EnrollViewModel
                 {
                     Title = c.Title,
+                    ImageUrl = c.ImagePath,
                     Description = c.Description,
                     InstructorFullName = c.Instructor.FirstName + " " + c.Instructor.LastName,
                     InstructorEmail = c.Instructor.Email,
