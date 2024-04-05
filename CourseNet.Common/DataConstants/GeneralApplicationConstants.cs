@@ -12,6 +12,10 @@
         public const string AdministratorRoleName = "Administrator";
         public const string DevelopmentAdminEmail = "admin@coursenet.bg";
 
+        public const string UsersCacheKey = "UsersCacheKey";
+        public const string EnrollCacheKey = "EnrollsCacheKey";
+        public const int CacheExpirationInMinutes = 5;
+
         public const string OnlineUsersCookieName = "OnlineUsers";
         public const int LastActivityBeforeOffline = 10;
     }
