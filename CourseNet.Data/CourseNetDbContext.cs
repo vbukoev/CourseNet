@@ -3,17 +3,21 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+// ReSharper disable VirtualMemberCallInConstructor
 
 namespace CourseNet.Data
 {
     public class CourseNetDbContext : IdentityDbContext<CourseUser, IdentityRole<Guid>, Guid>
     {
 
-        private readonly DbContextOptions<CourseNetDbContext> _context;
+        
         public CourseNetDbContext(DbContextOptions<CourseNetDbContext> context)
             : base(context)
         {
-            _context = context;
+            if (!Database.IsRelational())
+            {
+                Database.EnsureCreated();
+            }
         }
 
         public DbSet<Course> Courses { get; set; } = null!;

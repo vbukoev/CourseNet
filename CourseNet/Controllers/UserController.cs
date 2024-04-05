@@ -4,7 +4,9 @@ using Griesoft.AspNetCore.ReCaptcha;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using static CourseNet.Common.Notifications.NotificationMessagesConstants;
+using static CourseNet.Common.DataConstants.GeneralApplicationConstants;
 
 namespace CourseNet.Web.Controllers
 {
@@ -13,15 +15,18 @@ namespace CourseNet.Web.Controllers
         private readonly SignInManager<CourseUser> signInManager;
         private readonly UserManager<CourseUser> userManager;
         private readonly IUserStore<CourseUser> userStore;
+        private readonly IMemoryCache memoryCache;
 
         public UserController(
             UserManager<CourseUser> userManager,
             IUserStore<CourseUser> userStore,
-            SignInManager<CourseUser> signInManager)
+            SignInManager<CourseUser> signInManager, 
+            IMemoryCache memoryCache)
         {
             this.userManager = userManager;
             this.userStore = userStore;
             this.signInManager = signInManager;
+            this.memoryCache = memoryCache;
         }
 
         [HttpGet]
@@ -61,7 +66,7 @@ namespace CourseNet.Web.Controllers
             }
 
             await signInManager.SignInAsync(user, false);
-            //memoryCache.Remove(UsersCacheKey);
+            memoryCache.Remove(UsersCacheKey);
 
             return RedirectToAction("Index", "Home");
         }

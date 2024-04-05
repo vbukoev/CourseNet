@@ -1,3 +1,12 @@
-﻿@{
-    Layout = "_Layout";
+﻿@using static CourseNet.Common.DataConstants.GeneralApplicationConstants
+@{
+    if (User.IsInRole(AdministratorRoleName))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    }
+
+    else
+    {
+        Layout = "_Layout";
+    }
 }
