@@ -1,8 +1,9 @@
 using CourseNet.Data;
-using CourseNet.Data.Models.Entities;
 using CourseNet.Services.Data;
+using CourseNet.Web.ViewModels.Instructor;
 using Microsoft.EntityFrameworkCore;
 using static CourseNet.Services.Tests.DatabaseSeeder;
+
 namespace CourseNet.Services.Tests
 {
     public class InstructorServiceTests
@@ -65,21 +66,68 @@ namespace CourseNet.Services.Tests
         }
 
         [Test]
-        public async Task HasAppliedCoursesByUserIdAsyncShouldReturnTrueWhenHasAppliedCourses()
-        {
-            string existingInstructorUserId = "120206E2-D1E9-4B04-BF2C-943FE9A1793D";
-
-            bool result = await instructorService.HasAppliedCoursesByUserIdAsync(existingInstructorUserId);
-
-            Assert.IsTrue(result);
-        }
-
-        [Test]
         public async Task HasAppliedCoursesByUserIdAsyncShouldReturnFalseWhenHasNotAppliedCourses()
         {
             string nonExistingInstructorUserId = StudentUser.Id.ToString();
 
             bool result = await instructorService.HasAppliedCoursesByUserIdAsync(nonExistingInstructorUserId);
+
+            Assert.IsFalse(result);
+        }
+        
+        [Test]
+        public async Task CreateShouldCreateInstructor()
+        {
+            string userId = Guid.NewGuid().ToString();
+            var model = new BecomeInstructorFormModel
+            {
+                FirstName = "Test",
+                LastName = "Test",
+                PhoneNumber = "+359123456789",
+                Email = ""
+            };
+
+            await instructorService.Create(userId, model);
+        }
+        
+        [Test]
+        public async Task GetInstructorIdByUserIdShouldReturnInstructorId()
+        {
+            string userId = InstructorUser.Id.ToString();
+
+            string result = await instructorService.GetInstructorIdByUserId(userId);
+
+            Assert.IsNotNull(result);
+        }
+
+        [Test]
+        public async Task GetInstructorIdByUserIdShouldReturnNullWhenInstructorNotExists()
+        {
+            string userId = StudentUser.Id.ToString();
+
+            string result = await instructorService.GetInstructorIdByUserId(userId);
+
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public async Task HasCourseWithIdAsyncShouldReturnTrueWhenHasCourse()
+        {
+            string userId = InstructorUser.Id.ToString();
+            string courseId = DatabaseSeeder.Course.Id.ToString();
+
+            bool result = await instructorService.HasCourseWithIdAsync(userId, courseId);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task HasCourseWithIdAsyncShouldReturnFalseWhenHasNotCourse()
+        {
+            string userId = InstructorUser.Id.ToString();
+            string courseId = Guid.NewGuid().ToString();
+
+            bool result = await instructorService.HasCourseWithIdAsync(userId, courseId);
 
             Assert.IsFalse(result);
         }
