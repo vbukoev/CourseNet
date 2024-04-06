@@ -27,6 +27,7 @@ namespace CourseNet.Services.Tests
             };
             InstructorUser = new CourseUser
             {
+                Id = Guid.Parse("120206E2-D1E9-4B04-BF2C-943FE9A1793D"),
                 UserName = "futureInstructor@instructors.com",
                 NormalizedUserName = "FUTUREINSTRUCTOR@INSTRUCTORS.COM",
                 Email = "futureInstructor@instructors.com",
@@ -42,6 +43,7 @@ namespace CourseNet.Services.Tests
 
             Instructor = new Instructor
             {
+                Email = "futureInstructor@instructors.com",
                 PhoneNumber = "+359123456789",
                 User = InstructorUser
             };
