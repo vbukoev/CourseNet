@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CourseNet.Data.Models.Entities;
-using CourseNet.Services.Data.Models.Course;
+﻿using CourseNet.Services.Data.Models.Course;
 using CourseNet.Services.Data.Models.Statistics;
 using CourseNet.Web.ViewModels.Course;
 using CourseNet.Web.ViewModels.Home;
-using Microsoft.EntityFrameworkCore;
 
 namespace CourseNet.Services.Data.Interfaces
 {
     public interface ICourseService
     {
         Task<IEnumerable<IndexViewModel>> GetAllCoursesAsync();
-
-        Task<string?> GetCourseIdByCourseNameAsync(string courseTitle);
-
+        
         Task<string> CreateCourseAndReturnIdAsync(CourseFormViewModel model, string instructorId);
 
         Task<AllCoursesFilteredAndPagedServiceModel> AllAsync(AllCoursesQueryModel queryModel);
