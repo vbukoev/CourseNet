@@ -1,8 +1,11 @@
-﻿using CourseNet.Data.Models.Entities;
+﻿using CourseNet.Data.Configurations;
+using CourseNet.Data.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using CourseNet.Data.Migrations;
+
 // ReSharper disable VirtualMemberCallInConstructor
 
 namespace CourseNet.Data
@@ -10,30 +13,30 @@ namespace CourseNet.Data
     public class CourseNetDbContext : IdentityDbContext<CourseUser, IdentityRole<Guid>, Guid>
     {
 
-        
-        public CourseNetDbContext(DbContextOptions<CourseNetDbContext> context)
+        private readonly bool seedDb;
+        public CourseNetDbContext(DbContextOptions<CourseNetDbContext> context, bool seedDb = true)
             : base(context)
         {
-            if (!Database.IsRelational())
-            {
-                Database.EnsureCreated();
-            }
+            this.seedDb = seedDb;
         }
 
         public DbSet<Course> Courses { get; set; } = null!;
         public DbSet<Instructor> Instructors { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
-        public DbSet<CourseUser> Students { get; set; } = null!;
         public DbSet<Lecture> Lectures { get; set; } = null!;
         public DbSet<Material> Materials { get; set; } = null!;
         public DbSet<Review> Reviews { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Assembly configAssembly =
-                Assembly.GetAssembly(typeof(CourseNetDbContext)) ?? Assembly.GetExecutingAssembly();
+            modelBuilder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new CourseEntityConfiguration());
 
-            modelBuilder.ApplyConfigurationsFromAssembly(configAssembly);
+            if (seedDb)
+            {
+                modelBuilder.ApplyConfiguration(new CategoryEntityConfiguration());
+                modelBuilder.ApplyConfiguration(new SeedCoursesEntityConfiguration());
+            }
 
             base.OnModelCreating(modelBuilder);
         }
