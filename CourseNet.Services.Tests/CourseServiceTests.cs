@@ -41,7 +41,6 @@ namespace CourseNet.Services.Tests
             Assert.AreNotEqual(coursesInDb + 1, courses.Count());
         }
 
-
         [Test]
         public async Task CreateCourseAndReturnIdAsyncShouldReturnId()
         {
