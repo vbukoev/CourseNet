@@ -50,7 +50,6 @@ namespace CourseNet.Services.Tests
 
             Course = new Course
             {
-                Id = Guid.NewGuid(),
                 Title = "C# Basics",
                 Description = "Learn the basics of C# programming language",
                 Instructor = Instructor,
