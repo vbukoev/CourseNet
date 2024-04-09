@@ -227,7 +227,7 @@ namespace CourseNet.Services.Tests
                 Title = "Test Course",
                 Description = "Test Description",
                 CategoryId = 1,
-                EndDate = "29/04/2024 12:22",
+                EndDate = "04/29/2024 12:22",
                 ImagePath = "https://www.test.com/image",
                 Difficulty = DifficultyLevel.Advanced,
                 Price = 100,
