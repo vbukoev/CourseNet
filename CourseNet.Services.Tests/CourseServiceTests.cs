@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using System.Globalization;
-using CourseNet.Data;
-using CourseNet.Data.Models.Entities;
+﻿using CourseNet.Data;
 using CourseNet.Data.Models.Entities.Enums;
 using CourseNet.Services.Data;
 using CourseNet.Web.ViewModels.Course;
@@ -171,23 +168,101 @@ namespace CourseNet.Services.Tests
         }
 
         [Test]
-        public async Task DetailsAsyncShouldReturnCourseDetails()
-        {
-            var courseId = DatabaseSeeder.Course.Id.ToString();
-
-            var courseDetails = await courseService.DetailsAsync(courseId);
-
-            Assert.IsNotNull(courseDetails);
-        }
-
-        [Test]
         public async Task DetailsAsyncShouldNotReturnCourseDetails()
         {
-            var courseId = DatabaseSeeder.Course.Id.ToString();
+            var courseId = Course.Id.ToString();
 
             var courseDetails = await courseService.DetailsAsync(courseId);
 
             Assert.IsNull(courseDetails);
+        }
+
+        [Test]
+        public async Task GetCourseForEditByIdAsyncShouldReturnCourseFormViewModel()
+        {
+            var courseId = Course.Id.ToString();
+
+            var courseFormViewModel = await courseService.GetCourseForEditByIdAsync(courseId);
+
+            Assert.IsNotNull(courseFormViewModel);
+        }
+
+        [Test]
+        public async Task GetCourseForEditByIdAsyncShouldNotReturnCourseFormViewModel()
+        {
+            var courseId = Guid.NewGuid().ToString();
+
+            var courseFormViewModel = await courseService.GetCourseForEditByIdAsync(courseId);
+
+            Assert.IsNull(courseFormViewModel);
+        }
+
+        [Test]
+        public async Task IsInstructorOfCourseAsyncShouldReturnTrueWhenIsInstructor()
+        {
+            var courseId = Course.Id.ToString();
+            var instructorId = Instructor.Id.ToString();
+
+            var result = await courseService.IsInstructorOfCourseAsync(courseId, instructorId);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task IsInstructorOfCourseAsyncShouldReturnFalseWhenIsNotInstructor()
+        {
+            var courseId = Course.Id.ToString();
+            var instructorId = Guid.NewGuid().ToString();
+
+            var result = await courseService.IsInstructorOfCourseAsync(courseId, instructorId);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task EditCourseByIdAsyncShouldEditCourse()
+        {
+            var courseFormViewModel = new CourseFormViewModel
+            {
+                Title = "Test Course",
+                Description = "Test Description",
+                CategoryId = 1,
+                EndDate = "29/04/2024 12:22",
+                ImagePath = "https://www.test.com/image",
+                Difficulty = DifficultyLevel.Advanced,
+                Price = 100,
+            };
+
+            var courseId = Course.Id.ToString();
+
+            await courseService.EditCourseByIdAsync(courseFormViewModel, courseId);
+
+            var course = await context.Courses.FirstOrDefaultAsync(c => c.Id.ToString() == courseId);
+
+            Assert.AreEqual(courseFormViewModel.Title, course.Title);
+        }
+
+        [Test]
+        public async Task DeleteCourseByIdAsyncShouldDeleteCourse()
+        {
+            var courseId = Course.Id.ToString();
+
+            await courseService.DeleteCourseByIdAsync(courseId);
+
+            var course = await context.Courses.FirstOrDefaultAsync(c => c.Id.ToString() == courseId);
+
+            Assert.IsNull(course);
+        }
+
+        [Test]
+        public async Task IsEnrolledByIdAsyncShouldCheckIfUserIsNotEnrolled()
+        {
+            var courseId = Course.Id.ToString();
+            var userId = StudentUser.Id.ToString();
+
+            var result = await courseService.IsEnrolledByIdAsync(courseId, userId);
+
+            Assert.IsFalse(result);
         }
     }
 }
