@@ -1,4 +1,8 @@
-﻿using CourseNet.Data;
+﻿using System.Diagnostics;
+using System.Globalization;
+using CourseNet.Data;
+using CourseNet.Data.Models.Entities;
+using CourseNet.Data.Models.Entities.Enums;
 using CourseNet.Services.Data;
 using CourseNet.Web.ViewModels.Course;
 using Microsoft.EntityFrameworkCore;
@@ -49,7 +53,9 @@ namespace CourseNet.Services.Tests
                 Title = "Test Course",
                 Description = "Test Description",
                 CategoryId = 1,
-                EndDate = DateTime.UtcNow.AddDays(10).ToString(),
+                EndDate = "29/04/2024 15:21",
+                ImagePath = "https://www.test.com/image",
+                Difficulty = DifficultyLevel.Advanced,
                 Price = 100,
             };
 
@@ -59,9 +65,129 @@ namespace CourseNet.Services.Tests
 
             var course = await context.Courses.FirstOrDefaultAsync(c => c.Id.ToString() == courseId);
 
-            if (courseId != null) 
-                Assert.AreEqual(courseId, course.Id);
+            Assert.IsNotNull(course);
         }
-        
+
+        [Test]
+        public async Task AllAsyncShouldReturnAllCoursesAsync()
+        {
+            var queryModel = new AllCoursesQueryModel
+            {
+                CurrentPage = 1,
+                CoursesPerPage = 9,
+                SearchTerm = null,
+            };
+
+            var courses = await courseService.AllAsync(queryModel);
+
+            var coursesInDb = context.Courses.Count();
+
+            Assert.AreEqual(coursesInDb, courses.Courses.Count());
+        }
+
+        [Test]
+        public async Task AllAsyncShouldNotReturnAllCoursesAsync()
+        {
+            var queryModel = new AllCoursesQueryModel
+            {
+                CurrentPage = 1,
+                CoursesPerPage = 9,
+                SearchTerm = null,
+            };
+
+            var courses = await courseService.AllAsync(queryModel);
+
+            var coursesInDb = context.Courses.Count();
+
+            Assert.AreNotEqual(coursesInDb + 1, courses.Courses.Count());
+        }
+
+        [Test]
+        public async Task AllByInstructorIdAsyncShouldReturnAllCoursesByInstructorId()
+        {
+            var instructorId = InstructorUser.Id.ToString();
+
+            var courses = await courseService.AllByInstructorIdAsync(instructorId);
+
+            var coursesInDb = context.Courses.Count(c => c.InstructorId.ToString() == instructorId);
+
+            Assert.AreEqual(coursesInDb, courses.Count());
+        }
+
+        [Test]
+        public async Task AllByInstructorIdAsyncShouldNotReturnAllCoursesByInstructorId()
+        {
+            var instructorId = InstructorUser.Id.ToString();
+
+            var courses = await courseService.AllByInstructorIdAsync(instructorId);
+
+            var coursesInDb = context.Courses.Count(c => c.InstructorId.ToString() == instructorId);
+
+            Assert.AreNotEqual(coursesInDb + 1, courses.Count());
+        }
+
+        [Test]
+        public async Task AllByUserIdAsyncShouldReturnAllCoursesByUserId()
+        {
+            var userId = StudentUser.Id.ToString();
+
+            var courses = await courseService.AllByUserIdAsync(userId);
+
+            var coursesInDb = context.Courses.Count(c => c.Instructor.UserId.ToString() == userId);
+
+            Assert.AreEqual(coursesInDb, courses.Count());
+        }
+
+        [Test]
+        public async Task AllByUserIdAsyncShouldNotReturnAllCoursesByUserId()
+        {
+            var userId = StudentUser.Id.ToString();
+
+            var courses = await courseService.AllByUserIdAsync(userId);
+
+            var coursesInDb = context.Courses.Count(c => c.Instructor.UserId.ToString() == userId);
+
+            Assert.AreNotEqual(coursesInDb + 1, courses.Count());
+        }
+
+        [Test]
+        public async Task ExistsByIdAsyncShouldReturnTrueWhenExists()
+        {
+            var courseId = DatabaseSeeder.Course.Id.ToString();
+
+            var result = await courseService.ExistsByIdAsync(courseId);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task ExistsByIdAsyncShouldReturnFalseWhenNotExists()
+        {
+            var courseId = Guid.NewGuid().ToString();
+
+            var result = await courseService.ExistsByIdAsync(courseId);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task DetailsAsyncShouldReturnCourseDetails()
+        {
+            var courseId = DatabaseSeeder.Course.Id.ToString();
+
+            var courseDetails = await courseService.DetailsAsync(courseId);
+
+            Assert.IsNotNull(courseDetails);
+        }
+
+        [Test]
+        public async Task DetailsAsyncShouldNotReturnCourseDetails()
+        {
+            var courseId = DatabaseSeeder.Course.Id.ToString();
+
+            var courseDetails = await courseService.DetailsAsync(courseId);
+
+            Assert.IsNull(courseDetails);
+        }
     }
 }
