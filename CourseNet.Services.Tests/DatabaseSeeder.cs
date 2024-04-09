@@ -55,7 +55,7 @@ namespace CourseNet.Services.Tests
                 Instructor = Instructor,
                 InstructorId = Instructor.Id
             };
-
+            
             dbContext.Users.Add(StudentUser);
 
             dbContext.Users.Add(InstructorUser);
