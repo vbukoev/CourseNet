@@ -63,5 +63,57 @@ namespace CourseNet.Services.Tests
 
             Assert.IsFalse(result);
         }
+
+        [Test]
+        public async Task CategoryExistsByNameAsyncShouldReturnTrueWhenExists()
+        {
+            string existingCategoryName = "Programming";
+
+            bool result = await categoryService.CategoryExistsByNameAsync(existingCategoryName);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task CategoryExistsByNameAsyncShouldReturnFalseWhenNotExists()
+        {
+            string nonExistingCategoryName = "Math(NotExisting)";
+
+            bool result = await categoryService.CategoryExistsByNameAsync(nonExistingCategoryName);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task AllCategoryNamesAsyncShouldReturnAllCategoryNames()
+        {
+            var allNames = await categoryService.AllCategoryNamesAsync();
+
+            Assert.AreEqual(context.Categories.Count(), allNames.Count());
+        }
+
+        [Test]
+        public async Task AllCategoryNamesAsyncShouldNotReturnAllCategoryNames()
+        {
+            var allNames = await categoryService.AllCategoryNamesAsync();
+
+            Assert.AreNotEqual(context.Categories.Count() + 1, allNames.Count());
+        }
+
+        [Test]
+        public async Task AllCategoriesAsyncShouldReturnAllCategories()
+        {
+            var allCategories = await categoryService.AllCategoriesAsync();
+
+            Assert.AreEqual(context.Categories.Count(), allCategories.Count());
+        }
+
+        [Test]
+        public async Task AllCategoriesAsyncShouldNotReturnAllCategories()
+        {
+            var allCategories = await categoryService.AllCategoriesAsync();
+
+            Assert.AreNotEqual(context.Categories.Count() + 1, allCategories.Count());
+        }
     }
 }
