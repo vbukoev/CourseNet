@@ -10,7 +10,7 @@ namespace CourseNet.Services.Tests
     {
         private DbContextOptions<CourseNetDbContext> dbOptions;
         private CourseNetDbContext context;
-        private IEnrollService enrollService;
+        private EnrollService enrollService;
 
         [OneTimeSetUp]
         public void OneTimeSetup()
