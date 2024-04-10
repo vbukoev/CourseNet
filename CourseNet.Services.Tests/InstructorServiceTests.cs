@@ -23,7 +23,7 @@ namespace CourseNet.Services.Tests
             context.Database.EnsureCreated();
             SeedDatabase(context);
 
-            instructorService = new InstructorService(context);
+            instructorService = new InstructorService(context); 
         }
 
         [Test]
