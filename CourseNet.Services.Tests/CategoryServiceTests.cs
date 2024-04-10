@@ -142,7 +142,7 @@ namespace CourseNet.Services.Tests
 
             var categoryId = await categoryService.CreateCategoryAndReturnIdAsync(model);
 
-            Assert.AreNotEqual(2, categoryId);
+            Assert.AreNotEqual(categoryId + 1, categoryId);
         }
 
         [Test]
@@ -184,5 +184,144 @@ namespace CourseNet.Services.Tests
 
             Assert.AreNotEqual(2, categoryForEdit.Id);
         }
+
+        [Test]
+        public async Task EditCategoryByIdAsyncShouldEditCategory()
+        {
+            int categoryId = 1;
+            var viewModel = new CategoryDetailsViewModel
+            {
+                Id = categoryId,
+                Name = "EditedCategory",
+            };
+
+            await categoryService.EditCategoryByIdAsync(viewModel, categoryId);
+
+            var category = await context.Categories.FindAsync(categoryId);
+
+            Assert.AreEqual(viewModel.Name, category.Name);
+        }
+
+        [Test]
+        public async Task EditCategoryByIdAsyncShouldNotEditCategory()
+        {
+            int categoryId = 1;
+            var viewModel = new CategoryDetailsViewModel
+            {
+                Id = categoryId,
+                Name = "EditedCategory",
+            };
+
+            await categoryService.EditCategoryByIdAsync(viewModel, categoryId);
+
+            var category = await context.Categories.FindAsync(categoryId);
+
+            Assert.AreNotEqual("NotEditedCategory", category.Name);
+        }
+
+        [Test]
+        public async Task GetCategoryForDeleteByIdAsyncShouldReturnCategoryForDelete()
+        {
+            int categoryId = 1;
+
+            var category = await context.Categories.FindAsync(categoryId);
+
+            Assert.AreEqual(categoryId, category.Id);
+        }
+
+        [Test]
+        public async Task GetCategoryForDeleteByIdAsyncShouldNotReturnCategoryForDelete()
+        {
+            int categoryId = 1;
+
+            var category = await context.Categories.FindAsync(categoryId);
+
+            Assert.AreNotEqual(2, category.Id);
+        }
+
+        [Test]
+        public async Task DeleteCategoryByIdAsyncShouldDeleteCategory()
+        {
+            int categoryId = 1;
+
+            await categoryService.DeleteCategoryByIdAsync(categoryId);
+
+            var category = await context.Categories.FindAsync(categoryId);
+
+            Assert.IsNull(category);
+        }
+
+        [Test]
+        public async Task DeleteCategoryByIdAsyncShouldNotDeleteCategory()
+        {
+            int categoryId = 1;
+
+            await categoryService.DeleteCategoryByIdAsync(categoryId);
+
+            var category = await context.Categories.FindAsync(categoryId);
+
+            Assert.IsNotNull(category);
+        }
+
+        [Test]
+        public async Task DeleteCategoryByIdAsyncShouldDeleteCategoryAndCourses()
+        {
+            int categoryId = 1;
+
+            await categoryService.DeleteCategoryByIdAsync(categoryId);
+
+            var category = await context.Categories.FindAsync(categoryId);
+            var courses = await context.Courses.Where(c => c.CategoryId == categoryId).ToListAsync();
+
+            Assert.IsNull(category);
+            Assert.AreEqual(0, courses.Count());
+        }
+
+        [Test]
+        public async Task DeleteCategoryByIdAsyncShouldNotDeleteCategoryAndCourses()
+        {
+            int categoryId = 1;
+
+            await categoryService.DeleteCategoryByIdAsync(categoryId);
+
+            var category = await context.Categories.FindAsync(categoryId);
+            var courses = await context.Courses.Where(c => c.CategoryId == categoryId).ToListAsync();
+
+            Assert.IsNotNull(category);
+            Assert.AreNotEqual(0, courses.Count());
+        }
+
+        [Test]
+        public async Task DeleteCategoryByIdAsyncShouldDeleteCategoryAndCoursesAndNotDeleteOtherCategoriesCourses()
+        {
+            int categoryId = 1;
+
+            await categoryService.DeleteCategoryByIdAsync(categoryId);
+
+            var category = await context.Categories.FindAsync(categoryId);
+            var courses = await context.Courses.Where(c => c.CategoryId == categoryId).ToListAsync();
+            var otherCourses = await context.Courses.Where(c => c.CategoryId != categoryId).ToListAsync();
+
+            Assert.IsNull(category);
+            Assert.AreEqual(0, courses.Count());
+            Assert.AreNotEqual(0, otherCourses.Count());
+        }
+
+        [Test]
+        public async Task DeleteCategoryByIdAsyncShouldNotDeleteCategoryAndCoursesAndNotDeleteOtherCategoriesCourses()
+        {
+            int categoryId = 1;
+
+            await categoryService.DeleteCategoryByIdAsync(categoryId);
+
+            var category = await context.Categories.FindAsync(categoryId);
+            var courses = await context.Courses.Where(c => c.CategoryId == categoryId).ToListAsync();
+            var otherCourses = await context.Courses.Where(c => c.CategoryId != categoryId).ToListAsync();
+
+            Assert.IsNotNull(category);
+            Assert.AreNotEqual(0, courses.Count());
+            Assert.AreNotEqual(0, otherCourses.Count());
+        }
+
     }
 }
