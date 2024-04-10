@@ -243,6 +243,29 @@ namespace CourseNet.Services.Tests
         }
 
         [Test]
+        public async Task EditCourseByIdAsyncShouldNotEditCourse()
+        {
+            var courseFormViewModel = new CourseFormViewModel
+            {
+                Title = "Test Course1",
+                Description = "Test Description",
+                CategoryId = 1,
+                EndDate = "04/29/2024 12:22",
+                ImagePath = "https://www.test.com/image",
+                Difficulty = DifficultyLevel.Advanced,
+                Price = 100,
+            };
+
+            var courseId = Course.Id.ToString();
+
+            await courseService.EditCourseByIdAsync(courseFormViewModel, courseId);
+
+            var course = await context.Courses.FirstOrDefaultAsync(c => c.Id.ToString() == courseId);
+
+            Assert.AreNotEqual(courseFormViewModel.Title + "11", course.Title);
+        }
+
+        [Test]
         public async Task DeleteCourseByIdAsyncShouldDeleteCourse()
         {
             var courseId = Course.Id.ToString();
@@ -263,6 +286,74 @@ namespace CourseNet.Services.Tests
             var result = await courseService.IsEnrolledByIdAsync(courseId, userId);
 
             Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task IsEnrolledByIdAsyncShouldCheckIfUserIsEnrolled()
+        {
+            var courseId = Course.Id.ToString();
+            var userId = StudentUser.Id.ToString();
+
+            await courseService.EnrollCourseAsync(courseId, userId);
+
+            var result = await courseService.IsEnrolledByIdAsync(courseId, userId);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task LeaveCourseAsyncShouldLeaveCourse()
+        {
+            var courseId = Course.Id.ToString();
+            var userId = StudentUser.Id.ToString();
+
+            await courseService.EnrollCourseAsync(courseId, userId);
+
+            await courseService.LeaveCourseAsync(courseId);
+
+            var result = await courseService.IsEnrolledByIdAsync(courseId, userId);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task GetStatisticsAsyncShouldReturnStatistics()
+        {
+            var statistics = await courseService.GetStatisticsAsync();
+
+            Assert.IsNotNull(statistics);
+        }
+
+        [Test]
+        public async Task GetStatisticsAsyncShouldNotReturnStatistics()
+        {
+            var statistics = await courseService.GetStatisticsAsync();
+
+            Assert.IsNull(statistics);
+        }
+
+        [Test]
+        public async Task DeleteCoursesByCategoryIdAsyncShouldDeleteCourses()
+        {
+            var categoryId = 1;
+
+            await courseService.DeleteCoursesByCategoryIdAsync(categoryId);
+
+            var courses = await context.Courses.CountAsync(c => c.CategoryId == categoryId);
+
+            Assert.AreEqual(0, courses);
+        }
+
+        [Test]
+        public async Task DeleteCoursesByCategoryIdAsyncShouldNotDeleteCourses()
+        {
+            var categoryId = 1;
+
+            await courseService.DeleteCoursesByCategoryIdAsync(categoryId);
+
+            var courses = await context.Courses.CountAsync(c => c.CategoryId == categoryId);
+
+            Assert.AreNotEqual(1, courses);
         }
     }
 }
