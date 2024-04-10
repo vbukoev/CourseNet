@@ -224,7 +224,7 @@ namespace CourseNet.Services.Tests
         [Test]
         public async Task GetCourseForEditByIdAsyncShouldNotReturnCourseFormViewModel()
         {
-            var courseId = Guid.NewGuid().ToString();
+            var courseId = Course.Id.ToString();
 
             var courseFormViewModel = await courseService.GetCourseForEditByIdAsync(courseId);
 
@@ -365,6 +365,64 @@ namespace CourseNet.Services.Tests
             var result = await courseService.IsEnrolledByIdAsync(courseId, userId);
 
             Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task IsEnrolledByIdAsyncShouldCheckIfUserIsEnrolledAfterLeavingAndEnrollingAgainAndLeavingAgain()
+        {
+            var courseId = Course.Id.ToString();
+            var userId = StudentUser.Id.ToString();
+
+            await courseService.EnrollCourseAsync(courseId, userId);
+
+            await courseService.LeaveCourseAsync(courseId);
+
+            await courseService.EnrollCourseAsync(courseId, userId);
+
+            await courseService.LeaveCourseAsync(courseId);
+
+            var result = await courseService.IsEnrolledByIdAsync(courseId, userId);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task EnrollCourseAsyncShouldEnrollCourse()
+        {
+            var courseId = Course.Id.ToString();
+            var userId = StudentUser.Id.ToString();
+
+            await courseService.EnrollCourseAsync(courseId, userId);
+
+            var result = await courseService.IsEnrolledByIdAsync(courseId, userId);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task IsEnrolledByIdAsyncCourseIdShouldReturnEnrolledCourse()
+        {
+            var courseId = Course.Id.ToString();
+            var userId = StudentUser.Id.ToString();
+
+            await courseService.EnrollCourseAsync(courseId, userId);
+
+            var result = await courseService.IsEnrolledByIdAsync(courseId);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task IsEnrolledByIdAsyncCourseIdShouldNotReturnEnrolledCourse()
+        {
+            var courseId = Course.Id.ToString();
+            var userId = StudentUser.Id.ToString();
+
+            await courseService.EnrollCourseAsync(courseId, userId);
+
+            var result = await courseService.IsEnrolledByIdAsync(Guid.NewGuid().ToString());
+
+            Assert.IsFalse(result);
         }
 
         [Test]
