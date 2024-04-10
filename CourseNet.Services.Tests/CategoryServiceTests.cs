@@ -1,6 +1,7 @@
 ﻿using CourseNet.Data;
 using CourseNet.Services.Data;
 using CourseNet.Services.Data.Interfaces;
+using CourseNet.Web.ViewModels.Category;
 using Microsoft.EntityFrameworkCore;
 using static CourseNet.Services.Tests.DatabaseSeeder;
 
@@ -115,5 +116,7 @@ namespace CourseNet.Services.Tests
 
             Assert.AreNotEqual(context.Categories.Count() + 1, allCategories.Count());
         }
+
+        
     }
 }
