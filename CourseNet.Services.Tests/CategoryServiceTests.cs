@@ -130,5 +130,59 @@ namespace CourseNet.Services.Tests
 
             Assert.AreEqual(categoryId, categoryId);
         }
+
+        [Test]
+        public async Task CreateCategoryAndReturnIdAsyncShouldNotCreateCategoryAndReturnId()
+        {
+            var model = new CategoryDetailsViewModel
+            {
+                Id = 1,
+                Name = "NewCategory",
+            };
+
+            var categoryId = await categoryService.CreateCategoryAndReturnIdAsync(model);
+
+            Assert.AreNotEqual(2, categoryId);
+        }
+
+        [Test]
+        public async Task GetCategoryDetailsAsyncShouldReturnCategoryDetails()
+        {
+            int categoryId = 1;
+
+            var categoryDetails = await categoryService.GetCategoryDetailsAsync(categoryId);
+
+            Assert.AreEqual(categoryId, categoryDetails.Id);
+        }
+
+        [Test]
+        public async Task GetCategoryDetailsAsyncShouldNotReturnCategoryDetails()
+        {
+            int categoryId = 1;
+
+            var categoryDetails = await categoryService.GetCategoryDetailsAsync(categoryId);
+
+            Assert.AreNotEqual(2, categoryDetails.Id);
+        }
+
+        [Test]
+        public async Task GetCategoryForEditByIdAsyncShouldReturnCategoryForEdit()
+        {
+            int categoryId = 1;
+
+            var categoryForEdit = await categoryService.GetCategoryForEditByIdAsync(categoryId);
+
+            Assert.AreEqual(categoryId, categoryForEdit.Id);
+        }
+
+        [Test]
+        public async Task GetCategoryForEditByIdAsyncShouldNotReturnCategoryForEdit()
+        {
+            int categoryId = 1;
+
+            var categoryForEdit = await categoryService.GetCategoryForEditByIdAsync(categoryId);
+
+            Assert.AreNotEqual(2, categoryForEdit.Id);
+        }
     }
 }
