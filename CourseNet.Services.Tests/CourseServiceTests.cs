@@ -100,6 +100,40 @@ namespace CourseNet.Services.Tests
         }
 
         [Test]
+        public async Task AllAsyncShouldReturnAllCoursesBySearchTermAsync()
+        {
+            var queryModel = new AllCoursesQueryModel
+            {
+                CurrentPage = 1,
+                CoursesPerPage = 9,
+                SearchTerm = "C#",
+            };
+
+            var courses = await courseService.AllAsync(queryModel);
+
+            var coursesInDb = context.Courses.Count(c => c.Title.Contains(queryModel.SearchTerm));
+
+            Assert.AreEqual(coursesInDb, courses.Courses.Count());
+        }
+
+        [Test]
+        public async Task AllAsyncShouldNotReturnAllCoursesBySearchTermAsync()
+        {
+            var queryModel = new AllCoursesQueryModel
+            {
+                CurrentPage = 1,
+                CoursesPerPage = 9,
+                SearchTerm = "C#",
+            };
+
+            var courses = await courseService.AllAsync(queryModel);
+
+            var coursesInDb = context.Courses.Count(c => c.Title.Contains(queryModel.SearchTerm));
+
+            Assert.AreNotEqual(coursesInDb + 1, courses.Courses.Count());
+        }
+
+        [Test]
         public async Task AllByInstructorIdAsyncShouldReturnAllCoursesByInstructorId()
         {
             var instructorId = InstructorUser.Id.ToString();
@@ -302,6 +336,38 @@ namespace CourseNet.Services.Tests
         }
 
         [Test]
+        public async Task IsEnrolledByIdAsyncShouldCheckIfUserIsNotEnrolledAfterLeaving()
+        {
+            var courseId = Course.Id.ToString();
+            var userId = StudentUser.Id.ToString();
+
+            await courseService.EnrollCourseAsync(courseId, userId);
+
+            await courseService.LeaveCourseAsync(courseId);
+
+            var result = await courseService.IsEnrolledByIdAsync(courseId, userId);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task IsEnrolledByIdAsyncShouldCheckIfUserIsEnrolledAfterLeavingAndEnrollingAgain()
+        {
+            var courseId = Course.Id.ToString();
+            var userId = StudentUser.Id.ToString();
+
+            await courseService.EnrollCourseAsync(courseId, userId);
+
+            await courseService.LeaveCourseAsync(courseId);
+
+            await courseService.EnrollCourseAsync(courseId, userId);
+
+            var result = await courseService.IsEnrolledByIdAsync(courseId, userId);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
         public async Task LeaveCourseAsyncShouldLeaveCourse()
         {
             var courseId = Course.Id.ToString();
@@ -322,14 +388,6 @@ namespace CourseNet.Services.Tests
             var statistics = await courseService.GetStatisticsAsync();
 
             Assert.IsNotNull(statistics);
-        }
-
-        [Test]
-        public async Task GetStatisticsAsyncShouldNotReturnStatistics()
-        {
-            var statistics = await courseService.GetStatisticsAsync();
-
-            Assert.IsNull(statistics);
         }
 
         [Test]
