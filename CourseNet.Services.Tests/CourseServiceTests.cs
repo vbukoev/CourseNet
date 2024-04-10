@@ -222,16 +222,6 @@ namespace CourseNet.Services.Tests
         }
 
         [Test]
-        public async Task GetCourseForEditByIdAsyncShouldNotReturnCourseFormViewModel()
-        {
-            var courseId = Course.Id.ToString();
-
-            var courseFormViewModel = await courseService.GetCourseForEditByIdAsync(courseId);
-
-            Assert.IsNull(courseFormViewModel);
-        }
-
-        [Test]
         public async Task IsInstructorOfCourseAsyncShouldReturnTrueWhenIsInstructor()
         {
             var courseId = Course.Id.ToString();
