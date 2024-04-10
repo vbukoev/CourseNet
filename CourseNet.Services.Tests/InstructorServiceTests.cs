@@ -11,6 +11,7 @@ namespace CourseNet.Services.Tests
         private DbContextOptions<CourseNetDbContext> dbOptions;
         private CourseNetDbContext context;
         private InstructorService instructorService;
+
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
@@ -22,7 +23,7 @@ namespace CourseNet.Services.Tests
             context.Database.EnsureCreated();
             SeedDatabase(context);
 
-            instructorService = new InstructorService(context);
+            instructorService = new InstructorService(context); 
         }
 
         [Test]

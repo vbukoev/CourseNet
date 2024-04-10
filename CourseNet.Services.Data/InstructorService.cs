@@ -50,7 +50,7 @@ namespace CourseNet.Services.Data
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber,
                 Email = model.Email,
-                UserId = Guid.Parse(userId)
+                UserId = Guid.Parse(userId) 
             };
 
             await dbContext.Instructors.AddAsync(instructor);

@@ -9,6 +9,7 @@ namespace CourseNet.Services.Tests
         public static CourseUser InstructorUser;
         public static Instructor Instructor;
         public static Course Course;
+        public static Category Category;
         public static void SeedDatabase(CourseNetDbContext dbContext)
         {
             StudentUser = new CourseUser
@@ -56,6 +57,11 @@ namespace CourseNet.Services.Tests
                 InstructorId = Instructor.Id
             };
 
+            Category = new Category
+            {
+                Name = "Programming"
+            };
+            
             dbContext.Users.Add(StudentUser);
 
             dbContext.Users.Add(InstructorUser);
@@ -63,6 +69,8 @@ namespace CourseNet.Services.Tests
             dbContext.Instructors.Add(Instructor);
 
             dbContext.Courses.Add(Course);
+
+            dbContext.Categories.Add(Category);
 
             dbContext.SaveChanges();
         }
