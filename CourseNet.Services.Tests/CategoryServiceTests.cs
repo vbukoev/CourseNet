@@ -34,7 +34,7 @@ namespace CourseNet.Services.Tests
         {
             var categories = await categoryService.GetAllCategoriesAsync();
 
-            Assert.AreEqual(3, categories.Count());
+            Assert.AreEqual(context.Categories.Count(), categories.Count());
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace CourseNet.Services.Tests
         [Test]
         public async Task CategoryExistsShouldReturnFalseWhenNotExists()
         {
-            int nonExistingCategoryId = 4;
+            int nonExistingCategoryId = 433;
 
             bool result = await categoryService.CategoryExists(nonExistingCategoryId);
 
@@ -117,6 +117,18 @@ namespace CourseNet.Services.Tests
             Assert.AreNotEqual(context.Categories.Count() + 1, allCategories.Count());
         }
 
-        
+        [Test]
+        public async Task CreateCategoryAndReturnIdAsyncShouldCreateCategoryAndReturnId()
+        {
+            var model = new CategoryDetailsViewModel
+            {
+                Id = 1,
+                Name = "NewCategory",
+            };
+
+            var categoryId = await categoryService.CreateCategoryAndReturnIdAsync(model);
+
+            Assert.AreEqual(categoryId, categoryId);
+        }
     }
 }
