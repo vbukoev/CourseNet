@@ -17,6 +17,7 @@ namespace CourseNet.Services.Data
             this.context = context;
             this.courseService = courseService;
         }
+
         public async Task<IEnumerable<CategorySelectionFormViewModel>> GetAllCategoriesAsync()
         {
             IEnumerable<CategorySelectionFormViewModel> categories = await context.Categories
