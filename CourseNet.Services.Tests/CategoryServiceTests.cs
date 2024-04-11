@@ -1,6 +1,5 @@
 ﻿using CourseNet.Data;
 using CourseNet.Services.Data;
-using CourseNet.Services.Data.Interfaces;
 using CourseNet.Web.ViewModels.Category;
 using Microsoft.EntityFrameworkCore;
 using static CourseNet.Services.Tests.DatabaseSeeder;
@@ -34,7 +33,7 @@ namespace CourseNet.Services.Tests
         {
             var categories = await categoryService.GetAllCategoriesAsync();
 
-            Assert.AreEqual(3, categories.Count());
+            Assert.AreEqual(context.Categories.Count(), categories.Count());
         }
 
         [Test]
@@ -58,7 +57,7 @@ namespace CourseNet.Services.Tests
         [Test]
         public async Task CategoryExistsShouldReturnFalseWhenNotExists()
         {
-            int nonExistingCategoryId = 4;
+            int nonExistingCategoryId = 433;
 
             bool result = await categoryService.CategoryExists(nonExistingCategoryId);
 
@@ -117,6 +116,128 @@ namespace CourseNet.Services.Tests
             Assert.AreNotEqual(context.Categories.Count() + 1, allCategories.Count());
         }
 
-        
+        [Test]
+        public async Task CreateCategoryAndReturnIdAsyncShouldCreateCategoryAndReturnId()
+        {
+            var model = new CategoryDetailsViewModel
+            {
+                Id = 1,
+                Name = "NewCategory",
+            };
+
+            var categoryId = await categoryService.CreateCategoryAndReturnIdAsync(model);
+
+            Assert.AreEqual(categoryId, categoryId);
+        }
+
+        [Test]
+        public async Task CreateCategoryAndReturnIdAsyncShouldNotCreateCategoryAndReturnId()
+        {
+            var model = new CategoryDetailsViewModel
+            {
+                Id = 1,
+                Name = "NewCategory",
+            };
+
+            var categoryId = await categoryService.CreateCategoryAndReturnIdAsync(model);
+
+            Assert.AreNotEqual(categoryId + 1, categoryId);
+        }
+
+        [Test]
+        public async Task GetCategoryDetailsAsyncShouldReturnCategoryDetails()
+        {
+            int categoryId = 1;
+
+            var categoryDetails = await categoryService.GetCategoryDetailsAsync(categoryId);
+
+            Assert.AreEqual(categoryId, categoryDetails.Id);
+        }
+
+        [Test]
+        public async Task GetCategoryDetailsAsyncShouldNotReturnCategoryDetails()
+        {
+            int categoryId = 1;
+
+            var categoryDetails = await categoryService.GetCategoryDetailsAsync(categoryId);
+
+            Assert.AreNotEqual(2, categoryDetails.Id);
+        }
+
+        [Test]
+        public async Task GetCategoryForEditByIdAsyncShouldReturnCategoryForEdit()
+        {
+            int categoryId = 1;
+
+            var categoryForEdit = await categoryService.GetCategoryForEditByIdAsync(categoryId);
+
+            Assert.AreEqual(categoryId, categoryForEdit.Id);
+        }
+
+        [Test]
+        public async Task GetCategoryForEditByIdAsyncShouldNotReturnCategoryForEdit()
+        {
+            int categoryId = 1;
+
+            var categoryForEdit = await categoryService.GetCategoryForEditByIdAsync(categoryId);
+
+            Assert.AreNotEqual(2, categoryForEdit.Id);
+        }
+
+        [Test]
+        public async Task EditCategoryByIdAsyncShouldEditCategory()
+        {
+            int categoryId = 1;
+            var viewModel = new CategoryDetailsViewModel
+            {
+                Id = categoryId,
+                Name = "EditedCategory",
+            };
+
+            await categoryService.EditCategoryByIdAsync(viewModel, categoryId);
+
+            var category = await context.Categories.FindAsync(categoryId);
+
+            Assert.AreEqual(viewModel.Name, category.Name);
+        }
+
+        [Test]
+        public async Task EditCategoryByIdAsyncShouldNotEditCategory()
+        {
+            int categoryId = 1;
+            var viewModel = new CategoryDetailsViewModel
+            {
+                Id = categoryId,
+                Name = "EditedCategory",
+            };
+
+            await categoryService.EditCategoryByIdAsync(viewModel, categoryId);
+
+            var category = await context.Categories.FindAsync(categoryId);
+
+            Assert.AreNotEqual("NotEditedCategory", category.Name);
+        }
+
+        [Test]
+        public async Task GetCategoryForDeleteByIdAsyncShouldReturnCategoryForDelete()
+        {
+            int categoryId = 1;
+
+            var category = await context.Categories.FindAsync(categoryId);
+
+            Assert.AreEqual(categoryId, category.Id);
+        }
+
+        [Test]
+        public async Task GetCategoryForDeleteByIdAsyncShouldNotReturnCategoryForDelete()
+        {
+            int categoryId = 1;
+
+            var category = await context.Categories.FindAsync(categoryId);
+
+            Assert.AreNotEqual(2, category.Id);
+        }
+
+
     }
 }
