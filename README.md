@@ -1,32 +1,37 @@
 
-# "Online Course System Plan"
+# CourseNet
 
-A brief description of what this project does and who it's for
+## Overview
 
-    Home Page:
-        Display a list of active courses.
-        Include buttons or filters for sorting by difficulty level, category, etc.
+"CourseNet" is a web application with educational and demonstrative purposes. It mimics (in a much smaller scale) systems used for management of online courses and enrolling in them. You can enroll in to different courses, lectures, you can get a huge amount of materials, become students or even instructors of the courses.
 
-    Registration and Login:
-        Allow users to register and log into the system.
-        Utilize ASP.NET Identity System for user and role management.
+   ## Technologies used
+<ul>
+  <li>.NET Core 6.0</li>
+  <li>ASP.NET Core</li>
+  <li>Entity Framework Core</li>
+  <li>HTML, CSS, Bootstrap</li>
+  <li>MS SQL Server</li>
+  <li>NUnit</li>
+  <li>Moq</li>
+  <li>JS</li>
+</ul>
 
-    Courses:
-        Create, edit, and delete courses.
-        Add course information such as title, description, difficulty level, category, etc.
+## Users
+There are 4 types of users with different access to the application's functionality:
 
-    Enrollments and Users:
-        Allow users to enroll in and unenroll from courses.
-        View enrolled users for each course.
+<ul>
+  <li>
+    <b>Guest</b> - logged off user. Guests can only view available courses.
+  </li>
+  <li>
+    <b>Student</b> - 
+  </li>
+  <li>
+    <b>Instructor</b> 
+  </li>
+  <li>
+    <b>Administrator</b> - The administrator can alter the global settings of the application and delete courses, lectures, materials, reviews.
+  </li>
+</ul>
 
-    Assignments and Grading:
-        Create and upload assignments or tests for courses.
-        Provide grading and feedback by administrators.
-
-    Search and Filtering:
-        Search for courses by title or category.
-        Filter by difficulty level and course status (active, completed).
-
-    Security and Testing:
-        Implement security measures against SQL injections, XSS, and CSRF attacks.
-        Write modular tests for critical parts of the application.
