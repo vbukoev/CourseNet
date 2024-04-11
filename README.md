@@ -1,4 +1,4 @@
-[[https://www.google.com/url?sa=i&url=https%3A%2F%2Fcourse-net.com%2F&psig=AOvVaw1Moz9v5utMOI6Fh6BdW06t&ust=1712915657011000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMDCnKPyuYUDFQAAAAAdAAAAABAE](https://course-net.com/wp-content/uploads/2023/08/LOGO-TAGLINE-BARU-ACCELERATE-YOUR-IT-CAREER-01-2-scaled-e1692669459550-768x181.webp)](https://course-net.com/wp-content/uploads/2023/08/LOGO-TAGLINE-BARU-ACCELERATE-YOUR-IT-CAREER-01-2-scaled-e1692669459550-768x181.webp)
+👨🏻‍💻
 
 ## Overview
 
