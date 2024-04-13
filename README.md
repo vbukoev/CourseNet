@@ -61,7 +61,6 @@ Password: 123456
   <li>
     <a href="#home-page">Home page</a>
   </li>
- 
   <li>
     <a href="#admin-home-page">Administration home page</a>
   </li>
@@ -76,6 +75,12 @@ Password: 123456
   </li>
   <li>
     <a href="#delete-section-of-the-course">Delete section of the course</a>
+  </li>
+    <li>
+    <a href="#my-courses">My courses</a>
+  </li>
+    <li>
+    <a href="#become-instructor-page">Become instructor page</a>
   </li>
   <li>
     <a href="#error-page">Error page</a>
@@ -110,5 +115,11 @@ Here you can edit the course. You can change its description, price, category, d
 Below you can see the delete page when you try to delete a course. To do it you have to have either administrator role in the application or you have to be the instructor who created the course.
 ![course-delete](https://github.com/vbukoev/CourseNet/assets/105813259/16932c1b-6bfd-4e86-83bd-d7004b75bcbc)
 
+## My courses
+The page where you can see the courses which you enrolled.
+![courses-mine](https://github.com/vbukoev/CourseNet/assets/105813259/dd9fde5d-63fd-465d-a5f7-7db254f4da3f)
 
+## Become instructor page
+This page is the place where you can become an instructor.
+![instructor-become](https://github.com/vbukoev/CourseNet/assets/105813259/5c69ae36-ded0-43bb-9ea5-7f50d94f2db2)
 
