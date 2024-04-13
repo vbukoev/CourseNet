@@ -95,6 +95,7 @@ Here you can edit the course. You can change its description, price, category, d
 ![course-edit](https://github.com/vbukoev/CourseNet/assets/105813259/0311df60-4c25-4be6-9b13-6a59aa9b3bef)
 
 ## Delete section of the course
+Below you can see the delete page when you try to delete a course. To do it you have to have either administrator role in the application or you have to be the instructor who created the course.
 ![course-delete](https://github.com/vbukoev/CourseNet/assets/105813259/16932c1b-6bfd-4e86-83bd-d7004b75bcbc)
 
 
