@@ -72,10 +72,10 @@ Password: 123456
     <a href="#details-section-of-the-course">Details section of the course</a>
   </li>
   <li>
-    <a href="#course-edit">Edit course</a>
+    <a href="#edit-section-of-the-course">Edit section of the course</a>
   </li>
   <li>
-    <a href="#course-delete">Delete course</a>
+    <a href="#delete-section-of-the-course">Delete section of the course</a>
   </li>
   <li>
     <a href="#error-page">Error page</a>
