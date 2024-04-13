@@ -69,7 +69,7 @@ Password: 123456
     <a href="#all-courses">All courses</a>
   </li>
   <li>
-    <a href="#Details section of the course">Details section of the course</a>
+    <a href="#details-section-of-the-course">Details section of the course</a>
   </li>
   <li>
     <a href="#course-edit">Edit course</a>
