@@ -63,7 +63,10 @@ Password: 123456
   </li>
  
   <li>
-    <a href="#administration-pages">Administration pages</a>
+    <a href="#admin-home-page">Administration home page</a>
+  </li>
+  <li>
+    <a href="#all-courses">All courses</a>
   </li>
   <li>
     <a href="#error-page">Error page</a>
