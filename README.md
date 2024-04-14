@@ -123,3 +123,7 @@ The page where you can see the courses which you enrolled.
 This page is the place where you can become an instructor.
 ![instructor-become](https://github.com/vbukoev/CourseNet/assets/105813259/5c69ae36-ded0-43bb-9ea5-7f50d94f2db2)
 
+## All categories
+The page where all categories are shown.
+![all-categories](https://github.com/vbukoev/CourseNet/assets/105813259/f76369db-1ef2-4461-938f-9777885da3ca)
+
