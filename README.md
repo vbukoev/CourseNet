@@ -154,3 +154,23 @@ If the user wants to create lecture, first of all the user has to have the permi
 ## Delete lecture
 The delete page of the lecture shows its name and questions its instructor(creator)/administrator if he/she is sure.
 ![delete-lecture](https://github.com/vbukoev/CourseNet/assets/105813259/0e139ee5-8863-4046-b868-bcd7bcd35ab8)
+
+## All materials for lecture
+The page where all materials for the lectures are shown.
+![all-materials-page](https://github.com/vbukoev/CourseNet/assets/105813259/6f0e75a2-247b-40c6-81eb-14ad2b199b47)
+
+## Edit the material
+There is an option to change the name of the material and to change its description.
+![edit-material](https://github.com/vbukoev/CourseNet/assets/105813259/36839cb1-cec3-4c18-9b55-779637920b7c)
+
+## Delete material
+The page where you are questioned if you are sure you want to delete the material. You can delete it if you have the needed permissions.
+![delete-material](https://github.com/vbukoev/CourseNet/assets/105813259/05dd7aad-008b-4f7b-8381-9312821dc8ea)
+
+## All reviews for the course
+All reviews shown in this page.
+![all-reviews-for-the-course](https://github.com/vbukoev/CourseNet/assets/105813259/cd0cd960-169d-482a-87d5-a6bfebf21990)
+
+## Create review for the course
+The page where you can add review to the course by adding rating for the course(from 1 to 10) and comment to the review.
+![create-review-for-the-course](https://github.com/vbukoev/CourseNet/assets/105813259/c01a430f-c6c0-4d54-9b10-07576b44d79e)
