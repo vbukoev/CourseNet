@@ -147,3 +147,10 @@ The page where you are questioned if you are sure you want to delete the categor
 This is the page where you can see all of the lectures which are related to the course you want to check. There are buttons for deleting the lecture if you have the permissions, adding materials to the lecture, or to see the current materials available.
 ![all-lectures-for-course](https://github.com/vbukoev/CourseNet/assets/105813259/63ec8fb2-1588-47b0-ae00-6fb9c445b688)
 
+## Create lectures
+If the user wants to create lecture, first of all the user has to have the permissions. After that, he/she has to add the title of the lecture and its description. After all the last thing is to hit the submit button.  
+![create-lectures](https://github.com/vbukoev/CourseNet/assets/105813259/2802d4d1-c7f3-45b1-ad89-010710cc1a2d)
+
+## Delete lecture
+The delete page of the lecture shows its name and questions its instructor(creator)/administrator if he/she is sure.
+![delete-lecture](https://github.com/vbukoev/CourseNet/assets/105813259/0e139ee5-8863-4046-b868-bcd7bcd35ab8)
