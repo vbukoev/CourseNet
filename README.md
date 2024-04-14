@@ -124,6 +124,26 @@ This page is the place where you can become an instructor.
 ![instructor-become](https://github.com/vbukoev/CourseNet/assets/105813259/5c69ae36-ded0-43bb-9ea5-7f50d94f2db2)
 
 ## All categories
-The page where all categories are shown.
+The page where all categories are shown. There are buttons for the details, delete button, edit button.
 ![all-categories](https://github.com/vbukoev/CourseNet/assets/105813259/f76369db-1ef2-4461-938f-9777885da3ca)
+
+## Create category page
+You can create a category first if you have the permissions to do it. It can be done by only submitting the category name.
+![create-category-page](https://github.com/vbukoev/CourseNet/assets/105813259/dda8b9d8-34b6-48cf-abed-358f885a6b62)
+
+## Details of the category
+The page where the name of the category is shown.
+![details-of-the-category](https://github.com/vbukoev/CourseNet/assets/105813259/42b695ee-a7dd-4325-9c26-aa041db79504)
+
+## Edit category page
+This is the page where you can change the category name.
+![edit-category-page](https://github.com/vbukoev/CourseNet/assets/105813259/37cb3e6d-b25d-492d-a622-851a620dda4b)
+
+## Delete category page
+The page where you are questioned if you are sure you want to delete the category. If you delete the category, you are going to delete all of the courses which are from this category. 
+![delete-category-page](https://github.com/vbukoev/CourseNet/assets/105813259/35fc3eea-9849-4c20-89d1-a736a165663f)
+
+## All lectures for course
+This is the page where you can see all of the lectures which are related to the course you want to check. There are buttons for deleting the lecture if you have the permissions, adding materials to the lecture, or to see the current materials available.
+![all-lectures-for-course](https://github.com/vbukoev/CourseNet/assets/105813259/63ec8fb2-1588-47b0-ae00-6fb9c445b688)
 
