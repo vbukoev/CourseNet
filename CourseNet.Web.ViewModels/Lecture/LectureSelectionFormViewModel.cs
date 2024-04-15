@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static CourseNet.Common.DataConstants.GeneralApplicationConstants;
+using static CourseNet.Common.DataConstants.Lecture;
 
 namespace CourseNet.Web.ViewModels.Lecture
 {
@@ -13,6 +14,7 @@ namespace CourseNet.Web.ViewModels.Lecture
         /// </summary>
         [Required(ErrorMessage = RequireErrorMessage)]
         [Display(Name = "Заглавие")]
+        [StringLength(TitleMaxLength, MinimumLength = TitleMinLength, ErrorMessage = LengthErrorMessage)]
         public string Title { get; set; } = null!;
 
         /// <summary>
@@ -20,6 +22,7 @@ namespace CourseNet.Web.ViewModels.Lecture
         /// </summary>
         [Required(ErrorMessage = RequireErrorMessage)]
         [Display(Name = "Описание")]
+        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength, ErrorMessage = LengthErrorMessage)]
         public string Description { get; set; } = null!;
 
         /// <summary>
