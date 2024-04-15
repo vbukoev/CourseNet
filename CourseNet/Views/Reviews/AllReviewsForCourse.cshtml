@@ -23,10 +23,6 @@
                 <p><b>Рейтинг: </b>@review.Rating/10</p>
                 <p><i>@review.Comment</i></p>
                 <p><b>Дата: </b> @review.Date</p>
-                @if (isUserInstructor)
-                {
-                    <a asp-area="" asp-controller="Lectures" asp-action="Delete" asp-route-id="@review.Id" class="btn btn-danger btn-sm">Премахване на ревю</a>
-                }
             </div>
         }
     </div>
