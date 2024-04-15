@@ -83,6 +83,42 @@ Password: 123456
     <a href="#become-instructor-page">Become instructor page</a>
   </li>
   <li>
+    <a href="#all-categories">All categories</a>
+  </li>
+   <li>
+    <a href="#create-category-page">Create category page</a>
+  </li>
+   <li>
+    <a href="#details-of-the-category">Details of the category</a>
+  </li>
+   <li>
+    <a href="#edit-category-page">Edit category page</a>
+  </li>
+   <li>
+    <a href="#all-lectures-for-course">All lectures for course</a>
+  </li>
+   <li>
+    <a href="#create-lectures">Create lectures</a>
+  </li>
+    <li>
+    <a href="#delete-lecture">Delete lecture</a>
+  </li>
+    <li>
+    <a href="#all-materials-for-lecture">All materials for lecture</a>
+  </li>
+    <li>
+    <a href="#edit-the-material">Edit the material</a>
+  </li>
+    <li>
+    <a href="#delete-material">Delete material</a>
+  </li>
+   <li>
+    <a href="#all-reviews-for-the-course">All reviews for the course</a>
+  </li>
+   <li>
+    <a href="#create-review-for-the-course">Create review for the course</a>
+  </li>
+   <li>
     <a href="#error-page">Error page</a>
   </li>
 </ul>
