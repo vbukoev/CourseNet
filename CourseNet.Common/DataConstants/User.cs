@@ -10,11 +10,5 @@
 
         public const int PasswordMinLength = 6;
         public const int PasswordMaxLength = 100;
-
-        public const int AddressMinLength = 3;
-        public const int AddressMaxLength = 50;
-
-        public const int PhoneNumberMinLength = 7;
-        public const int PhoneNumberMaxLength = 15;
     }
 }
