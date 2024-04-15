@@ -137,7 +137,8 @@ The page where the name of the category is shown.
 
 ## Edit category page
 This is the page where you can change the category name.
-![edit-category-page](https://github.com/vbukoev/CourseNet/assets/105813259/37cb3e6d-b25d-492d-a622-851a620dda4b)
+![edit-category-page](https://github.com/vbukoev/CourseNet/assets/105813259/b4a9c0b4-db42-41b9-ac44-cb0f83f7636b)
+
 
 ## Delete category page
 The page where you are questioned if you are sure you want to delete the category. If you delete the category, you are going to delete all of the courses which are from this category. 
