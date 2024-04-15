@@ -121,6 +121,9 @@ Password: 123456
    <li>
     <a href="#error-page">Error page</a>
   </li>
+    <li>
+    <a href="#unit-tests-and-code-coverage">Unit tests and code coverage</a>
+  </li>
 </ul>
 
 ## User registration
@@ -210,3 +213,8 @@ All reviews shown in this page.
 ## Create review for the course
 The page where you can add review to the course by adding rating for the course(from 1 to 10) and comment to the review.
 ![create-review-for-the-course](https://github.com/vbukoev/CourseNet/assets/105813259/c01a430f-c6c0-4d54-9b10-07576b44d79e)
+
+## Unit tests and code coverage
+On the pictures below, it is shown the number of unit tests and the code coverage of unit tests of the services.
+![unit-tests-passing](https://github.com/vbukoev/CourseNet/assets/105813259/3727d44b-6b65-44d1-93de-df0afc882f24)
+![code-coverage-services](https://github.com/vbukoev/CourseNet/assets/105813259/bf81b4e8-73d5-4864-8acb-dd93493f45c4)
