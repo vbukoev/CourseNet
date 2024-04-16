@@ -221,6 +221,6 @@ On the pictures below, it is shown the number of unit tests and the code coverag
 ![code-coverage-services](https://github.com/vbukoev/CourseNet/assets/105813259/bf81b4e8-73d5-4864-8acb-dd93493f45c4)
 
 ## Error page 
-![error-page-404](https://github.com/vbukoev/CourseNet/assets/105813259/489a0fb8-9365-4608-8b63-8a1f2e10b1bb)
+![error-page-401](https://github.com/vbukoev/CourseNet/assets/105813259/ef379d65-ff15-454b-8095-7dc49a30d227)
 
-![error-page-401](https://github.com/vbukoev/CourseNet/assets/105813259/c7cbc324-2468-4143-96c0-ce7bc0d03efa)
+![error-page-404](https://github.com/vbukoev/CourseNet/assets/105813259/28aec0b4-ec71-4f40-bcc9-c495efbea576)
