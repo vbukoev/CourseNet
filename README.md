@@ -217,7 +217,10 @@ The page where you can add review to the course by adding rating for the course(
 ## Unit tests and code coverage
 On the pictures below, it is shown the number of unit tests and the code coverage of unit tests of the services.
 ![unit-tests-passing](https://github.com/vbukoev/CourseNet/assets/105813259/3727d44b-6b65-44d1-93de-df0afc882f24)
+
 ![code-coverage-services](https://github.com/vbukoev/CourseNet/assets/105813259/bf81b4e8-73d5-4864-8acb-dd93493f45c4)
 
 ## Error page 
-![error-page](https://github.com/vbukoev/CourseNet/assets/105813259/2f3c5312-c657-40a1-a7a6-7a887ef1bcde)
+![error-page-404](https://github.com/vbukoev/CourseNet/assets/105813259/489a0fb8-9365-4608-8b63-8a1f2e10b1bb)
+
+![error-page-401](https://github.com/vbukoev/CourseNet/assets/105813259/c7cbc324-2468-4143-96c0-ce7bc0d03efa)
