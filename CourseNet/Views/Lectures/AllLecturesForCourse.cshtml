@@ -23,14 +23,16 @@
                 <h4><b>Заглавие на лекцията: </b>@lecture.Title</h4>
                 <p><i>@lecture.Description</i></p>
                 <p><b>Дата: </b> @lecture.Date</p>
-                @if (isUserInstructor)
+                @if (isUserInstructor || User.IsAdmin())
                 {
                     <a asp-area="" asp-controller="Lectures" asp-action="Delete" asp-route-id="@lecture.Id" class="btn btn-danger btn-sm">Премахване на лекцията</a>
 
-                    <a class="btn btn-primary" href="/Materials/AllMaterialsForLecture?lectureId=@lecture.Id">Виж налични материали за лекцията</a>
                     
                     <a class="btn btn-primary" href="/Materials/Create?lectureId=@lecture.Id">Добави материал към лекцията</a>
-                    }
+                }
+                <a class="btn btn-primary" href="/Materials/AllMaterialsForLecture?lectureId=@lecture.Id">Виж налични материали за лекцията</a>
+
+
             </div>
         }
     </div>
