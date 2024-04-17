@@ -351,15 +351,6 @@ namespace CourseNet.Web.Controllers
                 return RedirectToAction("Index", "Courses");
             }
 
-            bool isCourseEnrolled = await courseService.IsEnrolledByIdAsync(id);
-
-            if (isCourseEnrolled)
-            {
-                TempData[ErrorMessage] = "Вие вече сте записани за този курс! Изберете си друг курс от свободните курсовете!";
-
-                return RedirectToAction("Index", "Courses");
-            }
-
             bool isInstructor = await instructorService.InstructorExistsByUserId(User.GetId()!);
 
             if (isInstructor && !User.IsAdmin())

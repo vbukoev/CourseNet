@@ -36,7 +36,7 @@
                         <a class="btn btn-primary" href="/Lectures/AllLecturesForCourse?courseId=@Model.Id">Натисни тук</a>
 
                         <p></p>
-                        @if (isUserInstructor)
+                        @if ((isUserInstructor && isInstructorTeachingCourse) || User.IsAdmin())
                         {
                             <a class="btn btn-primary" href="/Lectures/Create?courseId=@Model.Id">Създай лекция</a>
                         }
@@ -75,7 +75,7 @@
             </p>
             <p>Категория: <b>@Model.Category</b></p>
             <p>Трудност: <b>@Model.Difficulty</b></p>
-            <p>Крайна дата: <b>@Model.EndDate</b></p>
+            <p>Крайна дата и час: <b>@Model.EndDate</b></p>
             <div class="form-inline">
                 @if (User.Identity?.IsAuthenticated ?? false)
                 {
