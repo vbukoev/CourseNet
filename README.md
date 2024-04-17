@@ -2,6 +2,8 @@
 
 "CourseNet" is a web application with educational and demonstrative purposes. It mimics (in a much smaller scale) systems used for management of online courses and enrolling in them. You can enroll in to different courses, lectures, you can get a huge amount of materials, become students or even instructors of the courses.
 
+You can check the CourseNET website here -> https://coursenetweb.azurewebsites.net.
+
    ## Technologies used ⚙️
 <ul>
   <li>.NET Core 6.0</li>
