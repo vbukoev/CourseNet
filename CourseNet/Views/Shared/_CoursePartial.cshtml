@@ -41,7 +41,7 @@
                     <p></p>
                 }
 
-                @if (!Model.IsEnrolled)
+                @if (!Model.IsEnrolled || User.IsAdmin())
                 {
                     @if (!isUserInstructor || User.IsAdmin())
                     {
@@ -54,7 +54,7 @@
                 }
                 else
                 {
-                    @if (!isUserInstructor && isCourseEnrolled)
+                    @if ((!isUserInstructor && isCourseEnrolled) || User.IsAdmin())
                     {
                         <form asp-area="" asp-controller="Courses" asp-action="Leave"
                               asp-route-id="@Model.Id" method="post">
