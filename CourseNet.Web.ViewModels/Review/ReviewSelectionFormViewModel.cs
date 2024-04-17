@@ -29,7 +29,7 @@ namespace CourseNet.Web.ViewModels.Review
         /// </summary>
         [Display(Name = "Дата")]
         [DataType(DataType.Date)]
-        public DateTime Date { get; set; } = DateTime.UtcNow;
+        public DateTime Date { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Course Identifier for the review
