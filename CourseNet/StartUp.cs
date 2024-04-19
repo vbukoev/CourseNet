@@ -40,6 +40,7 @@ builder.Services.ConfigureApplicationCookie(cfg =>
     cfg.AccessDeniedPath = "/Home/Error/401";
 });
 
+// Add services to the container automatically due to the ModelBinderProvider.
 builder.Services
     .AddControllersWithViews()
     .AddMvcOptions(options =>
