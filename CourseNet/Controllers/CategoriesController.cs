@@ -257,7 +257,6 @@ namespace CourseNet.Web.Controllers
         {
             TempData[ErrorMessage] = GeneralErrorMessage;
             return RedirectToAction("Index", "Home");
-
         }
     }
 }
