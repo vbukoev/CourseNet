@@ -74,9 +74,6 @@ namespace CourseNet.Data.Models.Entities
         [Comment("Collection of Categories")]
         public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
 
-        //[Comment("Collection of Students")]
-        //public virtual ICollection<User> Students { get; set; } = new HashSet<User>();
-
         [Comment("Collection of Lectures")]
         public virtual ICollection<Lecture> Lectures { get; set; } = new HashSet<Lecture>();
 
